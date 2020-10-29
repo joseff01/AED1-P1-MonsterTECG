@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -19,6 +20,7 @@ public class HostMenu implements Runnable{
 
     Socket clientSocket;
 
+    DataOutputStream outputStream;
 
 
     public HostMenu(JLabel socketLabel,JPanel mainPanel){
@@ -48,6 +50,7 @@ public class HostMenu implements Runnable{
     public void setClientSocket(String ip, int socket){
         try {
             clientSocket = new Socket(ip, socket);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,7 +63,6 @@ public class HostMenu implements Runnable{
 
         String startGameFlagJSON;
 
-        while(!start) {
             try {
 
                 Socket EntrySocket = listenSocket.accept();
@@ -75,13 +77,10 @@ public class HostMenu implements Runnable{
 
                 setClientSocket(startGameFlag.getIp(),startGameFlag.getSocket());
 
-                start = true;
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-        }
 
         mainPanel.removeAll();
         mainPanel.validate();

@@ -136,7 +136,6 @@ public class Main {
                             }
 
                             try{
-
                                 if (Integer.parseInt(socketText.getText()) < 10000) {
                                     return;
                                 }
