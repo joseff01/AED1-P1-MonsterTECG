@@ -15,6 +15,8 @@ public class GameplayMenu {
 
     ServerSocket mySocket;
 
+    Bar vidaBar;
+
     int opponentSocketNum;
 
     boolean myTurn;
@@ -33,6 +35,22 @@ public class GameplayMenu {
         gameBackgroundLabel = new JLabel(new ImageIcon("Images\\FondoJuego.png"));
         gameBackgroundLabel.setLayout(null);
         mainPanel.add(gameBackgroundLabel);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
+        vidaBar.setBounds(10, 100,75,1000);
+        gameBackgroundLabel.add(vidaBar);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
+        vidaBar.setBounds(95, 100,75,1000);
+        gameBackgroundLabel.add(vidaBar);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
+        vidaBar.setBounds(1085, -300,75,1000);
+        gameBackgroundLabel.add(vidaBar);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
+        vidaBar.setBounds(1160, -300,75,1000);
+        gameBackgroundLabel.add(vidaBar);
 
         finishTurnButton = new JButton("Finish Turn");
         finishTurnButton.setBounds(870,520,170,50);
@@ -54,6 +72,7 @@ public class GameplayMenu {
         this.addCardToHand(testCard6);
         this.addCardToHand(testCard7);
         this.addCardToHand(testCard8);
+
 
 
         class EndTurnEvent implements ActionListener {
@@ -85,7 +104,7 @@ public class GameplayMenu {
         EndTurnEvent endTurnEvent = new EndTurnEvent();
         finishTurnButton.addActionListener(endTurnEvent);
         gameBackgroundLabel.add(finishTurnButton);
-        
+
 
         if (!myTurn){
 
