@@ -47,15 +47,6 @@ public class HostMenu implements Runnable{
         }
     }
 
-    public void setClientSocket(String ip, int socket){
-        try {
-            clientSocket = new Socket(ip, socket);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public void run() {
 
@@ -63,7 +54,9 @@ public class HostMenu implements Runnable{
 
         String startGameFlagJSON;
 
-            try {
+        StartGameFlag startGameFlag = null;
+
+        try {
 
                 Socket EntrySocket = listenSocket.accept();
 
@@ -73,27 +66,23 @@ public class HostMenu implements Runnable{
 
                 ObjectMapper objectMapper = new ObjectMapper();
 
-                StartGameFlag startGameFlag = objectMapper.readValue(startGameFlagJSON,StartGameFlag.class);
+                startGameFlag = objectMapper.readValue(startGameFlagJSON,StartGameFlag.class);
 
-                setClientSocket(startGameFlag.getIp(),startGameFlag.getSocket());
+                EntrySocket.close();
 
 
-            } catch (IOException e) {
+        } catch (IOException e) {
                 e.printStackTrace();
-            }
+        }
 
         mainPanel.removeAll();
         mainPanel.validate();
         mainPanel.repaint();
 
-        GameplayMenu gameplayMenu = new GameplayMenu(mainPanel,listenSocket,clientSocket,true);
+        GameplayMenu gameplayMenu = new GameplayMenu(mainPanel,listenSocket,startGameFlag.getSocket(),true);
 
     }
 
     int ListenSocketNum = 10000;
-
-    public int getListenSocketNum() {
-        return ListenSocketNum;
-    }
 
 }

@@ -155,11 +155,13 @@ public class Main {
 
                             streamOutput.writeUTF(startGameFlagJSON);
 
+                            streamOutput.close();
+
                             mainPanel.removeAll();
                             mainPanel.validate();
                             mainPanel.repaint();
 
-                            GameplayMenu gameplayMenu = new GameplayMenu(mainPanel,joinMenu.getListenSocket(),clientSocket,false);
+                            GameplayMenu gameplayMenu = new GameplayMenu(mainPanel,joinMenu.getListenSocket(),Integer.parseInt(socketText.getText()),false);
 
 
 

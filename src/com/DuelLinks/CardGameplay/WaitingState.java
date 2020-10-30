@@ -38,6 +38,8 @@ public class WaitingState implements Runnable{
 
                 String startGameFlagJSON = (String) StreamInput.readUTF();
 
+                EntrySocket.close();
+
                 //ObjectMapper objectMapper = new ObjectMapper();
 
                 //StartGameFlag startGameFlag = objectMapper.readValue(startGameFlagJSON,StartGameFlag.class);
