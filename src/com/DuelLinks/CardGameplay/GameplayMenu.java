@@ -113,7 +113,7 @@ public class GameplayMenu {
 
         gameBackgroundLabel.remove(card);
 
-        
+
 
     }
 
