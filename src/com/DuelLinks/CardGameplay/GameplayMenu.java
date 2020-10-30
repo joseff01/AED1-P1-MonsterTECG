@@ -26,9 +26,15 @@ public class GameplayMenu {
         this.opponentSocketNum = opponentSocketNum;
         this.myTurn = myTurn;
 
+        JLabel gameBackgroundLabel = new JLabel(new ImageIcon("Images\\FondoJuego.png"));
+        gameBackgroundLabel.setLayout(null);
+        mainPanel.add(gameBackgroundLabel);
+
         finishTurnButton = new JButton("Finish Turn");
         finishTurnButton.setBounds(600,450,150,50);
         finishTurnButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,25));
+
+        gameBackgroundLabel.add(finishTurnButton);
 
         class EndTurnEvent implements ActionListener {
 
