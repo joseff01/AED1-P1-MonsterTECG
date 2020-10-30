@@ -1,5 +1,6 @@
 package com.DuelLinks.MainMenu;
 
+import com.DuelLinks.CardGameplay.Card;
 import com.DuelLinks.CardGameplay.GameplayMenu;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
