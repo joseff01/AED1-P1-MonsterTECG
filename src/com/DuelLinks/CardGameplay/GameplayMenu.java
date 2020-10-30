@@ -36,20 +36,20 @@ public class GameplayMenu {
         gameBackgroundLabel.setLayout(null);
         mainPanel.add(gameBackgroundLabel);
 
-        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
-        vidaBar.setBounds(10, 100,75,1000);
-        gameBackgroundLabel.add(vidaBar);
-
         vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
-        vidaBar.setBounds(95, 100,75,1000);
-        gameBackgroundLabel.add(vidaBar);
-
-        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
-        vidaBar.setBounds(1085, -300,75,1000);
+        vidaBar.setBounds(10, 360,75,400);
         gameBackgroundLabel.add(vidaBar);
 
         vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
-        vidaBar.setBounds(1160, -300,75,1000);
+        vidaBar.setBounds(85, 360,75,400);
+        gameBackgroundLabel.add(vidaBar);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
+        vidaBar.setBounds(1085, 0,75,400);
+        gameBackgroundLabel.add(vidaBar);
+
+        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
+        vidaBar.setBounds(1160, 0,75,400);
         gameBackgroundLabel.add(vidaBar);
 
         finishTurnButton = new JButton("Finish Turn");

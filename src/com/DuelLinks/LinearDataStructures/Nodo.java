@@ -25,4 +25,4 @@ public class Nodo{
         this.next = next;
     }
 }
-}
+
