@@ -34,7 +34,7 @@ public class GameplayMenu {
         finishTurnButton.setBounds(600,450,150,50);
         finishTurnButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,25));
 
-        gameBackgroundLabel.add(finishTurnButton);
+
 
         class EndTurnEvent implements ActionListener {
 
@@ -64,7 +64,8 @@ public class GameplayMenu {
 
         EndTurnEvent endTurnEvent = new EndTurnEvent();
         finishTurnButton.addActionListener(endTurnEvent);
-        mainPanel.add(finishTurnButton);
+        gameBackgroundLabel.add(finishTurnButton);
+        
 
         if (!myTurn){
 
