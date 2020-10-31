@@ -18,6 +18,7 @@ public class Main {
 
     public static void main(String[] args) throws JsonProcessingException {
 
+
         ServerSocket mySocket;
 
         Socket opponentSocket;

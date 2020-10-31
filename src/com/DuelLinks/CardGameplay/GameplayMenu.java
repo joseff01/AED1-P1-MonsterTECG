@@ -16,6 +16,10 @@ public class GameplayMenu {
     ServerSocket mySocket;
 
     Bar vidaBar;
+    Bar vidaBar2;
+    Bar manaBar;
+    Bar manaBar2;
+
 
     int opponentSocketNum;
 
@@ -40,21 +44,22 @@ public class GameplayMenu {
         vidaBar.setBounds(10, 360,75,400);
         gameBackgroundLabel.add(vidaBar);
 
-        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
-        vidaBar.setBounds(85, 360,75,400);
-        gameBackgroundLabel.add(vidaBar);
+        manaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
+        manaBar.setBounds(85, 360,75,400);
+        gameBackgroundLabel.add(manaBar);
 
-        vidaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
-        vidaBar.setBounds(1085, 0,75,400);
-        gameBackgroundLabel.add(vidaBar);
+        manaBar2 = new Bar(new ImageIcon("Images\\Cyan.png"));
+        manaBar2.setBounds(1085, 0,75,400);
+        gameBackgroundLabel.add(manaBar2);
 
-        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
-        vidaBar.setBounds(1160, 0,75,400);
-        gameBackgroundLabel.add(vidaBar);
+        vidaBar2 = new Bar(new ImageIcon("Images\\Green.png"));
+        vidaBar2.setBounds(1160, 0,75,400);
+        gameBackgroundLabel.add(vidaBar2);
 
         finishTurnButton = new JButton("Finish Turn");
         finishTurnButton.setBounds(870,520,170,50);
         finishTurnButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,18));
+
 
         MonsterCard testCard = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
         MonsterCard testCard2 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
