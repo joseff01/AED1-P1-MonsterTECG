@@ -1,5 +1,7 @@
 package com.DuelLinks.LinearDataStructures.DoubleList;
 
+import com.DuelLinks.LinearDataStructures.SingleList.SingleNode;
+
 public class DoubleList<T> {
     private DoubleNode<T> first;
 
@@ -112,7 +114,7 @@ public class DoubleList<T> {
 
     }
 
-    public void eliminateAt(int position){
+    public void deleteAt(int position){
         int length = this.getLength();
         if (length < position) {
 
@@ -168,6 +170,26 @@ public class DoubleList<T> {
         }
         return ref.getValue();
 
+
+
+    }
+
+    public void print(){
+        if (this.isEmpty()){
+            System.out.println("[]");
+            return;
+        }else if(this.getLength() == 1){
+            System.out.println("[" + this.first.getValue() + "]");
+        }else {
+            System.out.print("[" + this.first.getValue() + ",");
+            DoubleNode<T> ref = this.first.getNext();
+            while (ref.getNext() != null) {
+                System.out.print(ref.getValue() + ",");
+                ref = ref.getNext();
+            }
+            System.out.print(ref.getValue() + "]");
+            System.out.println();
+        }
 
 
     }

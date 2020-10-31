@@ -1,6 +1,7 @@
 package com.DuelLinks.LinearDataStructures.DoubleCircularList;
 
 import com.DuelLinks.LinearDataStructures.DoubleList.DoubleNode;
+import com.DuelLinks.LinearDataStructures.SingleList.SingleNode;
 
 public class DoubleCircularList<T> {
 
@@ -46,6 +47,7 @@ public class DoubleCircularList<T> {
             DoubleNode<T> last = this.first.getPrevious();
             last.setNext(newNode);
             this.first.setPrevious(newNode);
+            this.first = newNode;
         }
 
     }
@@ -58,7 +60,8 @@ public class DoubleCircularList<T> {
             DoubleNode<T> last = this.first.getPrevious();
             last.setNext(this.first.getNext());
             DoubleNode<T> next = this.first.getNext();
-            next.setPrevious(this.first.getPrevious());
+            next.setPrevious(last);
+            this.first = next;
         }
     }
 
@@ -74,7 +77,7 @@ public class DoubleCircularList<T> {
             DoubleNode<T> newNode = new DoubleNode<T>(value,last,this.first);
             last.setNext(newNode);
             this.first.setPrevious(newNode);
-            this.first = newNode;
+
 
         }
     }
@@ -122,7 +125,7 @@ public class DoubleCircularList<T> {
 
     }
 
-    public void eliminateAt(int position){
+    public void deleteAt(int position){
         int length = this.getLength();
         if (length < position) {
 
@@ -178,6 +181,26 @@ public class DoubleCircularList<T> {
         }
         return ref.getValue();
 
+
+
+    }
+
+    public void print(){
+        if (this.isEmpty()){
+            System.out.println("[]");
+            return;
+        }else if(this.getLength() == 1){
+            System.out.println("[" + this.first.getValue() + "]");
+        }else {
+            System.out.print("[" + this.first.getValue() + ",");
+            DoubleNode<T> ref = this.first.getNext();
+            while (ref.getNext() != this.first) {
+                System.out.print(ref.getValue() + ",");
+                ref = ref.getNext();
+            }
+            System.out.print(ref.getValue() + "]");
+            System.out.println();
+        }
 
 
     }

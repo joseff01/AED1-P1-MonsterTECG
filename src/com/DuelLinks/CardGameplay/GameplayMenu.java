@@ -1,5 +1,7 @@
 package com.DuelLinks.CardGameplay;
 
+import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +29,7 @@ public class GameplayMenu {
 
     JLabel gameBackgroundLabel;
 
-    int x = 165;
+    DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -62,23 +64,15 @@ public class GameplayMenu {
 
 
         MonsterCard testCard = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
+        myHand.addLast(testCard);
         MonsterCard testCard2 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
+        myHand.addLast(testCard2);
         MonsterCard testCard3 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
+        myHand.addLast(testCard3);
         MonsterCard testCard4 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        MonsterCard testCard5 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        MonsterCard testCard6 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        MonsterCard testCard7 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        MonsterCard testCard8 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        this.addCardToHand(testCard);
-        this.addCardToHand(testCard2);
-        this.addCardToHand(testCard3);
-        this.addCardToHand(testCard4);
-        this.addCardToHand(testCard5);
-        this.addCardToHand(testCard6);
-        this.addCardToHand(testCard7);
-        this.addCardToHand(testCard8);
+        myHand.addLast(testCard4);
 
-
+        displayMyHand();
 
         class EndTurnEvent implements ActionListener {
 
@@ -124,21 +118,26 @@ public class GameplayMenu {
 
     }
 
-    public void addCardToHand(Card card){
 
-        card.setBounds(x,580,120,175);
-        x = x + 135;
-        gameBackgroundLabel.add(card);
-
-
+    public void removeMyHand(){
+        if (!myHand.isEmpty()) {
+            int length = myHand.getLength();
+            for (int i = 0; i < length; i++) {
+                gameBackgroundLabel.remove(myHand.getValueAt(i));
+            }
+        }
     }
 
-    public void removeCardFromHand(Card card){
-
-        gameBackgroundLabel.remove(card);
-
-
-
+    public void displayMyHand(){
+        if (!myHand.isEmpty()) {
+            int x = 165;
+            int length = myHand.getLength();
+            for (int i = 0; i < length; i++) {
+                myHand.getValueAt(i).setBounds(x, 575, 120, 175);
+                gameBackgroundLabel.add(myHand.getValueAt(i));
+                x = x + 135;
+            }
+        }
     }
 
     JButton finishTurnButton;
