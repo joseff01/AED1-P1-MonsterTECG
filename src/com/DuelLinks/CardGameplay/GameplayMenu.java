@@ -1,15 +1,22 @@
 package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
+import com.DuelLinks.MainMenu.StartGameFlag;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class GameplayMenu {
 
@@ -29,6 +36,8 @@ public class GameplayMenu {
 
     JLabel gameBackgroundLabel;
 
+    DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
+
     DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
@@ -37,6 +46,19 @@ public class GameplayMenu {
         this.mySocket = mySocket;
         this.opponentSocketNum = opponentSocketNum;
         this.myTurn = myTurn;
+
+        try {
+            Scanner scanner = new Scanner(new File("json\\Cards.json"));
+            for(int i = 0; i < 22; i++){
+                String cardJsonString = scanner.nextLine();
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonMonsterCard JsonCard = objectMapper.readValue(cardJsonString, JsonMonsterCard.class);
+                MonsterCard monsterCard = new MonsterCard(JsonCard);
+                allCards.addLast(monsterCard);
+            }
+        } catch (FileNotFoundException | JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
         gameBackgroundLabel = new JLabel(new ImageIcon("Images\\FondoJuego.png"));
         gameBackgroundLabel.setLayout(null);
@@ -63,14 +85,10 @@ public class GameplayMenu {
         finishTurnButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,18));
 
 
-        MonsterCard testCard = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        myHand.addLast(testCard);
-        MonsterCard testCard2 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        myHand.addLast(testCard2);
-        MonsterCard testCard3 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        myHand.addLast(testCard3);
-        MonsterCard testCard4 = new MonsterCard(new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),new ImageIcon("Images\\SmallCards\\MonsterCP\\cpBlueDragon.png"),1,1);
-        myHand.addLast(testCard4);
+        myHand.addLast(allCards.getValueAt(0));
+        myHand.addLast(allCards.getValueAt(1));
+        myHand.addLast(allCards.getValueAt(2));
+        myHand.addLast(allCards.getValueAt(3));
 
         displayMyHand();
 

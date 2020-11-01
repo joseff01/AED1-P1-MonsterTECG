@@ -2,6 +2,7 @@ package com.DuelLinks.LinearDataStructures.DoubleCircularList;
 
 import com.DuelLinks.LinearDataStructures.DoubleList.DoubleNode;
 import com.DuelLinks.LinearDataStructures.SingleList.SingleNode;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class DoubleCircularList<T> {
 
@@ -9,6 +10,10 @@ public class DoubleCircularList<T> {
 
     public DoubleCircularList(){
         this.first =  null;
+    }
+
+    public DoubleCircularList(DoubleNode<T> firstNode) {
+        this.first = firstNode;
     }
 
     public DoubleCircularList(T value){
