@@ -1,10 +1,13 @@
 package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
+import com.DuelLinks.LinearDataStructures.SingleList.SingleList;
+import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.DuelLinks.MainMenu.StartGameFlag;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameplayMenu {
@@ -40,6 +44,8 @@ public class GameplayMenu {
 
     DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
+    Stack Deck = new Stack(22);
+
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
         this.mainPanel = mainPanel;
@@ -59,6 +65,26 @@ public class GameplayMenu {
         } catch (FileNotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
+
+        Random random = new Random();
+        int i = 0;
+        DoubleCircularList<Integer> integerSingleList= new DoubleCircularList<Integer>();
+
+        while(i < 20){
+            int randomInt = random.nextInt(22);
+            if (!integerSingleList.isValue(randomInt)){
+                integerSingleList.addLast(randomInt);
+                integerSingleList.print();
+                System.out.println(randomInt);
+                Deck.push(allCards.getValueAt(randomInt));
+                i++;
+            }
+        }
+
+        myHand.addLast((Card) Deck.pop());
+        myHand.addLast((Card) Deck.pop());
+        myHand.addLast((Card) Deck.pop());
+        myHand.addLast((Card) Deck.pop());
 
         gameBackgroundLabel = new JLabel(new ImageIcon("Images\\FondoJuego.png"));
         gameBackgroundLabel.setLayout(null);
@@ -83,12 +109,6 @@ public class GameplayMenu {
         finishTurnButton = new JButton("Finish Turn");
         finishTurnButton.setBounds(870,520,170,50);
         finishTurnButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,18));
-
-
-        myHand.addLast(allCards.getValueAt(0));
-        myHand.addLast(allCards.getValueAt(1));
-        myHand.addLast(allCards.getValueAt(2));
-        myHand.addLast(allCards.getValueAt(3));
 
         displayMyHand();
 

@@ -190,6 +190,54 @@ public class DoubleCircularList<T> {
 
     }
 
+    public boolean deleteValue(T value){
+        if (!isEmpty()){
+            if (this.first.getValue().equals(value)){
+                this.deleteFirst();
+                return true;
+            } else if (this.first.getPrevious().getValue().equals(value)){
+                this.deleteLast();
+                return true;
+            }
+            DoubleNode<T> ref = this.first.getNext();
+            while(!ref.getValue().equals(value)){
+                if (ref == this.first){
+                    return false;
+                }
+                ref = ref.getNext();
+            }
+            DoubleNode<T> prev = ref.getPrevious();
+            DoubleNode<T> next = ref.getNext();
+            prev.setNext(next);
+            next.setPrevious(prev);
+            return true;
+
+        }
+        return false;
+
+    }
+
+    public boolean isValue(T value){
+        if (!isEmpty()){
+            if (this.first.getValue().equals(value)){
+                return true;
+            } else if (this.first.getPrevious().getValue().equals(value)){
+                return true;
+            }
+            DoubleNode<T> ref = this.first.getNext();
+            while(!ref.getValue().equals(value)){
+                if (ref == this.first){
+                    return false;
+                }
+                ref = ref.getNext();
+            }
+            return true;
+
+        }
+        return false;
+
+    }
+
     public void print(){
         if (this.isEmpty()){
             System.out.println("[]");

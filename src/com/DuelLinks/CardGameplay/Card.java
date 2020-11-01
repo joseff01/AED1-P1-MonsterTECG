@@ -10,6 +10,8 @@ public abstract class Card extends JButton {
 
     private ImageIcon smallImage;
 
+    private ImageIcon largeImage;
+
     public Card(ImageIcon icon) {
 
         super(icon);
@@ -41,7 +43,17 @@ public abstract class Card extends JButton {
         this.largeImage = largeImage;
     }
 
-    private ImageIcon largeImage;
+    @Override
+    public boolean equals(Object o){
+        if (o == this){
+            return true;
+        }else if (!(o instanceof Card)) {
+            return false;
+        }
+        Card c = (Card) o;
+        return (this.smallImage == ((Card) o).smallImage);
+    }
+
 
 
 
