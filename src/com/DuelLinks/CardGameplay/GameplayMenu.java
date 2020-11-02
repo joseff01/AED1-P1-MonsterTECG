@@ -24,12 +24,10 @@ public class GameplayMenu {
 
     ServerSocket mySocket;
 
-    JButton finishTurnButton;
-
-    Bar vidaBar;
-    Bar vidaBar2;
-    Bar manaBar;
-    Bar manaBar2;
+    Bar myLifeBar;
+    Bar enemyLifeBar;
+    Bar myManaBar;
+    Bar enemyManaBar;
 
     int opponentSocketNum;
 
@@ -118,21 +116,21 @@ public class GameplayMenu {
         addCardEnemyHand();
         addCardEnemyHand();
 
-        vidaBar = new Bar(new ImageIcon("Images\\Green.png"));
-        vidaBar.setBounds(10, 360,75,400);
-        gameBackgroundLabel.add(vidaBar);
+        myLifeBar = new Bar(true,true);
+        myLifeBar.setBounds(10, 360,55,400);
+        gameBackgroundLabel.add(myLifeBar);
 
-        manaBar = new Bar(new ImageIcon("Images\\Cyan.png"));
-        manaBar.setBounds(85, 360,75,400);
-        gameBackgroundLabel.add(manaBar);
+        myManaBar = new Bar(false,true);
+        myManaBar.setBounds(85, 360,55,400);
+        gameBackgroundLabel.add(myManaBar);
 
-        manaBar2 = new Bar(new ImageIcon("Images\\Cyan.png"));
-        manaBar2.setBounds(1085, 0,75,400);
-        gameBackgroundLabel.add(manaBar2);
+        enemyManaBar = new Bar(false,false);
+        enemyManaBar .setBounds(1085, 0,55,400);
+        gameBackgroundLabel.add(enemyManaBar );
 
-        vidaBar2 = new Bar(new ImageIcon("Images\\Green.png"));
-        vidaBar2.setBounds(1160, 0,75,400);
-        gameBackgroundLabel.add(vidaBar2);
+        enemyLifeBar = new Bar(true,false);
+        enemyLifeBar.setBounds(1160, 0,55,400);
+        gameBackgroundLabel.add(enemyLifeBar);
 
         finishTurnButton = new JButton("Finish Turn");
         finishTurnButton.setBounds(870,520,170,50);
