@@ -24,6 +24,8 @@ public class GameplayMenu {
 
     ServerSocket mySocket;
 
+    JButton finishTurnButton;
+
     Bar myLifeBar;
     Bar enemyLifeBar;
     Bar myManaBar;
