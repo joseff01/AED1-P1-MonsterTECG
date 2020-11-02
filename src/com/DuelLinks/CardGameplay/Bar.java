@@ -1,6 +1,7 @@
 package com.DuelLinks.CardGameplay;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class Bar extends JLabel {
     boolean loose;
@@ -9,10 +10,30 @@ public class Bar extends JLabel {
     int vida;
     int mana;
 
-    public Bar(ImageIcon color) {
-        super(color);
-        this.vida = 500;
-        this.mana = 1000;
+    public Bar(boolean type,boolean my) {
+        if(type){
+            super.setText("1000");
+            super.setBackground(Color.GREEN);
+            this.vida = 1000;
+        }
+        else{
+            super.setText("250");
+            this.mana = 250;
+            super.setBackground(Color.CYAN);
+        }
+
+        super.setOpaque(true);
+        super.setForeground(Color.DARK_GRAY);
+        if(my){
+            super.setVerticalAlignment(SwingConstants.TOP);
+        }
+        else{
+            super.setVerticalAlignment(SwingConstants.BOTTOM);
+        }
+
+
+
+
 
     }
     public void looseVida(int valor, Bar barTemp,boolean flag){
@@ -24,10 +45,12 @@ public class Bar extends JLabel {
         else if(flag){
             barTemp.setVida(barTemp.getVida()-temp);
             barTemp.setBounds(barTemp.getX(), barTemp.getY(),barTemp.getWidth(),barTemp.getHeight()-temp);
+            barTemp.setText(Integer.toString(getVida()));
         }
         else{
             barTemp.setVida(barTemp.getVida()-temp);
             barTemp.setBounds(barTemp.getX(), barTemp.getY()+temp,barTemp.getWidth(),barTemp.getHeight());
+            barTemp.setText(Integer.toString(getVida()));
         }
     }
 
@@ -39,51 +62,61 @@ public class Bar extends JLabel {
         else if (flag){
             barTemp.setMana(barTemp.getMana()-temp);
             barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),getHeight()-temp);
+            barTemp.setText(Integer.toString(getMana()));
         }
         else{
             barTemp.setVida(barTemp.getMana()-temp);
             barTemp.setBounds(barTemp.getX(), barTemp.getY()+temp,barTemp.getWidth(),barTemp.getHeight());
+            barTemp.setText(Integer.toString(getMana()));
         }
     }
-    public void winVida(int valor, Bar x,boolean flag){
+    public void winVida(int valor, Bar barTemp,boolean flag){
         int temp = ((valor * 400)/1000);
 
-        if(x.getVida()+temp>=1000 && flag){
-            x.setBounds(x.getX(),x.getY(),x.getWidth(),1000);
-            x.setVida(1000);
+        if(barTemp.getVida()+temp>=1000 && flag){
+            barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),1000);
+            barTemp.setVida(1000);
+            barTemp.setText("1000");
         }
-        else if(x.getVida() + temp >= 1000 && !flag) {
-            x.setBounds(x.getX(), 360, x.getWidth(), x.getHeight());
-            x.setVida(1000);
+        else if(barTemp.getVida() + temp >= 1000 && !flag) {
+            barTemp.setBounds(barTemp.getX(), 360, barTemp.getWidth(), barTemp.getHeight());
+            barTemp.setVida(1000);
+            barTemp.setText("1000");
         }
         else if(flag){
-            x.setVida(x.getVida()+temp);
-            x.setBounds(x.getX(),x.getY(),x.getWidth(),getHeight()+temp);
+            barTemp.setVida(barTemp.getVida()+temp);
+            barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),getHeight()+temp);
+            barTemp.setText(Integer.toString(getVida()));
         }
         else{
-            x.setVida(x.getVida()+temp);
-            x.setBounds(x.getX(),x.getY()+temp,x.getWidth(),getHeight());
+            barTemp.setVida(barTemp.getVida()+temp);
+            barTemp.setBounds(barTemp.getX(),barTemp.getY()+temp,barTemp.getWidth(),getHeight());
+            barTemp.setText(Integer.toString(getVida()));
         }
     }
 
-    public void winMana(int valor, Bar x,boolean flag){
+    public void winMana(int valor, Bar barTemp,boolean flag){
         int temp = ((valor * 400)/1000);
 
-        if(x.getMana()+temp>=1000 && flag){
-            x.setBounds(x.getX(),x.getY(),x.getWidth(),1000);
-            x.setMana(1000);
+        if(barTemp.getMana()+temp>=1000 && flag){
+            barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),1000);
+            barTemp.setMana(1000);
+            barTemp.setText("1000");
         }
-        else if(x.getMana() + temp >= 1000 && !flag) {
-            x.setBounds(x.getX(), 360, x.getWidth(), x.getHeight());
-            x.setMana(1000);
+        else if(barTemp.getMana() + temp >= 1000 && !flag) {
+            barTemp.setBounds(barTemp.getX(), 360, barTemp.getWidth(), 1000);
+            barTemp.setMana(1000);
+            barTemp.setText("1000");
         }
         else if(flag){
-            x.setMana(x.getMana()+temp);
-            x.setBounds(x.getX(),x.getY(),x.getWidth(),getHeight()+temp);
+            barTemp.setMana(barTemp.getMana()+temp);
+            barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),barTemp.getHeight()+temp);
+            barTemp.setText(Integer.toString(getMana()));
         }
         else{
-            x.setMana(x.getMana()+temp);
-            x.setBounds(x.getX(),x.getY()+temp,x.getWidth(),getHeight());
+            barTemp.setMana(barTemp.getMana()+temp);
+            barTemp.setBounds(barTemp.getX(),barTemp.getY()+temp,barTemp.getWidth(),getHeight());
+            barTemp.setText(Integer.toString(getMana()));
         }
     }
     public int getVida() {
