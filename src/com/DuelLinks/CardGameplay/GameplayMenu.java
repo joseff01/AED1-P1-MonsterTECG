@@ -1,10 +1,8 @@
 package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
-import com.DuelLinks.LinearDataStructures.SingleList.SingleList;
 import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
@@ -26,6 +24,8 @@ public class GameplayMenu {
 
     ServerSocket mySocket;
 
+    JButton finishTurnButton;
+
     Bar vidaBar;
     Bar vidaBar2;
     Bar manaBar;
@@ -42,12 +42,17 @@ public class GameplayMenu {
     DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
     Stack myDeck = new Stack(20);
+    int myDeckLength = 20;
+    JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength),SwingConstants.CENTER);
 
     DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
-
     int enemyHandXPosition = 955;
 
-    int enemyDeck = 20;
+    int enemyDeckLength = 20;
+    JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength),SwingConstants.CENTER);
+
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -85,6 +90,23 @@ public class GameplayMenu {
                 i++;
             }
         }
+
+        myDeckLabel.setLayout(null);
+        myDeckLabel.setBounds(465, 390, 120, 175);
+        myDeckLengthLabel.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,20));
+        myDeckLengthLabel.setForeground(Color.WHITE);
+        myDeckLengthLabel.setBounds(40,77,40,20);
+        myDeckLabel.add(myDeckLengthLabel);
+        gameBackgroundLabel.add(myDeckLabel);
+
+        enemyDeckLabel.setLayout(null);
+        enemyDeckLabel.setBounds(735, 185, 120, 175);
+        enemyDeckLengthLabel.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,20));
+        enemyDeckLengthLabel.setForeground(Color.WHITE);
+        enemyDeckLengthLabel.setBounds(40,77,40,20);
+        enemyDeckLabel.add(enemyDeckLengthLabel);
+        gameBackgroundLabel.add(enemyDeckLabel);
+
 
         addCardMyHand();
         addCardMyHand();
@@ -184,8 +206,15 @@ public class GameplayMenu {
 
     public void addCardMyHand(){
         if (myHand.getLength() <= 8){
-            myHand.addLast((Card) myDeck.pop());
-            this.displayMyHand();
+            if (myDeckLength > 0) {
+                myHand.addLast((Card) myDeck.pop());
+                myDeckLength--;
+                myDeckLengthLabel.setText(String.valueOf(myDeckLength));
+                this.displayMyHand();
+                if (myDeckLength == 0){
+                    gameBackgroundLabel.remove(myDeckLabel);
+                }
+            }
         }
     }
 
@@ -203,16 +232,22 @@ public class GameplayMenu {
         }
     }
 
-    public void addCardEnemyHand(){
-        if (enemyHand.getLength() <= 8){
-            JLabel enemyCard = new JLabel(new ImageIcon("Images\\cpAtras.png"));
-            enemyCard.setBounds(enemyHandXPosition,5,120,175);
-            enemyHand.addLast(enemyCard);
-            gameBackgroundLabel.add(enemyCard);
-            enemyHandXPosition = enemyHandXPosition - 135;
-
+    public void addCardEnemyHand() {
+        if (enemyHand.getLength() <= 8) {
+            if (enemyDeckLength > 0) {
+                JLabel enemyCard = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+                enemyCard.setBounds(enemyHandXPosition, 5, 120, 175);
+                enemyHand.addLast(enemyCard);
+                gameBackgroundLabel.add(enemyCard);
+                enemyHandXPosition = enemyHandXPosition - 135;
+                enemyDeckLength--;
+                enemyDeckLengthLabel.setText(String.valueOf(enemyDeckLength));
+                if (enemyDeckLength == 0) {
+                    gameBackgroundLabel.remove(enemyDeckLabel);
+                }
+            }
         }
     }
 
-    JButton finishTurnButton;
+
 }
