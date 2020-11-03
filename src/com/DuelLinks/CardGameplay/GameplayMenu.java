@@ -141,10 +141,6 @@ public class GameplayMenu {
         addCardMyHand();
         addCardMyHand();
         addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
 
         addCardEnemyHand();
         addCardEnemyHand();
@@ -156,11 +152,11 @@ public class GameplayMenu {
         gameBackgroundLabel.add(myLifeBar);
 
         myManaBar = new Bar(false, true);
-        myManaBar.setBounds(85, 360, 55, 400);
+        myManaBar.setBounds(85, 660, 55, 400);
         gameBackgroundLabel.add(myManaBar);
 
         enemyManaBar = new Bar(false, false);
-        enemyManaBar.setBounds(1085, 0, 55, 400);
+        enemyManaBar.setBounds(1085, 0, 55, 100);
         gameBackgroundLabel.add(enemyManaBar);
 
         enemyLifeBar = new Bar(true, false);
