@@ -335,8 +335,7 @@ public class GameplayMenu {
         }
     }
     public class SendAttack implements ActionListener{
-
-    public class SendAttack implements ActionListener{
+        
 
         @Override
         public void actionPerformed(ActionEvent e) {
