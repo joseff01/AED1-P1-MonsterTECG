@@ -328,21 +328,30 @@ public class GameplayMenu {
             useButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    flagUse =true;
-                    myManaBar.looseMana(x.getManaRequirement(), myManaBar, true);
-                    enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
-                    removeCardMyHand(x);
-                    JButton chosencard = getChosenLarge();
-                    chosencard.setIcon(null);
-                    setChosenCard(null);
-                    gameBackgroundLabel.remove(backButton);
-                    gameBackgroundLabel.remove(useButton);
-                    gameBackgroundLabel.revalidate();
-                    gameBackgroundLabel.repaint();
-                    cardBigLabel.setVisible(false);
-                    finishTurnButton.setVisible(true);
-                    for (int i = 0; i < length; i++) {
-                        myHand.getValueAt(i).setEnabled(true);
+                    if(!flagUse){
+                        if(myManaBar.isEnough(x.getManaRequirement(),myManaBar,true)){
+                            flagUse =true;
+                            enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
+                            removeCardMyHand(x);
+                            JButton chosencard = getChosenLarge();
+                            chosencard.setIcon(null);
+                            setChosenCard(null);
+                            gameBackgroundLabel.remove(backButton);
+                            gameBackgroundLabel.remove(useButton);
+                            gameBackgroundLabel.revalidate();
+                            gameBackgroundLabel.repaint();
+                            cardBigLabel.setVisible(false);
+                            finishTurnButton.setVisible(true);
+                            for (int i = 0; i < length; i++) {
+                                myHand.getValueAt(i).setEnabled(true);
+                            }
+                        }
+                        else{
+                            return;
+                        }
+                    }
+                    else{
+                        return;
                     }
                 }
             });
