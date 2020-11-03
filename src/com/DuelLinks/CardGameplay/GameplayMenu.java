@@ -34,19 +34,21 @@ public class GameplayMenu {
 
     int opponentSocketNum;
 
-    boolean flagUso =false;
+    boolean flagUse = false;
 
     boolean myTurn;
 
-    Card chosenCard = null;
+    Card chosenCard;
 
-    JButton chosenLarge = null;
+    JButton chosenLarge;
 
     JLabel gameBackgroundLabel;
 
     DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
 
     DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
+
+    JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
     Stack myDeck = new Stack(20);
     int myDeckLength = 20;
@@ -56,25 +58,13 @@ public class GameplayMenu {
     DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
     int enemyHandXPosition = 955;
 
-    public JButton getChosenLarge() {
-        return chosenLarge;
-    }
+    JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
     int enemyDeckLength = 20;
     JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
     JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
 
-    public Card getChosenCard() {
-        return chosenCard;
-    }
-
-    public void setChosenCard(Card chosenCard) {
-        this.chosenCard = chosenCard;
-    }
-
-    public void setChosenLarge(JButton chosenLarge) {
-        this.chosenLarge = chosenLarge;
-    }
+    public JButton cardBigLabel;
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -87,10 +77,12 @@ public class GameplayMenu {
         gameBackgroundLabel.setLayout(null);
         mainPanel.add(gameBackgroundLabel);
 
-        this.carta = new JButton();
-        carta.setBounds(450, 5, 414, 600);
-        carta.setVisible(false);
-        gameBackgroundLabel.add(carta);
+        this.cardBigLabel = new JButton();
+        cardBigLabel.setBounds(450, 5, 414, 600);
+        cardBigLabel.setVisible(false);
+        cardBigLabel.setBorderPainted(false);
+        cardBigLabel.setFocusPainted(false);
+        gameBackgroundLabel.add(cardBigLabel);
 
         try {
             Scanner scanner = new Scanner(new File("json\\Cards.json"));
@@ -137,6 +129,18 @@ public class GameplayMenu {
         enemyDeckLabel.add(enemyDeckLengthLabel);
         gameBackgroundLabel.add(enemyDeckLabel);
 
+        myDiscardPile.setBounds(595, 390, 120, 175);
+        myDiscardPile.setVisible(false);
+        gameBackgroundLabel.add(myDiscardPile);
+
+        opponentDiscardPile.setBounds(605, 185, 120, 175);
+        opponentDiscardPile.setVisible(false);
+        gameBackgroundLabel.add(opponentDiscardPile);
+
+        addCardMyHand();
+        addCardMyHand();
+        addCardMyHand();
+        addCardMyHand();
         addCardMyHand();
         addCardMyHand();
         addCardMyHand();
@@ -248,6 +252,7 @@ public class GameplayMenu {
         this.removeMyHand();
         myHand.deleteValue(card);
         this.displayMyHand();
+        myDiscardPile.setVisible(true);
     }
 
     public void removeCardEnemyHand() {
@@ -276,89 +281,101 @@ public class GameplayMenu {
     }
 
 
-    public JButton getCarta() {
-        return carta;
+    public JButton getCardBigLabel() {
+        return cardBigLabel;
     }
 
-    public void setCarta(JButton carta) {
-        this.carta = carta;
+    public void setCardBigLabel(JButton cardBigLabel) {
+        this.cardBigLabel = cardBigLabel;
     }
 
-    public JButton carta;
+
+    public JButton getChosenLarge() {
+        return chosenLarge;
+    }
+
+    public Card getChosenCard() {
+        return chosenCard;
+    }
+
+    public void setChosenCard(Card chosenCard) {
+        this.chosenCard = chosenCard;
+    }
+
+    public void setChosenLarge(JButton chosenLarge) {
+        this.chosenLarge = chosenLarge;
+    }
 
     public class CardClick implements ActionListener {
-        JButton back;
-        JButton attack;
+
+        JButton backButton;
+        JButton useButton;
 
         @Override
         public void actionPerformed(ActionEvent e) {
-                finishTurnButton.setVisible(false);
-                Card x = (Card) e.getSource();
-                int length = myHand.getLength();
-                for (int i = 0; i < length; i++) {
-                    myHand.getValueAt(i).setEnabled(false);
+            finishTurnButton.setEnabled(false);
+            Card x = (Card) e.getSource();
+            int length = myHand.getLength();
+            for (int i = 0; i < length; i++) {
+                myHand.getValueAt(i).setEnabled(false);
+            }
+            useButton = new JButton("Use Card");
+            if (flagUse == true){
+                useButton.setEnabled(false);
+            }
+            useButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
+            useButton.setBounds(890, 350, 110, 40);
+            useButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    flagUse =true;
+                    myManaBar.looseMana(x.getManaRequirement(), myManaBar, true);
+                    enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
+                    removeCardMyHand(x);
+                    JButton chosencard = getChosenLarge();
+                    chosencard.setIcon(null);
+                    setChosenCard(null);
+                    gameBackgroundLabel.remove(backButton);
+                    gameBackgroundLabel.remove(useButton);
+                    gameBackgroundLabel.revalidate();
+                    gameBackgroundLabel.repaint();
+                    cardBigLabel.setVisible(false);
+                    finishTurnButton.setVisible(true);
+                    for (int i = 0; i < length; i++) {
+                        myHand.getValueAt(i).setEnabled(true);
+                    }
                 }
-                attack = new JButton("Attack");
-                attack.setBounds(890, 350, 110, 80);
-                attack.addActionListener(new ActionListener() {
+            });
+            gameBackgroundLabel.add(useButton);
 
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (!flagUso){
-                            flagUso=true;
-                            myManaBar.looseMana(x.getManaRequirement(), myManaBar, true);
-                            enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
-                            removeCardMyHand(x);
-                            JButton chosencard = getChosenLarge();
-                            chosencard.setIcon(null);
-                            setChosenCard(null);
-                            gameBackgroundLabel.remove(back);
-                            gameBackgroundLabel.remove(attack);
-                            gameBackgroundLabel.revalidate();
-                            gameBackgroundLabel.repaint();
-                            carta.setVisible(false);
-                            finishTurnButton.setVisible(true);
-                            for (int i = 0; i < length; i++) {
-                                myHand.getValueAt(i).setEnabled(true);
-                            }
-                        }
-                        else{
-                            return;
-                        }
-
+            backButton = new JButton("Back");
+            backButton.setBounds(890, 300, 110, 40);
+            backButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    JButton x = getChosenLarge();
+                    x.setIcon(null);
+                    setChosenCard(null);
+                    gameBackgroundLabel.remove(backButton);
+                    gameBackgroundLabel.remove(useButton);
+                    gameBackgroundLabel.revalidate();
+                    gameBackgroundLabel.repaint();
+                    cardBigLabel.setVisible(false);
+                    finishTurnButton.setVisible(true);
+                    for (int i = 0; i < length; i++) {
+                        myHand.getValueAt(i).setEnabled(true);
                     }
-                });
-                gameBackgroundLabel.add(attack);
+                }
+            });
+            backButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
+            gameBackgroundLabel.add(backButton);
 
-                back = new JButton("Back");
-                back.setBounds(890, 200, 110, 80);
-                back.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        JButton x = getChosenLarge();
-                        x.setIcon(null);
-                        setChosenCard(null);
-                        gameBackgroundLabel.remove(back);
-                        gameBackgroundLabel.remove(attack);
-                        gameBackgroundLabel.revalidate();
-                        gameBackgroundLabel.repaint();
-                        carta.setVisible(false);
-                        finishTurnButton.setVisible(true);
-                        for (int i = 0; i < length; i++) {
-                            myHand.getValueAt(i).setEnabled(true);
-                        }
-                    }
-                });
-                gameBackgroundLabel.add(back);
-
-                carta.setIcon(x.getLargeImage());
-                gameBackgroundLabel.revalidate();
-                gameBackgroundLabel.repaint();
-                carta.setVisible(true);
-
-                setChosenLarge(carta);
-                setChosenCard(x);
-
+            cardBigLabel.setIcon(x.getLargeImage());
+            gameBackgroundLabel.revalidate();
+            gameBackgroundLabel.repaint();
+            cardBigLabel.setVisible(true);
+            setChosenLarge(cardBigLabel);
+            setChosenCard(x);
         }
     }
 }
