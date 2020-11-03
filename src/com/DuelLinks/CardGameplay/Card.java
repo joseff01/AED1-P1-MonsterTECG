@@ -1,16 +1,25 @@
 package com.DuelLinks.CardGameplay;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public abstract class Card extends JButton {
 
-    private int ManaRequirement;
+    private int manaRequirement;
+
+    public int getAttackDone() {
+        return attackDone;
+    }
+
+    public void setAttackDone(int attackDone) {
+        this.attackDone = attackDone;
+    }
+
+    private int attackDone;
 
     private ImageIcon smallImage;
-
     private ImageIcon largeImage;
+
+
 
     public Card(ImageIcon icon) {
 
@@ -20,11 +29,11 @@ public abstract class Card extends JButton {
 
 
     public int getManaRequirement() {
-        return ManaRequirement;
+        return manaRequirement;
     }
 
     public void setManaRequirement(int manaRequirement) {
-        ManaRequirement = manaRequirement;
+        this.manaRequirement = manaRequirement;
     }
 
     public ImageIcon getSmallImage() {

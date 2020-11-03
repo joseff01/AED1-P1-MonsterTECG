@@ -26,6 +26,10 @@ public class GameplayMenu {
 
     ServerSocket mySocket;
 
+
+
+    boolean pressed = false;
+
     Bar myLifeBar;
     Bar enemyLifeBar;
     Bar myManaBar;
@@ -34,6 +38,11 @@ public class GameplayMenu {
     int opponentSocketNum;
 
     boolean myTurn;
+
+
+    Card chosenCard = null;
+
+    JLabel chosenLarge = null;
 
     JLabel gameBackgroundLabel;
 
@@ -48,6 +57,29 @@ public class GameplayMenu {
     int enemyHandXPosition = 955;
 
     int enemyDeck = 20;
+    
+    public JLabel getChosenLarge() {
+        return chosenLarge;
+    }
+
+    public void setChosenLarge(JLabel chosenLarge) {
+        this.chosenLarge = chosenLarge;
+    }
+
+    public boolean isPressed() {
+        return pressed;
+    }
+
+    public void setPressed(boolean pressed) {
+        this.pressed = pressed;
+    }
+    public Card getChosenCard() {
+        return chosenCard;
+    }
+
+    public void setChosenCard(Card chosenCard) {
+        this.chosenCard = chosenCard;
+    }
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -56,9 +88,19 @@ public class GameplayMenu {
         this.opponentSocketNum = opponentSocketNum;
         this.myTurn = myTurn;
 
+
+
         gameBackgroundLabel = new JLabel(new ImageIcon("Images\\FondoJuego.png"));
         gameBackgroundLabel.setLayout(null);
         mainPanel.add(gameBackgroundLabel);
+
+        this.carta = new JLabel();
+        carta.setBounds(100,100,414,600);
+        carta.setBackground(Color.WHITE);
+        gameBackgroundLabel.add(carta);
+
+
+
 
         try {
             Scanner scanner = new Scanner(new File("json\\Cards.json"));
@@ -67,6 +109,10 @@ public class GameplayMenu {
                 ObjectMapper objectMapper = new ObjectMapper();
                 JsonMonsterCard JsonCard = objectMapper.readValue(cardJsonString, JsonMonsterCard.class);
                 MonsterCard monsterCard = new MonsterCard(JsonCard);
+                CardClick cardclick = new CardClick();
+                cardclick.setGameplayMenu(this);
+                monsterCard.addActionListener(cardclick);
+
                 allCards.addLast(monsterCard);
             }
         } catch (FileNotFoundException | JsonProcessingException e) {
@@ -95,6 +141,7 @@ public class GameplayMenu {
         addCardEnemyHand();
         addCardEnemyHand();
         addCardEnemyHand();
+
 
         myLifeBar = new Bar(true,true);
         myLifeBar.setBounds(10, 360,55,400);
@@ -174,6 +221,7 @@ public class GameplayMenu {
         if (!myHand.isEmpty()) {
             int x = 165;
             int length = myHand.getLength();
+
             for (int i = 0; i < length; i++) {
                 myHand.getValueAt(i).setBounds(x, 575, 120, 175);
                 gameBackgroundLabel.add(myHand.getValueAt(i));
@@ -214,5 +262,79 @@ public class GameplayMenu {
         }
     }
 
+    public JLabel getCarta() {
+        return carta;
+    }
+
+    public void setCarta(JLabel carta) {
+        this.carta = carta;
+    }
+
+    public JLabel carta;
     JButton finishTurnButton;
+
+    public class CardClick implements ActionListener{
+        public void setGameplayMenu(GameplayMenu gameplayMenu) {
+            this.gameplayMenu = gameplayMenu;
+        }
+
+        GameplayMenu gameplayMenu;
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton attack = new JButton("Attack");
+            attack.setBounds(1105,500,100,20);
+            attack.addActionListener(new SendAttack());
+            gameBackgroundLabel.add(attack);
+
+            JButton back = new JButton("bk");
+            back.setBounds(1105,480,100,20);
+            gameBackgroundLabel.add(back);
+
+
+
+            System.out.println("puta");
+
+            MonsterCard x = (MonsterCard) e.getSource();
+            gameplayMenu.carta.setIcon(x.getLargeImage());
+            gameBackgroundLabel.revalidate();
+            gameBackgroundLabel.repaint();
+
+            setChosenLarge(gameplayMenu.carta);
+
+            setPressed(true);
+            setChosenCard(x);
+
+            //for(int i, )
+            ///gameplayMenu.myHand.getValueAt()
+
+            System.out.println("Macarron");
+        }
+    }
+    public class SendAttack implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Card chosen = getChosenCard();
+            myManaBar.looseMana(chosen.getManaRequirement(),myManaBar,true);
+            enemyLifeBar.looseVida(chosen.getAttackDone(),enemyLifeBar,false);
+            }
+        }
+    public class Back implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JLabel x = getChosenLarge();
+            setChosenCard(null);
+
+        }
+    }
+
 }
+
+
+
+
+
+
+

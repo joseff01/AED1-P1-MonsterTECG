@@ -36,6 +36,7 @@ public class Bar extends JLabel {
 
 
     }
+
     public void looseVida(int valor, Bar barTemp,boolean flag){
         int temp = ((valor * 400)/1000);
 
@@ -45,11 +46,13 @@ public class Bar extends JLabel {
         else if(flag){
             barTemp.setVida(barTemp.getVida()-temp);
             barTemp.setBounds(barTemp.getX(), barTemp.getY(),barTemp.getWidth(),barTemp.getHeight()-temp);
+            setVida(getVida()-temp);
             barTemp.setText(Integer.toString(getVida()));
         }
         else{
             barTemp.setVida(barTemp.getVida()-temp);
-            barTemp.setBounds(barTemp.getX(), barTemp.getY()+temp,barTemp.getWidth(),barTemp.getHeight());
+            barTemp.setBounds(barTemp.getX(), barTemp.getY(),barTemp.getWidth(),barTemp.getHeight()-temp);
+            setVida(getVida()-temp);
             barTemp.setText(Integer.toString(getVida()));
         }
     }
@@ -57,16 +60,20 @@ public class Bar extends JLabel {
     public void looseMana(int valor, Bar barTemp,boolean flag){
         int temp = ((valor * 400)/1000);
         if(barTemp.getMana()-temp<=0){
+            setMana(0);
             isEmpty = true;
         }
-        else if (flag){
+
+        else if (!flag){
             barTemp.setMana(barTemp.getMana()-temp);
             barTemp.setBounds(barTemp.getX(),barTemp.getY(),barTemp.getWidth(),getHeight()-temp);
+            setMana(getMana()-temp);
             barTemp.setText(Integer.toString(getMana()));
         }
         else{
             barTemp.setVida(barTemp.getMana()-temp);
             barTemp.setBounds(barTemp.getX(), barTemp.getY()+temp,barTemp.getWidth(),barTemp.getHeight());
+            setMana(getMana()-temp);
             barTemp.setText(Integer.toString(getMana()));
         }
     }
@@ -90,7 +97,7 @@ public class Bar extends JLabel {
         }
         else{
             barTemp.setVida(barTemp.getVida()+temp);
-            barTemp.setBounds(barTemp.getX(),barTemp.getY()+temp,barTemp.getWidth(),getHeight());
+            barTemp.setBounds(barTemp.getX(),barTemp.getY()-temp,barTemp.getWidth(),getHeight());
             barTemp.setText(Integer.toString(getVida()));
         }
     }
@@ -115,10 +122,11 @@ public class Bar extends JLabel {
         }
         else{
             barTemp.setMana(barTemp.getMana()+temp);
-            barTemp.setBounds(barTemp.getX(),barTemp.getY()+temp,barTemp.getWidth(),getHeight());
+            barTemp.setBounds(barTemp.getX(),barTemp.getY()-temp,barTemp.getWidth(),getHeight());
             barTemp.setText(Integer.toString(getMana()));
         }
     }
+
     public int getVida() {
         return vida;
     }
