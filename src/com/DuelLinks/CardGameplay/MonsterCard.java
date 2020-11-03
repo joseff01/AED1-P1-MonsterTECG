@@ -1,6 +1,7 @@
 package com.DuelLinks.CardGameplay;
 
 import javax.swing.*;
+import java.awt.event.ActionListener;
 
 public class MonsterCard extends Card{
 
@@ -14,18 +15,22 @@ public class MonsterCard extends Card{
         this.setManaRequirement(manaReq);
         this.setSmallImage(smallImg);
         this.setLargeImage(largeImg);
+        this.setAttackDone(attackDamage);
+
 
     }
 
     public MonsterCard(JsonMonsterCard jsonMonsterCard){
 
         super(new ImageIcon(jsonMonsterCard.getSmallImage()));
-
         this.attackDamage = jsonMonsterCard.getAttackDamage();
         this.setManaRequirement(jsonMonsterCard.getManaRequirement());
         this.setSmallImage(new ImageIcon(jsonMonsterCard.getSmallImage()));
         this.setLargeImage(new ImageIcon(jsonMonsterCard.getLargeImage()));
+        this.setAttackDone(attackDamage);
+
 
     }
 
 }
+
