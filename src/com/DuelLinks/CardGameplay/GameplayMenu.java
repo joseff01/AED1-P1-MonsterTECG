@@ -334,6 +334,7 @@ public class GameplayMenu {
             System.out.println("Macarron");
         }
     }
+    public class SendAttack implements ActionListener{
 
     public class SendAttack implements ActionListener{
 
