@@ -29,6 +29,7 @@ public class GameplayMenu {
     private boolean pressed = false;
 
     public JButton finishTurnButton;
+    JButton log;
 
     public Bar myLifeBar;
     public Bar enemyLifeBar;
@@ -185,9 +186,12 @@ public class GameplayMenu {
         enemyLifeBar.setBounds(1160, 0, 55, 400);
         gameBackgroundLabel.add(enemyLifeBar);
 
-        finishTurnButton = new JButton("Finish Turn");
-        finishTurnButton.setBounds(870, 520, 170, 50);
-        finishTurnButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 18));
+        finishTurnButton = new JButton(new ImageIcon("Images\\endTurn.png"));
+        finishTurnButton.setBounds(200, 300, 208, 83);
+
+        log = new JButton(new ImageIcon("Images\\record.png"));
+        log.setBounds(200, 420, 162, 51);
+        gameBackgroundLabel.add(log);
 
         class EndTurnEvent implements ActionListener {
 
@@ -213,7 +217,7 @@ public class GameplayMenu {
                     sendMessage = null;
                     gameplayMenu.disableMyCards();
                     if (!(myTurn && firstTurnFlag)) {
-                        enemyManaBar.winMana(250, enemyManaBar, false);
+                        enemyManaBar.winMana(250, false);
                         addCardEnemyHand();
                     }
                     WaitingState waitingState = new WaitingState(mySocket, finishTurnButton, gameplayMenu);
@@ -230,19 +234,15 @@ public class GameplayMenu {
         finishTurnButton.addActionListener(endTurnEvent);
         gameBackgroundLabel.add(finishTurnButton);
 
-
         if (!myTurn) {
             disableMyCards();
             finishTurnButton.setEnabled(false);
             WaitingState waitingState = new WaitingState(mySocket, finishTurnButton,this);
 
         }
-
         mainPanel.validate();
         mainPanel.repaint();
-
     }
-
     private void removeMyHand() {
         if (!myHand.isEmpty()) {
             int length = myHand.getLength();
@@ -381,12 +381,13 @@ public class GameplayMenu {
             finishTurnButton.setEnabled(false);
             Card card = (Card) e.getSource();
             disableMyCards();
-            useButton = new JButton("Use Card");
+            useButton = new JButton(new ImageIcon("Images\\useCard.png"));
             if (flagUse == true){
                 useButton.setEnabled(false);
             }
-            useButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
-            useButton.setBounds(890, 350, 110, 40);
+            useButton.setBorderPainted(false);
+            useButton .setFocusPainted(false);
+            useButton.setBounds(890, 300, 162, 51);
             useButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -417,7 +418,7 @@ public class GameplayMenu {
                             } else {
                                 AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), card.getManaRequirement(), card.getLargeImageString(), card.getCardName());
                                 sendMessage = attackMessage;
-                                enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(), enemyLifeBar, false);
+                                enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(),false);
                                 flagUse = true;
                                 removeCardMyHand(card);
                                 JButton chosencard = getChosenLarge();
@@ -455,12 +456,14 @@ public class GameplayMenu {
 
                         }
                     }
-                }
-            });
-            gameBackgroundLabel.add(useButton);
 
-            backButton = new JButton("Back");
-            backButton.setBounds(890, 300, 110, 40);
+            });
+
+            gameBackgroundLabel.add(useButton);
+            backButton = new JButton(new ImageIcon("Images\\Back.png"));
+            backButton.setBorderPainted(false);
+            backButton.setFocusPainted(false);
+            backButton.setBounds(890, 360, 162, 51);
             backButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -476,7 +479,6 @@ public class GameplayMenu {
                     enableMyCards();
                 }
             });
-            backButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
             gameBackgroundLabel.add(backButton);
 
             cardBigLabel.setIcon(card.getLargeImage());

@@ -1,9 +1,7 @@
 package com.DuelLinks.MainMenu;
 
 import com.DuelLinks.CardGameplay.GameplayMenu;
-import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
-import com.DuelLinks.LinearDataStructures.DoubleList.DoubleList;
-import com.DuelLinks.LinearDataStructures.SingleList.SingleList;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -44,9 +42,8 @@ public class Main {
         backgroundLabel.setLayout(null);
         mainPanel.add(backgroundLabel);
 
-        JButton hostGameButton = new JButton("Host Game");
-        hostGameButton.setBounds(475,425,300,50);
-        hostGameButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,25));
+        JButton hostGameButton = new JButton(new ImageIcon("Images\\hostButton.png"));
+        hostGameButton.setBounds(510,400,242,93);
 
         class HostGameEvent implements ActionListener{
 
@@ -86,9 +83,9 @@ public class Main {
         HostGameEvent hostGame = new HostGameEvent();
         hostGameButton.addActionListener(hostGame);
 
-        JButton enterGameButton = new JButton("Join Game");
-        enterGameButton.setBounds(475,505,300,50);
-        enterGameButton.setFont(new Font("Copperplate Gothic Bold",Font.PLAIN,25));
+        JButton enterGameButton = new JButton(new ImageIcon("Images\\joinButton.png"));
+        enterGameButton.setBounds(510,515,242,93);
+
 
         class EnterGameMenuEvent implements ActionListener{
 
