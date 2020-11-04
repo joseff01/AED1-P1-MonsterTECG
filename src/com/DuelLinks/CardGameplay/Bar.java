@@ -40,7 +40,7 @@ public class Bar extends JLabel {
             return true;
         }
     }
-    public void looseVida(int valor,boolean bottom){
+    public void loseVida(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
 
         if(this.getVida()-valor<=0){
@@ -58,7 +58,7 @@ public class Bar extends JLabel {
         }
     }
 
-    public void looseMana(int valor,boolean bottom){
+    public void loseMana(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
         if (bottom){
             this.setBounds(this.getX(),this.getY()+temp,this.getWidth(),getHeight());
@@ -70,7 +70,7 @@ public class Bar extends JLabel {
         this.setText(Integer.toString(getMana()));
     }
 
-    public void winVida(int valor,boolean bottom){
+    public void gainLife(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
         if(this.getVida()+valor>=1000 && bottom){
             this.setBounds(this.getX(), 360, this.getWidth(), this.getHeight());
@@ -78,7 +78,7 @@ public class Bar extends JLabel {
             this.setText("1000");
         }
         else if(this.getVida() + valor >= 1000 && !bottom) {
-            this.setBounds(this.getX(),this.getY(),this.getWidth(),1000);
+            this.setBounds(this.getX(),this.getY(),this.getWidth(),400);
             this.setVida(1000);
             this.setText("1000");
         }
@@ -94,7 +94,7 @@ public class Bar extends JLabel {
         }
     }
 
-    public void winMana(int valor,boolean bottom){
+    public void gainMana(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
 
         if(this.getMana()+valor>=1000 && bottom){
@@ -103,7 +103,7 @@ public class Bar extends JLabel {
             this.setText("1000");
         }
         else if(this.getMana() + valor>= 1000 && !bottom) {
-            this.setBounds(this.getX(),this.getY(),this.getWidth(),1000);
+            this.setBounds(this.getX(),this.getY(),this.getWidth(),400);
             this.setMana(1000);
             this.setText("1000");
         }

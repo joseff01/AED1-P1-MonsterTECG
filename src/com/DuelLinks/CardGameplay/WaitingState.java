@@ -52,8 +52,8 @@ public class WaitingState implements Runnable{
                     gameplayMenu.showBigCard(attackMessage.getBigCardImageUsed());
                     while (!gameplayMenu.closeCardFlag) {}
                     gameplayMenu.closeCardFlag = false;
-                    gameplayMenu.myLifeBar.looseVida(attackMessage.getMyDamageTaken(), true);
-                    gameplayMenu.enemyManaBar.looseMana(attackMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.myLifeBar.loseVida(attackMessage.getMyDamageTaken(), true);
+                    gameplayMenu.enemyManaBar.loseMana(attackMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                 } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage){
                     SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
@@ -64,15 +64,18 @@ public class WaitingState implements Runnable{
                         gameplayMenu.flagDarkGrimoire = true;
                     } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")){
                         gameplayMenu.flagMagicTriangle = true;
+                    }else if(spellMessage.getCardName().equals("Pot Of Greed")){
+                        gameplayMenu.addCardEnemyHand();
+                        gameplayMenu.addCardEnemyHand();
                     }
-                    gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                 }
 
                 gameplayMenu.flagUse = false;
                 gameplayMenu.enableMyCards();
                 if (!(!gameplayMenu.myTurn && gameplayMenu.firstTurnFlag)){
                     gameplayMenu.addCardMyHand();
-                    gameplayMenu.myManaBar.winMana(250, true);
+                    gameplayMenu.myManaBar.gainMana(250, true);
                 }
                 gameplayMenu.firstTurnFlag = false;
                 gameplayMenu.finishTurnButton.setEnabled(true);
