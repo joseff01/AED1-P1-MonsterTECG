@@ -2,6 +2,7 @@ package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.ComunicationMessages.AttackMessage;
 import com.DuelLinks.ComunicationMessages.Message;
+import com.DuelLinks.ComunicationMessages.SpellMessage;
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
 import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -72,7 +73,11 @@ public class GameplayMenu {
 
     public volatile boolean closeCardFlag = false;
 
-    public boolean firstTurnFlag = true;
+    public volatile boolean firstTurnFlag = true;
+
+    public volatile boolean flagFightingSpirit = false;
+
+    public volatile boolean flagDarkGrimoire = false;
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -151,6 +156,8 @@ public class GameplayMenu {
         opponentDiscardPile.setBounds(605, 185, 120, 175);
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
+
+        myHand.addLast(allCards.getValueAt(23));
 
         addCardMyHand();
         addCardMyHand();
@@ -383,12 +390,57 @@ public class GameplayMenu {
             useButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(myManaBar.isEnough(card.getManaRequirement(),myManaBar,true)){
+                    int manaRequirement = card.getManaRequirement();
+                    if (flagDarkGrimoire){
+                        manaRequirement = manaRequirement*2;
+                        flagDarkGrimoire = false;
+                    }
+                    if(myManaBar.isEnough(manaRequirement,myManaBar,true)){
                         if (card instanceof MonsterCard){
-                            AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(),card.getManaRequirement(),card.getLargeImageString());
-                            sendMessage = attackMessage;
+                            if (flagFightingSpirit){
+                                flagFightingSpirit = false;
+                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage() + 200,manaRequirement,card.getLargeImageString(),card.getCardName());
+                                sendMessage = attackMessage;
+                                enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage() + 200, enemyLifeBar, false);
+                                flagUse = true;
+                                removeCardMyHand(card);
+                                JButton chosencard = getChosenLarge();
+                                chosencard.setIcon(null);
+                                setChosenCard(null);
+                                gameBackgroundLabel.remove(backButton);
+                                gameBackgroundLabel.remove(useButton);
+                                gameBackgroundLabel.revalidate();
+                                gameBackgroundLabel.repaint();
+                                cardBigLabel.setVisible(false);
+                                finishTurnButton.setEnabled(true);
+                                enableMyCards();
+                            } else {
+                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), card.getManaRequirement(), card.getLargeImageString(), card.getCardName());
+                                sendMessage = attackMessage;
+                                enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(), enemyLifeBar, false);
+                                flagUse = true;
+                                removeCardMyHand(card);
+                                JButton chosencard = getChosenLarge();
+                                chosencard.setIcon(null);
+                                setChosenCard(null);
+                                gameBackgroundLabel.remove(backButton);
+                                gameBackgroundLabel.remove(useButton);
+                                gameBackgroundLabel.revalidate();
+                                gameBackgroundLabel.repaint();
+                                cardBigLabel.setVisible(false);
+                                finishTurnButton.setEnabled(true);
+                                enableMyCards();
+                            }
+                        }else if (card instanceof SpellCard){
+                            System.out.println(card.getName());
+                            SpellMessage spellMessage = new SpellMessage(card.getManaRequirement(),card.getLargeImageString(),card.getCardName());
+                            sendMessage = spellMessage;
+                            if (card.getCardName().equals("Fighting Spirit")) {
+                                flagFightingSpirit = true;
+                            } else if (card.getCardName().equals("Dark World Grimoire")){
+
+                            }
                             flagUse = true;
-                            enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(), enemyLifeBar, false);
                             removeCardMyHand(card);
                             JButton chosencard = getChosenLarge();
                             chosencard.setIcon(null);
@@ -400,6 +452,7 @@ public class GameplayMenu {
                             cardBigLabel.setVisible(false);
                             finishTurnButton.setEnabled(true);
                             enableMyCards();
+
                         }
                     }
                 }

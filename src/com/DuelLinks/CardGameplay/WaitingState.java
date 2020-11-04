@@ -2,6 +2,7 @@ package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.ComunicationMessages.AttackMessage;
 import com.DuelLinks.ComunicationMessages.Message;
+import com.DuelLinks.ComunicationMessages.SpellMessage;
 import com.DuelLinks.MainMenu.StartGameFlag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -54,6 +55,18 @@ public class WaitingState implements Runnable{
                     gameplayMenu.myLifeBar.looseVida(attackMessage.getMyDamageTaken(), gameplayMenu.myLifeBar, true);
                     gameplayMenu.enemyManaBar.looseMana(attackMessage.getOpponentManaUsed(), gameplayMenu.enemyManaBar, false);
                     gameplayMenu.removeCardEnemyHand();
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage){
+                    SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
+                    System.out.println(spellMessage.getCardName());
+                    gameplayMenu.showBigCard(spellMessage.getBigCardImageUsed());
+                    while (!gameplayMenu.closeCardFlag) {}
+                    gameplayMenu.closeCardFlag = false;
+                    if (spellMessage.getCardName().equals("Dark World Grimoire")){
+                        gameplayMenu.flagDarkGrimoire = true;
+                        System.out.println(gameplayMenu.flagDarkGrimoire);
+                    }
+                    gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), gameplayMenu.enemyManaBar, false);
+
                 }
 
                 gameplayMenu.flagUse = false;
