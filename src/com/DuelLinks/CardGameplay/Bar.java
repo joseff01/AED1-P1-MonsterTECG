@@ -32,12 +32,11 @@ public class Bar extends JLabel {
 
 
     }
-    public boolean isEnough(int valor, boolean flagMana){
-        if(this.getMana()-valor<=0){
+    public boolean isEnough(int valor){
+        if(this.getMana()-valor<0){
             return false;
         }
         else{
-            this.looseMana(valor,flagMana);
             return true;
         }
     }

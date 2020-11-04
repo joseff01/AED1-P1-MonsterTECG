@@ -62,6 +62,8 @@ public class WaitingState implements Runnable{
                     gameplayMenu.closeCardFlag = false;
                     if (spellMessage.getCardName().equals("Dark World Grimoire")){
                         gameplayMenu.flagDarkGrimoire = true;
+                    } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")){
+                        gameplayMenu.flagMagicTriangle = true;
                     }
                     gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), false);
                 }
