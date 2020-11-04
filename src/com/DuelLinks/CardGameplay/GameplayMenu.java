@@ -152,11 +152,11 @@ public class GameplayMenu {
         gameBackgroundLabel.add(myLifeBar);
 
         myManaBar = new Bar(false, true);
-        myManaBar.setBounds(85, 360, 55, 400);
+        myManaBar.setBounds(85, 660, 55, 400);
         gameBackgroundLabel.add(myManaBar);
 
         enemyManaBar = new Bar(false, false);
-        enemyManaBar.setBounds(1085, 0, 55, 400);
+        enemyManaBar.setBounds(1085, 0, 55, 100);
         gameBackgroundLabel.add(enemyManaBar);
 
         enemyLifeBar = new Bar(true, false);
@@ -334,20 +334,23 @@ public class GameplayMenu {
             useButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    flagUse =true;
-                    myManaBar.looseMana(x.getManaRequirement(), myManaBar, true);
-                    enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
-                    removeCardMyHand(x);
-                    JButton chosencard = getChosenLarge();
-                    chosencard.setIcon(null);
-                    setChosenCard(null);
-                    gameBackgroundLabel.remove(backButton);
-                    gameBackgroundLabel.remove(useButton);
-                    gameBackgroundLabel.revalidate();
-                    gameBackgroundLabel.repaint();
-                    cardBigLabel.setVisible(false);
-                    finishTurnButton.setVisible(true);
-                    enableMyCards();
+
+                    if(myManaBar.isEnough(x.getManaRequirement(),myManaBar,true)){
+                        flagUse =true;
+                        enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
+                        removeCardMyHand(x);
+                        JButton chosencard = getChosenLarge();
+                        chosencard.setIcon(null);
+                        setChosenCard(null);
+                        gameBackgroundLabel.remove(backButton);
+                        gameBackgroundLabel.remove(useButton);
+                        gameBackgroundLabel.revalidate();
+                        gameBackgroundLabel.repaint();
+                        cardBigLabel.setVisible(false);
+                        finishTurnButton.setVisible(true);
+                        enableMyCards();
+                        }
+                    }
                 }
             });
             gameBackgroundLabel.add(useButton);
@@ -381,10 +384,3 @@ public class GameplayMenu {
         }
     }
 }
-
-
-
-
-
-
-
