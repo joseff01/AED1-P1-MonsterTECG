@@ -394,9 +394,9 @@ public class GameplayMenu {
                     int manaRequirement = card.getManaRequirement();
                     if (flagDarkGrimoire) {
                         manaRequirement = manaRequirement * 2;
-                        flagDarkGrimoire = false;
                     }
                     if (myManaBar.isEnough(manaRequirement, true)) {
+                        flagDarkGrimoire = false;
                         if (card instanceof MonsterCard) {
                             if (flagFightingSpirit) {
                                 flagFightingSpirit = false;
@@ -416,7 +416,7 @@ public class GameplayMenu {
                                 finishTurnButton.setEnabled(true);
                                 enableMyCards();
                             } else {
-                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), card.getManaRequirement(), card.getLargeImageString(), card.getCardName());
+                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), manaRequirement, card.getLargeImageString(), card.getCardName());
                                 sendMessage = attackMessage;
                                 enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(), false);
                                 flagUse = true;
@@ -434,11 +434,14 @@ public class GameplayMenu {
                             }
                         } else if (card instanceof SpellCard) {
                             System.out.println(card.getName());
-                            SpellMessage spellMessage = new SpellMessage(card.getManaRequirement(), card.getLargeImageString(), card.getCardName());
+                            SpellMessage spellMessage = new SpellMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
                             sendMessage = spellMessage;
-                            if (card.getCardName().equals("Fighting Spirit")) {
-                                flagFightingSpirit = true;
-                            } else if (card.getCardName().equals("Dark World Grimoire")) {
+                            switch (card.getCardName())
+                            {
+                                case ("Fighting Spirit"):
+                                    flagFightingSpirit = true;
+
+                                case ("Dark World Grimoire"):
 
                             }
                             flagUse = true;

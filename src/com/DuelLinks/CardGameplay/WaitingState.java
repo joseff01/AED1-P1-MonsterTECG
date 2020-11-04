@@ -62,10 +62,8 @@ public class WaitingState implements Runnable{
                     gameplayMenu.closeCardFlag = false;
                     if (spellMessage.getCardName().equals("Dark World Grimoire")){
                         gameplayMenu.flagDarkGrimoire = true;
-                        System.out.println(gameplayMenu.flagDarkGrimoire);
                     }
                     gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), false);
-
                 }
 
                 gameplayMenu.flagUse = false;
@@ -80,11 +78,6 @@ public class WaitingState implements Runnable{
                 gameplayMenu.gameBackgroundLabel.repaint();
 
                 EntrySocket.close();
-
-                //ObjectMapper objectMapper = new ObjectMapper();
-
-                //StartGameFlag startGameFlag = objectMapper.readValue(startGameFlagJSON,StartGameFlag.class);
-
 
             } catch (IOException e) {
                 e.printStackTrace();

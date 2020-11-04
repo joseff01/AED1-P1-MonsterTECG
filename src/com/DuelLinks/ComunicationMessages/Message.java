@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AttackMessage.class, name = "AttackMessage"),
-        @JsonSubTypes.Type(value = SpellMessage.class, name = "SpellMessage")
+        @JsonSubTypes.Type(value = SpellMessage.class, name = "SpellMessage"),
 })
 public abstract class Message {
 }
