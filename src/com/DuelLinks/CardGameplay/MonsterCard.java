@@ -20,6 +20,7 @@ public class MonsterCard extends Card{
         this.setSmallImage(new ImageIcon(jsonMonsterCard.getSmallImage()));
         this.setLargeImage(new ImageIcon(jsonMonsterCard.getLargeImage()));
         this.setLargeImageString(jsonMonsterCard.getLargeImage());
+        this.setCardNameString(jsonMonsterCard.getName());
 
 
     }

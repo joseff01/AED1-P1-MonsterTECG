@@ -94,14 +94,22 @@ public class GameplayMenu {
 
         try {
             Scanner scanner = new Scanner(new File("json\\Cards.json"));
+            ObjectMapper objectMapper = new ObjectMapper();
             for (int i = 0; i < 22; i++) {
                 String cardJsonString = scanner.nextLine();
-                ObjectMapper objectMapper = new ObjectMapper();
                 JsonMonsterCard JsonCard = objectMapper.readValue(cardJsonString, JsonMonsterCard.class);
                 MonsterCard monsterCard = new MonsterCard(JsonCard);
                 CardClick cardclick = new CardClick();
                 monsterCard.addActionListener(cardclick);
                 allCards.addLast(monsterCard);
+            }
+            for (int i = 0; i < 10; i++) {
+                String cardJsonString = scanner.nextLine();
+                JsonSpellCard JsonCard = objectMapper.readValue(cardJsonString, JsonSpellCard.class);
+                SpellCard spellCard = new SpellCard(JsonCard);
+                CardClick cardclick = new CardClick();
+                spellCard.addActionListener(cardclick);
+                allCards.addLast(spellCard);
             }
         } catch (FileNotFoundException | JsonProcessingException e) {
             e.printStackTrace();
@@ -112,7 +120,7 @@ public class GameplayMenu {
         DoubleCircularList<Integer> integerSingleList = new DoubleCircularList<Integer>();
 
         while (i < 20) {
-            int randomInt = random.nextInt(22);
+            int randomInt = random.nextInt(32);
             if (!integerSingleList.isValue(randomInt)) {
                 integerSingleList.addLast(randomInt);
                 myDeck.push(allCards.getValueAt(randomInt));

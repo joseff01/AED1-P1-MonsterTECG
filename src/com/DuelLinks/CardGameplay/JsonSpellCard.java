@@ -1,11 +1,6 @@
 package com.DuelLinks.CardGameplay;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class JsonMonsterCard {
-
-    private int attackDamage;
+public class JsonSpellCard {
 
     private int ManaRequirement;
 
@@ -15,9 +10,7 @@ public class JsonMonsterCard {
 
     private String name;
 
-    public JsonMonsterCard(String smallImg, String largeImg, int AttackDamage, int manaReq, String name){
-
-        this.attackDamage = AttackDamage;
+    public JsonSpellCard(String smallImg, String largeImg, int manaReq, String name){
 
         this.largeImage = largeImg;
 
@@ -29,7 +22,7 @@ public class JsonMonsterCard {
 
     }
 
-    public JsonMonsterCard(){
+    public JsonSpellCard(){
         super();
     }
 
@@ -55,14 +48,6 @@ public class JsonMonsterCard {
 
     public void setManaRequirement(int manaRequirement) {
         ManaRequirement = manaRequirement;
-    }
-
-    public int getAttackDamage() {
-        return attackDamage;
-    }
-
-    public void setAttackDamage(int attackDamage) {
-        this.attackDamage = attackDamage;
     }
 
     public String getName() {
