@@ -51,8 +51,8 @@ public class WaitingState implements Runnable{
                     gameplayMenu.showBigCard(attackMessage.getBigCardImageUsed());
                     while (!gameplayMenu.closeCardFlag) {}
                     gameplayMenu.closeCardFlag = false;
-                    gameplayMenu.myLifeBar.looseVida(attackMessage.getMyDamageTaken(), gameplayMenu.myLifeBar, true);
-                    gameplayMenu.enemyManaBar.looseMana(attackMessage.getOpponentManaUsed(), gameplayMenu.enemyManaBar, false);
+                    gameplayMenu.myLifeBar.looseVida(attackMessage.getMyDamageTaken(), true);
+                    gameplayMenu.enemyManaBar.looseMana(attackMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                 }
 
@@ -60,7 +60,7 @@ public class WaitingState implements Runnable{
                 gameplayMenu.enableMyCards();
                 if (!(!gameplayMenu.myTurn && gameplayMenu.firstTurnFlag)){
                     gameplayMenu.addCardMyHand();
-                    gameplayMenu.myManaBar.winMana(250, gameplayMenu.myManaBar, true);
+                    gameplayMenu.myManaBar.winMana(250, true);
                 }
                 gameplayMenu.firstTurnFlag = false;
                 gameplayMenu.finishTurnButton.setEnabled(true);
