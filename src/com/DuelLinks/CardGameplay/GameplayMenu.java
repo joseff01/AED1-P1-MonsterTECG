@@ -349,7 +349,6 @@ public class GameplayMenu {
                         cardBigLabel.setVisible(false);
                         finishTurnButton.setVisible(true);
                         enableMyCards();
-                        }
                     }
                 }
             });
