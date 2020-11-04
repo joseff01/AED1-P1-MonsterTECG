@@ -1,5 +1,7 @@
 package com.DuelLinks.CardGameplay;
 
+import com.DuelLinks.ComunicationMessages.AttackMessage;
+import com.DuelLinks.ComunicationMessages.Message;
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
 import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -19,52 +21,58 @@ import java.util.Scanner;
 
 public class GameplayMenu {
 
-    JPanel mainPanel;
+    private JPanel mainPanel;
 
-    ServerSocket mySocket;
+    private ServerSocket mySocket;
 
-    boolean pressed = false;
+    private boolean pressed = false;
 
-    JButton finishTurnButton;
+    public JButton finishTurnButton;
 
-    Bar myLifeBar;
-    Bar enemyLifeBar;
-    Bar myManaBar;
-    Bar enemyManaBar;
+    public Bar myLifeBar;
+    public Bar enemyLifeBar;
+    public Bar myManaBar;
+    public Bar enemyManaBar;
 
-    int opponentSocketNum;
+    private int opponentSocketNum;
 
-    boolean flagUse = false;
+    public boolean flagUse = false;
 
-    boolean myTurn;
+    public boolean myTurn;
 
-    Card chosenCard;
+    private Card chosenCard;
 
-    JButton chosenLarge;
+    private JButton chosenLarge;
 
-    JLabel gameBackgroundLabel;
+    public JLabel gameBackgroundLabel;
 
-    DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
+    private DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
 
-    DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
+    private DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
-    JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
-    Stack myDeck = new Stack(20);
-    int myDeckLength = 20;
-    JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
-    JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
+    private Stack myDeck = new Stack(20);
+    private int myDeckLength = 20;
+    private JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
 
-    DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
-    int enemyHandXPosition = 955;
+    private DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
+    private int enemyHandXPosition = 955;
 
-    JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
-    int enemyDeckLength = 20;
-    JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
-    JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
+    private int enemyDeckLength = 20;
+    private JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
 
-    public JButton cardBigLabel;
+    private JButton cardBigLabel;
+
+    private Message sendMessage;
+
+    public volatile boolean closeCardFlag = false;
+
+    public boolean firstTurnFlag = true;
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -93,7 +101,6 @@ public class GameplayMenu {
                 MonsterCard monsterCard = new MonsterCard(JsonCard);
                 CardClick cardclick = new CardClick();
                 monsterCard.addActionListener(cardclick);
-
                 allCards.addLast(monsterCard);
             }
         } catch (FileNotFoundException | JsonProcessingException e) {
@@ -169,19 +176,32 @@ public class GameplayMenu {
 
         class EndTurnEvent implements ActionListener {
 
+            GameplayMenu gameplayMenu;
+
+            public EndTurnEvent(GameplayMenu gameplayMenu) {
+                this.gameplayMenu = gameplayMenu;
+            }
+
+
             @Override
             public void actionPerformed(ActionEvent i) {
 
                 finishTurnButton.setEnabled(false);
 
                 try {
-
                     Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
                     DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
-                    streamOutput.writeUTF("Future Info");
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    String messageJson = objectMapper.writeValueAsString(sendMessage);
+                    streamOutput.writeUTF(messageJson);
                     streamOutput.close();
-
-                    WaitingState waitingState = new WaitingState(mySocket, finishTurnButton);
+                    sendMessage = null;
+                    gameplayMenu.disableMyCards();
+                    if (!(myTurn && firstTurnFlag)) {
+                        enemyManaBar.winMana(250, enemyManaBar, false);
+                        addCardEnemyHand();
+                    }
+                    WaitingState waitingState = new WaitingState(mySocket, finishTurnButton, gameplayMenu);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -191,16 +211,15 @@ public class GameplayMenu {
             }
         }
 
-        EndTurnEvent endTurnEvent = new EndTurnEvent();
+        EndTurnEvent endTurnEvent = new EndTurnEvent(this);
         finishTurnButton.addActionListener(endTurnEvent);
         gameBackgroundLabel.add(finishTurnButton);
 
 
         if (!myTurn) {
-
             disableMyCards();
             finishTurnButton.setEnabled(false);
-            WaitingState waitingState = new WaitingState(mySocket, finishTurnButton);
+            WaitingState waitingState = new WaitingState(mySocket, finishTurnButton,this);
 
         }
 
@@ -257,6 +276,7 @@ public class GameplayMenu {
             gameBackgroundLabel.remove(enemyHand.getLast());
             enemyHand.deleteLast();
             enemyHandXPosition = enemyHandXPosition + 135;
+            opponentDiscardPile.setVisible(true);
         }
     }
 
@@ -314,6 +334,28 @@ public class GameplayMenu {
         this.chosenLarge = chosenLarge;
     }
 
+    public void showBigCard(String cardStringPath){
+        cardBigLabel.setIcon(new ImageIcon(cardStringPath));
+        cardBigLabel.setVisible(true);
+        JButton backButton = new JButton("Back");
+        backButton.setBounds(890, 300, 110, 40);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameBackgroundLabel.remove(backButton);
+                cardBigLabel.setVisible(false);
+                gameBackgroundLabel.revalidate();
+                gameBackgroundLabel.repaint();
+                closeCardFlag = true;
+            }
+        });
+        backButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
+        gameBackgroundLabel.add(backButton);
+        gameBackgroundLabel.revalidate();
+        gameBackgroundLabel.repaint();
+
+    }
+
     public class CardClick implements ActionListener {
 
         JButton backButton;
@@ -322,8 +364,7 @@ public class GameplayMenu {
         @Override
         public void actionPerformed(ActionEvent e) {
             finishTurnButton.setEnabled(false);
-            Card x = (Card) e.getSource();
-            int length = myHand.getLength();
+            Card card = (Card) e.getSource();
             disableMyCards();
             useButton = new JButton("Use Card");
             if (flagUse == true){
@@ -334,21 +375,24 @@ public class GameplayMenu {
             useButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-
-                    if(myManaBar.isEnough(x.getManaRequirement(),myManaBar,true)){
-                        flagUse =true;
-                        enemyLifeBar.looseVida(x.getAttackDone(), enemyLifeBar, false);
-                        removeCardMyHand(x);
-                        JButton chosencard = getChosenLarge();
-                        chosencard.setIcon(null);
-                        setChosenCard(null);
-                        gameBackgroundLabel.remove(backButton);
-                        gameBackgroundLabel.remove(useButton);
-                        gameBackgroundLabel.revalidate();
-                        gameBackgroundLabel.repaint();
-                        cardBigLabel.setVisible(false);
-                        finishTurnButton.setVisible(true);
-                        enableMyCards();
+                    if(myManaBar.isEnough(card.getManaRequirement(),myManaBar,true)){
+                        if (card instanceof MonsterCard){
+                            AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(),card.getManaRequirement(),card.getLargeImageString());
+                            sendMessage = attackMessage;
+                            flagUse = true;
+                            enemyLifeBar.looseVida(((MonsterCard) card).getAttackDamage(), enemyLifeBar, false);
+                            removeCardMyHand(card);
+                            JButton chosencard = getChosenLarge();
+                            chosencard.setIcon(null);
+                            setChosenCard(null);
+                            gameBackgroundLabel.remove(backButton);
+                            gameBackgroundLabel.remove(useButton);
+                            gameBackgroundLabel.revalidate();
+                            gameBackgroundLabel.repaint();
+                            cardBigLabel.setVisible(false);
+                            finishTurnButton.setEnabled(true);
+                            enableMyCards();
+                        }
                     }
                 }
             });
@@ -374,12 +418,12 @@ public class GameplayMenu {
             backButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
             gameBackgroundLabel.add(backButton);
 
-            cardBigLabel.setIcon(x.getLargeImage());
+            cardBigLabel.setIcon(card.getLargeImage());
             gameBackgroundLabel.revalidate();
             gameBackgroundLabel.repaint();
             cardBigLabel.setVisible(true);
             setChosenLarge(cardBigLabel);
-            setChosenCard(x);
+            setChosenCard(card);
         }
     }
 }

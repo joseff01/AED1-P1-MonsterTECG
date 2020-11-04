@@ -1,6 +1,6 @@
 package com.DuelLinks.ComunicationMessages;
 
-public class AttackMessage {
+public class AttackMessage extends Message{
     int myDamageTaken;
     int opponentManaUsed;
     String bigCardImageUsed;
@@ -10,6 +10,8 @@ public class AttackMessage {
         this.opponentManaUsed = opponentManaUsed;
         this.bigCardImageUsed = bigCardImageUsed;
     }
+
+    public AttackMessage(){}
 
     public int getMyDamageTaken() {
         return myDamageTaken;

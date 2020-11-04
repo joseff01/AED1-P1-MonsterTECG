@@ -6,18 +6,9 @@ public abstract class Card extends JButton {
 
     private int manaRequirement;
 
-    public int getAttackDone() {
-        return attackDone;
-    }
-
-    public void setAttackDone(int attackDone) {
-        this.attackDone = attackDone;
-    }
-
-    private int attackDone;
-
     private ImageIcon smallImage;
     private ImageIcon largeImage;
+    private String largeImageString;
 
 
 
@@ -50,6 +41,14 @@ public abstract class Card extends JButton {
 
     public void setLargeImage(ImageIcon largeImage) {
         this.largeImage = largeImage;
+    }
+
+    public String getLargeImageString() {
+        return largeImageString;
+    }
+
+    public void setLargeImageString(String largeImageString) {
+        this.largeImageString = largeImageString;
     }
 
     @Override

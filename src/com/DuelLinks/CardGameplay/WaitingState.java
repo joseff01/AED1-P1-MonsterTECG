@@ -1,5 +1,7 @@
 package com.DuelLinks.CardGameplay;
 
+import com.DuelLinks.ComunicationMessages.AttackMessage;
+import com.DuelLinks.ComunicationMessages.Message;
 import com.DuelLinks.MainMenu.StartGameFlag;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -15,7 +17,11 @@ public class WaitingState implements Runnable{
 
     JButton finishTurnButton;
 
-    public WaitingState(ServerSocket mySocket, JButton finishTurnButton){
+    GameplayMenu gameplayMenu;
+
+    public WaitingState(ServerSocket mySocket, JButton finishTurnButton, GameplayMenu gameplayMenu){
+
+        this.gameplayMenu = gameplayMenu;
 
         this.mySocket = mySocket;
 
@@ -36,7 +42,30 @@ public class WaitingState implements Runnable{
 
                 DataInputStream StreamInput = new DataInputStream(EntrySocket.getInputStream());
 
-                String startGameFlagJSON = (String) StreamInput.readUTF();
+                ObjectMapper objectMapper = new ObjectMapper();
+
+                String messageReceived = (String) StreamInput.readUTF();
+                System.out.println(messageReceived);
+                if (objectMapper.readValue(messageReceived,Message.class) instanceof AttackMessage) {
+                    AttackMessage attackMessage = (AttackMessage) objectMapper.readValue(messageReceived, Message.class);
+                    gameplayMenu.showBigCard(attackMessage.getBigCardImageUsed());
+                    while (!gameplayMenu.closeCardFlag) {}
+                    gameplayMenu.closeCardFlag = false;
+                    gameplayMenu.myLifeBar.looseVida(attackMessage.getMyDamageTaken(), gameplayMenu.myLifeBar, true);
+                    gameplayMenu.enemyManaBar.looseMana(attackMessage.getOpponentManaUsed(), gameplayMenu.enemyManaBar, false);
+                    gameplayMenu.removeCardEnemyHand();
+                }
+
+                gameplayMenu.flagUse = false;
+                gameplayMenu.enableMyCards();
+                if (!(!gameplayMenu.myTurn && gameplayMenu.firstTurnFlag)){
+                    gameplayMenu.addCardMyHand();
+                    gameplayMenu.myManaBar.winMana(250, gameplayMenu.myManaBar, true);
+                }
+                gameplayMenu.firstTurnFlag = false;
+                gameplayMenu.finishTurnButton.setEnabled(true);
+                gameplayMenu.gameBackgroundLabel.validate();
+                gameplayMenu.gameBackgroundLabel.repaint();
 
                 EntrySocket.close();
 

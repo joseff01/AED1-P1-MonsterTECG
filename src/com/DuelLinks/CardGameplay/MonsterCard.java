@@ -7,17 +7,8 @@ public class MonsterCard extends Card{
 
     private int attackDamage;
 
-    public MonsterCard(ImageIcon smallImg, ImageIcon largeImg, int AttackDamage, int manaReq){
-
-        super(smallImg);
-
-        this.attackDamage = AttackDamage;
-        this.setManaRequirement(manaReq);
-        this.setSmallImage(smallImg);
-        this.setLargeImage(largeImg);
-        this.setAttackDone(attackDamage);
-
-
+    public int getAttackDamage() {
+        return attackDamage;
     }
 
     public MonsterCard(JsonMonsterCard jsonMonsterCard){
@@ -28,7 +19,7 @@ public class MonsterCard extends Card{
         this.setManaRequirement(jsonMonsterCard.getManaRequirement());
         this.setSmallImage(new ImageIcon(jsonMonsterCard.getSmallImage()));
         this.setLargeImage(new ImageIcon(jsonMonsterCard.getLargeImage()));
-        this.setAttackDone(attackDamage);
+        this.setLargeImageString(jsonMonsterCard.getLargeImage());
 
 
     }
