@@ -46,7 +46,7 @@ public class WaitingState implements Runnable{
                 ObjectMapper objectMapper = new ObjectMapper();
 
                 String messageReceived = (String) StreamInput.readUTF();
-                System.out.println(messageReceived);
+
                 if (objectMapper.readValue(messageReceived,Message.class) instanceof AttackMessage) {
                     AttackMessage attackMessage = (AttackMessage) objectMapper.readValue(messageReceived, Message.class);
                     gameplayMenu.showBigCard(attackMessage.getBigCardImageUsed());
@@ -57,7 +57,6 @@ public class WaitingState implements Runnable{
                     gameplayMenu.removeCardEnemyHand();
                 } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage){
                     SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
-                    System.out.println(spellMessage.getCardName());
                     gameplayMenu.showBigCard(spellMessage.getBigCardImageUsed());
                     while (!gameplayMenu.closeCardFlag) {}
                     gameplayMenu.closeCardFlag = false;
@@ -65,7 +64,7 @@ public class WaitingState implements Runnable{
                         gameplayMenu.flagDarkGrimoire = true;
                         System.out.println(gameplayMenu.flagDarkGrimoire);
                     }
-                    gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), gameplayMenu.enemyManaBar, false);
+                    gameplayMenu.enemyManaBar.looseMana(spellMessage.getOpponentManaUsed(), false);
 
                 }
 
