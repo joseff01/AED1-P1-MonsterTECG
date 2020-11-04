@@ -23,6 +23,7 @@ public class MonsterCard extends Card{
     public MonsterCard(JsonMonsterCard jsonMonsterCard){
 
         super(new ImageIcon(jsonMonsterCard.getSmallImage()));
+        this.setDisabledIcon(new ImageIcon(jsonMonsterCard.getSmallImage()));
         this.attackDamage = jsonMonsterCard.getAttackDamage();
         this.setManaRequirement(jsonMonsterCard.getManaRequirement());
         this.setSmallImage(new ImageIcon(jsonMonsterCard.getSmallImage()));

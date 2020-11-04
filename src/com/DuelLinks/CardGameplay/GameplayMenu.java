@@ -141,10 +141,6 @@ public class GameplayMenu {
         addCardMyHand();
         addCardMyHand();
         addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
-        addCardMyHand();
 
         addCardEnemyHand();
         addCardEnemyHand();
@@ -202,6 +198,7 @@ public class GameplayMenu {
 
         if (!myTurn) {
 
+            disableMyCards();
             finishTurnButton.setEnabled(false);
             WaitingState waitingState = new WaitingState(mySocket, finishTurnButton);
 
@@ -280,6 +277,17 @@ public class GameplayMenu {
         }
     }
 
+    public void disableMyCards(){
+        for (int i = 0; i < myHand.getLength(); i++) {
+            myHand.getValueAt(i).setEnabled(false);
+        }
+    }
+
+    public void enableMyCards(){
+        for (int i = 0; i < myHand.getLength(); i++) {
+            myHand.getValueAt(i).setEnabled(true);
+        }
+    }
 
     public JButton getCardBigLabel() {
         return cardBigLabel;
@@ -316,9 +324,7 @@ public class GameplayMenu {
             finishTurnButton.setEnabled(false);
             Card x = (Card) e.getSource();
             int length = myHand.getLength();
-            for (int i = 0; i < length; i++) {
-                myHand.getValueAt(i).setEnabled(false);
-            }
+            disableMyCards();
             useButton = new JButton("Use Card");
             if (flagUse == true){
                 useButton.setEnabled(false);
@@ -341,9 +347,7 @@ public class GameplayMenu {
                     gameBackgroundLabel.repaint();
                     cardBigLabel.setVisible(false);
                     finishTurnButton.setVisible(true);
-                    for (int i = 0; i < length; i++) {
-                        myHand.getValueAt(i).setEnabled(true);
-                    }
+                    enableMyCards();
                 }
             });
             gameBackgroundLabel.add(useButton);
@@ -361,10 +365,8 @@ public class GameplayMenu {
                     gameBackgroundLabel.revalidate();
                     gameBackgroundLabel.repaint();
                     cardBigLabel.setVisible(false);
-                    finishTurnButton.setVisible(true);
-                    for (int i = 0; i < length; i++) {
-                        myHand.getValueAt(i).setEnabled(true);
-                    }
+                    finishTurnButton.setEnabled(true);
+                    enableMyCards();
                 }
             });
             backButton.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 14));
