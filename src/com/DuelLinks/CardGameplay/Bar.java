@@ -60,14 +60,27 @@ public class Bar extends JLabel {
 
     public void loseMana(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
-        if (bottom){
+        if(this.getMana()-valor<=0 && bottom){
+            this.setBounds(this.getX(),800,this.getWidth(),getHeight());
+            this.setMana(0);
+            this.setText(Integer.toString(getMana()));
+        }
+        else if(this.getMana()-valor<=0 && !bottom){
+            this.setBounds(this.getX(),getY(),this.getWidth(),0);
+            this.setMana(0);
+            this.setText(Integer.toString(getMana()));
+        }
+        else if (bottom){
             this.setBounds(this.getX(),this.getY()+temp,this.getWidth(),getHeight());
+            this.setMana(this.getMana()-valor);
+            this.setText(Integer.toString(getMana()));
         }
         else{
             this.setBounds(this.getX(), this.getY(),this.getWidth(),this.getHeight()-temp);
+            this.setMana(this.getMana()-valor);
+            this.setText(Integer.toString(getMana()));
         }
-        this.setMana(this.getMana()-valor);
-        this.setText(Integer.toString(getMana()));
+
     }
 
     public void gainLife(int valor,boolean bottom){

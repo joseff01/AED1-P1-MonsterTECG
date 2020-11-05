@@ -110,6 +110,8 @@ public class GameplayMenu {
 
     public volatile boolean flagTrapWrathOfTheStarDragons = false;
 
+    public volatile boolean flagTrapShadowEye = false;
+
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
         this.mainPanel = mainPanel;
@@ -665,6 +667,7 @@ public class GameplayMenu {
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
+
                             } else if (flagTrapMagesFortress) {
                                 flagTrapMagesFortress = false;
                                 sendMessage = new MagesFortressMessage(manaRequirement, "Mage's Fortress");
@@ -681,73 +684,68 @@ public class GameplayMenu {
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
+
                             } else {
                                 myManaBar.loseMana(manaRequirement, true);
                                 SpellMessage spellMessage = new SpellMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
                                 sendMessage = spellMessage;
 
-                                switch (card.getCardName()) {
-                                    case ("Fighting Spirit"):
-                                        flagFightingSpirit = true;
-                                    case ("Pot Of Greed"):
-                                        addCardMyHand();
-                                        addCardMyHand();
+                                if (card.getCardName().equals("Fighting Spirit")) {
+                                    flagFightingSpirit = true;
+                                } else if (card.getCardName().equals("Pot Of Greed")) {
+                                    addCardMyHand();
+                                    addCardMyHand();
+                                } else if (card.getCardName().equals("Poison Of The Old Man")) {
+                                    Random random = new Random();
+                                    int randomInt = random.nextInt(6);
+                                    myLifeBar.gainLife((randomInt + 1) * 50, true);
+                                } else if (card.getCardName().equals("A Wild Monster Appears!")) {
+                                    flagWildMonster = true;
+                                } else if (card.getCardName().equals("Snatch Steal")) {
+                                    try {
+                                        Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
+                                        DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
+                                        ObjectMapper objectMapper = new ObjectMapper();
+                                        SnatchStealMessage snatchStealMessage = new SnatchStealMessage(0, "Snatch Steal", card.getLargeImageString(), 0, true);
+                                        String messageJson = objectMapper.writeValueAsString(snatchStealMessage);
+                                        streamOutput.writeUTF(messageJson);
+                                        streamOutput.close();
 
-                                    case ("Poison Of The Old Man"):
-                                        Random random = new Random();
-                                        int randomInt = random.nextInt(6);
-                                        myLifeBar.gainLife((randomInt + 1) * 50, true);
+                                        flagUse = true;
+                                        removeCardMyHand(card);
+                                        JButton chosencard = getChosenLarge();
+                                        chosencard.setIcon(null);
+                                        setChosenCard(null);
+                                        gameBackgroundLabel.remove(backButton);
+                                        gameBackgroundLabel.remove(useButton);
+                                        gameBackgroundLabel.revalidate();
+                                        gameBackgroundLabel.repaint();
+                                        cardBigLabel.setVisible(false);
 
-                                    case ("A Wild Monster Appears!"):
-                                        flagWildMonster = true;
+                                        startSnatchStealWaitingState();
 
-                                    case ("Snatch Steal"):
+                                        return;
 
-                                        try {
-                                            Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
-                                            DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
-                                            ObjectMapper objectMapper = new ObjectMapper();
-                                            SnatchStealMessage snatchStealMessage = new SnatchStealMessage(0,"Snatch Steal",card.getLargeImageString(),0,true);
-                                            String messageJson = objectMapper.writeValueAsString(snatchStealMessage);
-                                            streamOutput.writeUTF(messageJson);
-                                            streamOutput.close();
-
-                                            flagUse = true;
-                                            removeCardMyHand(card);
-                                            JButton chosencard = getChosenLarge();
-                                            chosencard.setIcon(null);
-                                            setChosenCard(null);
-                                            gameBackgroundLabel.remove(backButton);
-                                            gameBackgroundLabel.remove(useButton);
-                                            gameBackgroundLabel.revalidate();
-                                            gameBackgroundLabel.repaint();
-                                            cardBigLabel.setVisible(false);
-
-                                            startSnatchStealWaitingState();
-
-                                            return;
-
-                                        } catch (IOException j) {
-                                            j.printStackTrace();
-                                        }
-
-
+                                    } catch (IOException j) {
+                                        j.printStackTrace();
+                                    }
                                 }
-                                flagUse = true;
-                                removeCardMyHand(card);
-                                JButton chosencard = getChosenLarge();
-                                chosencard.setIcon(null);
-                                setChosenCard(null);
-                                gameBackgroundLabel.remove(backButton);
-                                gameBackgroundLabel.remove(useButton);
-                                gameBackgroundLabel.revalidate();
-                                gameBackgroundLabel.repaint();
-                                cardBigLabel.setVisible(false);
-                                finishTurnButton.setEnabled(true);
-                                enableMyCards();
                             }
+                            flagUse = true;
+                            removeCardMyHand(card);
+                            JButton chosencard = getChosenLarge();
+                            chosencard.setIcon(null);
+                            setChosenCard(null);
+                            gameBackgroundLabel.remove(backButton);
+                            gameBackgroundLabel.remove(useButton);
+                            gameBackgroundLabel.revalidate();
+                            gameBackgroundLabel.repaint();
+                            cardBigLabel.setVisible(false);
+                            finishTurnButton.setEnabled(true);
+                            enableMyCards();
 
-                        } else if (card instanceof TrapCard) {
+
+                        }else if (card instanceof TrapCard) {
 
                             myManaBar.loseMana(manaRequirement, true);
                             TrapMessage trapMessage = new TrapMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
