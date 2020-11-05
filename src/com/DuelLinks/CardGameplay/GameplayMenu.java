@@ -94,6 +94,10 @@ public class GameplayMenu {
     public volatile boolean flagWildMonster = false;
     int wildNum = 0;
 
+    public volatile boolean flagCurseOfAnubis = false;
+
+    public volatile boolean flagSpellbinding = false;
+
     public volatile boolean flagMagicTriangle = false;
 
     public volatile boolean flagTrapEyeOfTruth = false;
@@ -210,7 +214,7 @@ public class GameplayMenu {
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
 
-        myHand.addLast(allCards.getValueAt(38));
+        myHand.addLast(allCards.getValueAt(22));
 
         addCardMyHand();
         addCardMyHand();
@@ -479,16 +483,34 @@ public class GameplayMenu {
 
                     if (flagDarkGrimoire) {
                         manaRequirement = manaRequirement * 2;
-                    } else if(flagMessengerOfPeace && card instanceof MonsterCard){
-                        if(((MonsterCard) card).getAttackDamage()>=100){
+                    }
+                    if (flagMessengerOfPeace && card instanceof MonsterCard) {
+                        if (((MonsterCard) card).getAttackDamage() >= 100) {
                             isBigger = true;
                         }
                     }
-                    System.out.println(isBigger);
+                    System.out.println(manaRequirement);
                     if (myManaBar.isEnough(manaRequirement)) {
                         flagDarkGrimoire = false;
-                        if (card instanceof MonsterCard) {
-                            if (flagTrapWrathOfTheStarDragons){
+                        if (flagSpellbinding) {
+                            sendMessage = new SpellBindingMessage(manaRequirement, "Spellbinding Circle");
+                            myManaBar.loseMana(manaRequirement, true);
+                            flagSpellbinding = false;
+                            flagUse = true;
+                            removeCardMyHand(card);
+                            JButton chosencard = getChosenLarge();
+                            chosencard.setIcon(null);
+                            setChosenCard(null);
+                            gameBackgroundLabel.remove(backButton);
+                            gameBackgroundLabel.remove(useButton);
+                            cardBigLabel.setVisible(false);
+                            finishTurnButton.setEnabled(true);
+                            enableMyCards();
+                            addOneMyTrapCard();
+                            gameBackgroundLabel.revalidate();
+                            gameBackgroundLabel.repaint();
+                        } else if (card instanceof MonsterCard) {
+                            if (flagTrapWrathOfTheStarDragons) {
                                 if (((MonsterCard) card).isDragon()) {
                                     flagTrapWrathOfTheStarDragons = false;
                                     sendMessage = new WrathOfTheStarDragonsMessage(manaRequirement, "Wrath of The Star Dragons");
@@ -507,8 +529,7 @@ public class GameplayMenu {
                                     enableMyCards();
                                     return;
                                 }
-                            }
-                            if (flagTrapLifeRegeneration) {
+                            } else if (flagTrapLifeRegeneration) {
                                 flagTrapLifeRegeneration = false;
                                 sendMessage = new LifeRegenerationMessage(manaRequirement, ((MonsterCard) card).getAttackDamage(), "Life Regeneration");
                                 flagUse = true;
@@ -528,15 +549,7 @@ public class GameplayMenu {
                                 return;
                             } else if (flagTrapMirrorForce) {
                                 flagTrapMirrorForce = false;
-                                sendMessage = new MirrorForceMessage(manaRequirement,((MonsterCard) card).getAttackDamage(),"Mirror Force");
-                                flagUse = true;
-                                removeCardMyHand(card);
-                                JButton chosencard = getChosenLarge();
-                                chosencard.setIcon(null);
-                                setChosenCard(null);
-                                gameBackgroundLabel.remove(backButton);
-                                gameBackgroundLabel.remove(useButton);
-                                cardBigLabel.setVisible(false);
+                                sendMessage = new MirrorForceMessage(manaRequirement, ((MonsterCard) card).getAttackDamage(), "Mirror Force");
                                 showBigCard("Images\\BigCards\\Trap\\MirrorBc.png");
                                 myLifeBar.loseVida(((MonsterCard) card).getAttackDamage(), true);
                                 myManaBar.loseMana(manaRequirement, true);
@@ -544,10 +557,10 @@ public class GameplayMenu {
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
                                 return;
-                            }else if(!flagMagicTriangle){
-                                if(!isBigger){
-                                    if (flagFightingSpirit||flagScapegoat||flagWildMonster) {
-                                        if(flagFightingSpirit){
+                            } else if (!flagMagicTriangle) {
+                                if (!isBigger) {
+                                    if (flagFightingSpirit || flagScapegoat || flagWildMonster) {
+                                        if (flagFightingSpirit) {
                                             flagUse = true;
                                             flagFightingSpirit = false;
                                             enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage() + 200, false);
@@ -555,34 +568,30 @@ public class GameplayMenu {
                                             sendMessage = attackMessage;
                                             myManaBar.loseMana(manaRequirement, true);
                                             removeCardMyHand(card);
-                                        }
-                                        else if(flagScapegoat){
+                                        } else if (flagScapegoat) {
                                             flagUse = true;
                                             flagScapegoat = false;
-                                            if(((MonsterCard) card).getAttackDamage()-100>0){
-                                                enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage() -100, false);
+                                            if (((MonsterCard) card).getAttackDamage() - 100 > 0) {
+                                                enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage() - 100, false);
                                                 AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), manaRequirement, card.getLargeImageString(), card.getCardName());
                                                 sendMessage = attackMessage;
                                                 myManaBar.loseMana(manaRequirement, true);
                                                 removeCardMyHand(card);
                                             }
-                                        }
-                                        else if(flagWildMonster){
-                                            if (wildNum != 2){
+                                        } else if (flagWildMonster) {
+                                            if (wildNum != 2) {
                                                 enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage(), false);
                                                 AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), manaRequirement, card.getLargeImageString(), card.getCardName());
                                                 sendMessage = attackMessage;
                                                 wildNum++;
                                                 removeCardMyHand(card);
-                                            }
-                                            else{
+                                            } else {
                                                 wildNum = 0;
                                                 flagWildMonster = false;
                                                 flagUse = true;
                                             }
 
                                         }
-
                                         JButton chosencard = getChosenLarge();
                                         chosencard.setIcon(null);
                                         setChosenCard(null);
@@ -614,10 +623,9 @@ public class GameplayMenu {
                                 }
                             }
                         } else if (card instanceof SpellCard) {
-
                             if (flagTrapEyeOfTruth) {
                                 flagTrapEyeOfTruth = false;
-                                sendMessage = new EyeOfTruthMessage(manaRequirement,150,"The Eye Of Truth");
+                                sendMessage = new EyeOfTruthMessage(manaRequirement, 150, "The Eye Of Truth");
                                 flagUse = true;
                                 removeCardMyHand(card);
                                 JButton chosencard = getChosenLarge();
@@ -627,14 +635,14 @@ public class GameplayMenu {
                                 gameBackgroundLabel.remove(useButton);
                                 cardBigLabel.setVisible(false);
                                 showBigCard("Images\\BigCards\\Trap\\EyeTruthBc.png");
-                                myLifeBar.loseVida(150,true);
-                                myManaBar.loseMana(manaRequirement,true);
+                                myLifeBar.loseVida(150, true);
+                                myManaBar.loseMana(manaRequirement, true);
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
                             } else if (flagTrapMagesFortress) {
                                 flagTrapMagesFortress = false;
-                                sendMessage = new MagesFortressMessage(manaRequirement,"Mage's Fortress");
+                                sendMessage = new MagesFortressMessage(manaRequirement, "Mage's Fortress");
                                 flagUse = true;
                                 removeCardMyHand(card);
                                 JButton chosencard = getChosenLarge();
@@ -644,7 +652,7 @@ public class GameplayMenu {
                                 gameBackgroundLabel.remove(useButton);
                                 cardBigLabel.setVisible(false);
                                 showBigCard("Images\\BigCards\\Trap\\MageFortBc.png");
-                                myManaBar.loseMana(manaRequirement,true);
+                                myManaBar.loseMana(manaRequirement, true);
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
@@ -663,16 +671,10 @@ public class GameplayMenu {
                                     case ("Poison Of The Old Man"):
                                         Random random = new Random();
                                         int randomInt = random.nextInt(6);
-                                        int num = 0;
-                                        if (randomInt + 1 != 6) {
-                                            num = randomInt + 1 * 50;
-                                            myLifeBar.gainLife(num, true);
-                                        } else {
-                                            myLifeBar.gainLife(50, true);
-                                        }
+                                        myLifeBar.gainLife((randomInt + 1) * 50, true);
+
                                     case ("A Wild Monster Appears!"):
                                         flagWildMonster = true;
-
                                 }
                                 flagUse = true;
                                 removeCardMyHand(card);
@@ -688,29 +690,7 @@ public class GameplayMenu {
                                 enableMyCards();
                             }
 
-                            myManaBar.loseMana(manaRequirement, true);
-                            SpellMessage spellMessage = new SpellMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
-                            sendMessage = spellMessage;
-
-                            switch (card.getCardName())
-                            {
-                                case ("Fighting Spirit"):
-                                    flagFightingSpirit = true;
-                                case("Pot Of Greed"):
-                                    addCardMyHand();
-                                    addCardMyHand();
-
-                                case("Poison Of The Old Man"):
-                                    Random random = new Random();
-                                    int randomInt = random.nextInt(6);
-                                    myLifeBar.gainLife((randomInt+1)*50,true);
-
-                                case("A Wild Monster Appears!"):
-                                    flagWildMonster = true;
-                                    
-                            }
-
-                        }else if (card instanceof TrapCard){
+                        } else if (card instanceof TrapCard) {
 
                             myManaBar.loseMana(manaRequirement, true);
                             TrapMessage trapMessage = new TrapMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
@@ -729,8 +709,10 @@ public class GameplayMenu {
                             gameBackgroundLabel.revalidate();
                             gameBackgroundLabel.repaint();
                         }
+
                     }
                 }
+
             });
 
             gameBackgroundLabel.add(useButton);

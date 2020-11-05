@@ -61,20 +61,17 @@ public class WaitingState implements Runnable{
                     while (!gameplayMenu.closeCardFlag) {}
                     gameplayMenu.closeCardFlag = false;
 
-                    switch(spellMessage.getCardName()){
-                        case("Dark World Grimoire"):
-                            gameplayMenu.flagDarkGrimoire = true;
-                        case("Magic Triangle Of The Ice Barrier"):
-                            gameplayMenu.flagMagicTriangle = true;
-                        case("Pot Of Greed"):
-                            gameplayMenu.addCardEnemyHand();
-                            gameplayMenu.addCardEnemyHand();
-                        case("Scapegoat"):
-                            gameplayMenu.flagScapegoat = true;
-                        case("Messanger Of Peace"):
-                            gameplayMenu.flagMessengerOfPeace = true;
-                        case("Remove Trap"):
-                            
+                    if (spellMessage.getCardName().equals("Dark World Grimoire")){
+                        gameplayMenu.flagDarkGrimoire = true;
+                    } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")){
+                        gameplayMenu.flagMagicTriangle = true;
+                    } else if (spellMessage.getCardName().equals("Pot Of Greed")){
+                        gameplayMenu.addCardEnemyHand();
+                        gameplayMenu.addCardEnemyHand();
+                    } else if (spellMessage.getCardName().equals("Scapegoat")){
+                        gameplayMenu.flagScapegoat = true;
+                    } else if (spellMessage.getCardName().equals("Messanger Of Peace")){
+                        gameplayMenu.flagMessengerOfPeace = true;
                     }
                     gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
@@ -91,6 +88,8 @@ public class WaitingState implements Runnable{
                         gameplayMenu.flagTrapMirrorForce = true;
                     } else if (trapMessage.getCardName().equals("Wrath of The Star Dragons")){
                         gameplayMenu.flagTrapWrathOfTheStarDragons = true;
+                    } else if(trapMessage.getCardName().equals("Spellbinding Circle")){
+                          gameplayMenu.flagSpellbinding = true;
                     }
                     gameplayMenu.addOneEnemyTrapCard();
                     gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
@@ -128,6 +127,9 @@ public class WaitingState implements Runnable{
                     gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                     gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellBindingMessage){
+                    SpellBindingMessage trapActivatedMessage = (SpellBindingMessage) objectMapper.readValue(messageReceived,Message.class);
+
                 }
 
 
