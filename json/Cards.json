@@ -1,41 +1,41 @@
-{"smallImage":"Images\\SmallCards\\Monster\\cpBigKOALA.png", "largeImage":"Images\\BigCards\\Monster\\KOALABc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Big Koala" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpBlueDragon.png", "largeImage":"Images\\BigCards\\Monster\\BlueDragonBc.png", "attackDamage": 350, "manaRequirement": 325, "name": "Blue Eyes White Dragon" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpExodia.png", "largeImage":"Images\\BigCards\\Monster\\ExodiaBc.png", "attackDamage": 750, "manaRequirement": 750, "name": "Exodia The Forbidden One" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpRescueFurret.png", "largeImage":"Images\\BigCards\\Monster\\FerretBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Rescue Ferret" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpNinetales.png", "largeImage":"Images\\BigCards\\Monster\\FoxBc.png", "attackDamage": 125, "manaRequirement": 100, "name": "Nine-Tailed Fox" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpVampRedBa.png", "largeImage":"Images\\BigCards\\Monster\\BaronBc.png", "attackDamage": 250, "manaRequirement": 200, "name": "Vampire Red Baron" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpRescueHams.png", "largeImage":"Images\\BigCards\\Monster\\HamsterBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Rescue Hamster" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpHanatawa.png", "largeImage":"Images\\BigCards\\Monster\\HanewataBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Hanewata" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpHumpty.png", "largeImage":"Images\\BigCards\\Monster\\HumptyBc.png", "attackDamage": 75, "manaRequirement": 50, "name": "Gimmick Puppet Humpty Dumpty" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpKuriboh.png", "largeImage":"Images\\BigCards\\Monster\\KuribohBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Kuriboh" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpMagicianB.png", "largeImage":"Images\\BigCards\\Monster\\MagicBoyBc.png", "attackDamage": 150, "manaRequirement": 125, "name": "Dark Magician" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpMagicianG.png", "largeImage":"Images\\BigCards\\Monster\\MagicGirlBc.png", "attackDamage": 150, "manaRequirement": 125, "name": "Dark Magician Girl" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpMonki.png", "largeImage":"Images\\BigCards\\Monster\\MonkiBc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Beserk Monkey" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpObelisk.png", "largeImage":"Images\\BigCards\\Monster\\ObeliskBc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Obelisk The Tormentor" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpDragonRa.png", "largeImage":"Images\\BigCards\\Monster\\RaDragonBc.png", "attackDamage": 300, "manaRequirement": 275, "name": "The Winged Dragon Of Ra" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpRedDragon.png", "largeImage":"Images\\BigCards\\Monster\\RedDragonBc.png", "attackDamage": 300, "manaRequirement": 275, "name": "Red Eyes Black Dragon" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpSlifer.png", "largeImage":"Images\\BigCards\\Monster\\SliferBc.png", "attackDamage": 350, "manaRequirement": 325, "name": "Slifer The Sky Dragon" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpWhiteT.png", "largeImage":"Images\\BigCards\\Monster\\TigerBc.png", "attackDamage": 100, "manaRequirement": 75, "name": "The All-Seeing White Tiger" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpTimeWiz.png", "largeImage":"Images\\BigCards\\Monster\\TimeWizardBc.png", "attackDamage": 75, "manaRequirement": 50, "name": "Time Wizard" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpTwinDrag.png", "largeImage":"Images\\BigCards\\Monster\\TwinDragonBc.png", "attackDamage": 100, "manaRequirement": 75, "name": "Twin-Headed Fire Dragon" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpVermin.png", "largeImage":"Images\\BigCards\\Monster\\VerminBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Bubonic Vermin" }
-{"smallImage":"Images\\SmallCards\\Monster\\cpWombat.png", "largeImage":"Images\\BigCards\\Monster\\WombatBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Des Wombat" }
+{"smallImage":"Images\\SmallCards\\Monster\\cpBigKOALA.png", "largeImage":"Images\\BigCards\\Monster\\KOALABc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Big Koala", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpBlueDragon.png", "largeImage":"Images\\BigCards\\Monster\\BlueDragonBc.png", "attackDamage": 350, "manaRequirement": 325, "name": "Blue Eyes White Dragon", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpExodia.png", "largeImage":"Images\\BigCards\\Monster\\ExodiaBc.png", "attackDamage": 750, "manaRequirement": 750, "name": "Exodia The Forbidden One", "dragon": false}
+{"smallImage":"Images\\SmallCards\\Monster\\cpRescueFurret.png", "largeImage":"Images\\BigCards\\Monster\\FerretBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Rescue Ferret", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpNinetales.png", "largeImage":"Images\\BigCards\\Monster\\FoxBc.png", "attackDamage": 125, "manaRequirement": 100, "name": "Nine-Tailed Fox", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpVampRedBa.png", "largeImage":"Images\\BigCards\\Monster\\BaronBc.png", "attackDamage": 250, "manaRequirement": 200, "name": "Vampire Red Baron", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpRescueHams.png", "largeImage":"Images\\BigCards\\Monster\\HamsterBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Rescue Hamster", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpHanatawa.png", "largeImage":"Images\\BigCards\\Monster\\HanewataBc.png", "attackDamage": 50, "manaRequirement": 25, "name": "Hanewata", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpHumpty.png", "largeImage":"Images\\BigCards\\Monster\\HumptyBc.png", "attackDamage": 75, "manaRequirement": 50, "name": "Gimmick Puppet Humpty Dumpty", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpKuriboh.png", "largeImage":"Images\\BigCards\\Monster\\KuribohBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Kuriboh", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpMagicianB.png", "largeImage":"Images\\BigCards\\Monster\\MagicBoyBc.png", "attackDamage": 150, "manaRequirement": 125, "name": "Dark Magician", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpMagicianG.png", "largeImage":"Images\\BigCards\\Monster\\MagicGirlBc.png", "attackDamage": 150, "manaRequirement": 125, "name": "Dark Magician Girl", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpMonki.png", "largeImage":"Images\\BigCards\\Monster\\MonkiBc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Beserk Monkey", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpObelisk.png", "largeImage":"Images\\BigCards\\Monster\\ObeliskBc.png", "attackDamage": 200, "manaRequirement": 125, "name": "Obelisk The Tormentor", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpDragonRa.png", "largeImage":"Images\\BigCards\\Monster\\RaDragonBc.png", "attackDamage": 300, "manaRequirement": 275, "name": "The Winged Dragon Of Ra", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpRedDragon.png", "largeImage":"Images\\BigCards\\Monster\\RedDragonBc.png", "attackDamage": 300, "manaRequirement": 275, "name": "Red Eyes Black Dragon", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpSlifer.png", "largeImage":"Images\\BigCards\\Monster\\SliferBc.png", "attackDamage": 350, "manaRequirement": 325, "name": "Slifer The Sky Dragon", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpWhiteT.png", "largeImage":"Images\\BigCards\\Monster\\TigerBc.png", "attackDamage": 100, "manaRequirement": 75, "name": "The All-Seeing White Tiger", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpTimeWiz.png", "largeImage":"Images\\BigCards\\Monster\\TimeWizardBc.png", "attackDamage": 75, "manaRequirement": 50, "name": "Time Wizard", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpTwinDrag.png", "largeImage":"Images\\BigCards\\Monster\\TwinDragonBc.png", "attackDamage": 100, "manaRequirement": 75, "name": "Twin-Headed Fire Dragon", "dragon": true }
+{"smallImage":"Images\\SmallCards\\Monster\\cpVermin.png", "largeImage":"Images\\BigCards\\Monster\\VerminBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Bubonic Vermin", "dragon": false }
+{"smallImage":"Images\\SmallCards\\Monster\\cpWombat.png", "largeImage":"Images\\BigCards\\Monster\\WombatBc.png", "attackDamage": 25, "manaRequirement": 0, "name": "Des Wombat", "dragon": false }
 {"smallImage":"Images\\SmallCards\\Spell\\cpDarkWorld.png", "largeImage":"Images\\BigCards\\Spell\\Grimoire.png", "manaRequirement": 150, "name": "Dark World Grimoire" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpFightSpirit.png", "largeImage":"Images\\BigCards\\Spell\\FightingSpiritBc.png", "manaRequirement": 150, "name": "Fighting Spirit" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpMagicTriangle.png", "largeImage":"Images\\BigCards\\Spell\\IceTriangleBc.png", "manaRequirement": 250, "name": "Magic Triangle Of The Ice Barrier" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpMessengerP.png", "largeImage":"Images\\BigCards\\Spell\\PeaceMBc.png", "manaRequirement": 100, "name": "Messanger Of Peace" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpPoison.png", "largeImage":"Images\\BigCards\\Spell\\PoisonManBc.png", "manaRequirement": 175, "name": "Poison Of The Old Man" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpPotGreed.png", "largeImage":"Images\\BigCards\\Spell\\GreedBc.png", "manaRequirement": 100, "name": "Pot Of Greed" }
-{"smallImage":"Images\\SmallCards\\Spell\\cpRemoveT.png", "largeImage":"Images\\BigCards\\Spell\\RemoveBc.png", "manaRequirement": 150, "name": "Remove Trap" }
-{"smallImage":"Images\\SmallCards\\Spell\\cpSkapeG.png", "largeImage":"Images\\BigCards\\Spell\\ScapegoatBc.png", "manaRequirement": 150, "name": "Scapegoat" }
-{"smallImage":"Images\\SmallCards\\Spell\\cpSnatch.png", "largeImage":"Images\\BigCards\\Spell\\Steal.png", "manaRequirement": 150, "name": "Snach Steal" }
-{"smallImage":"Images\\SmallCards\\Spell\\cpWildM.png", "largeImage":"Images\\BigCards\\Spell\\WildMonsterBc.png", "manaRequirement": 150, "name": "A Wild Monster Appears!" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpEyeTruth.png", "largeImage":"Images\\BigCards\\Trap\\EyeTruthBc.png", "manaRequirement": 150, "name": "The Eye Of Truth" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpLifeRegen.png", "largeImage":"Images\\BigCards\\Trap\\LifeRegeBc.png", "manaRequirement": 150, "name": "Life Regeneration" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpMagesFort.png", "largeImage":"Images\\BigCards\\Trap\\MageFortBc.png", "manaRequirement": 150, "name": "Mage's Fortress" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpMirrorForce.png", "largeImage":"Images\\BigCards\\Trap\\MirrorBc.png", "manaRequirement": 150, "name": "Mirror Force" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpShadowEyes.png", "largeImage":"Images\\BigCards\\Trap\\ShadowEyeBc.png", "manaRequirement": 150, "name": "Shadow Of Eyes" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpSpellBind.png", "largeImage":"Images\\BigCards\\Trap\\CircleBc.png", "manaRequirement": 150, "name": "Spellbinding Circle" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpWrath.png", "largeImage":"Images\\BigCards\\Trap\\WrathStarBc.png", "manaRequirement": 150, "name": "Wrath of The Star Dragons" }
-{"smallImage":"Images\\SmallCards\\Trap\\cpWrathAnubis.png", "largeImage":"Images\\BigCards\\Trap\\CurseAnubisBc.png", "manaRequirement": 150, "name": "Curse Of Anubis" }
+{"smallImage":"Images\\SmallCards\\Spell\\cpRemoveT.png", "largeImage":"Images\\BigCards\\Spell\\RemoveBc.png", "manaRequirement": 250, "name": "Remove Trap" }
+{"smallImage":"Images\\SmallCards\\Spell\\cpSkapeG.png", "largeImage":"Images\\BigCards\\Spell\\ScapegoatBc.png", "manaRequirement": 25, "name": "Scapegoat" }
+{"smallImage":"Images\\SmallCards\\Spell\\cpSnatch.png", "largeImage":"Images\\BigCards\\Spell\\Steal.png", "manaRequirement": 50, "name": "Snach Steal" }
+{"smallImage":"Images\\SmallCards\\Spell\\cpWildM.png", "largeImage":"Images\\BigCards\\Spell\\WildMonsterBc.png", "manaRequirement": 800, "name": "A Wild Monster Appears!" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpEyeTruth.png", "largeImage":"Images\\BigCards\\Trap\\EyeTruthBc.png", "manaRequirement": 250, "name": "The Eye Of Truth" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpLifeRegen.png", "largeImage":"Images\\BigCards\\Trap\\LifeRegeBc.png", "manaRequirement": 300, "name": "Life Regeneration" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpMagesFort.png", "largeImage":"Images\\BigCards\\Trap\\MageFortBc.png", "manaRequirement": 250, "name": "Mage's Fortress" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpMirrorForce.png", "largeImage":"Images\\BigCards\\Trap\\MirrorBc.png", "manaRequirement": 300, "name": "Mirror Force" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpShadowEyes.png", "largeImage":"Images\\BigCards\\Trap\\ShadowEyeBc.png", "manaRequirement": 400, "name": "Shadow Of Eyes" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpSpellBind.png", "largeImage":"Images\\BigCards\\Trap\\CircleBc.png", "manaRequirement": 300, "name": "Spellbinding Circle" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpWrath.png", "largeImage":"Images\\BigCards\\Trap\\WrathStarBc.png", "manaRequirement": 200, "name": "Wrath of The Star Dragons" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpWrathAnubis.png", "largeImage":"Images\\BigCards\\Trap\\CurseAnubisBc.png", "manaRequirement": 125, "name": "Curse Of Anubis" }
 	

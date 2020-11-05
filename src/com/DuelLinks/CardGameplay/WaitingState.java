@@ -83,6 +83,14 @@ public class WaitingState implements Runnable{
                     TrapMessage trapMessage = (TrapMessage) objectMapper.readValue(messageReceived,Message.class);
                     if (trapMessage.getCardName().equals("The Eye Of Truth")){
                         gameplayMenu.flagTrapEyeOfTruth = true;
+                    } else if (trapMessage.getCardName().equals("Life Regeneration")){
+                        gameplayMenu.flagTrapLifeRegeneration = true;
+                    } else if (trapMessage.getCardName().equals("Mage's Fortress")){
+                        gameplayMenu.flagTrapMagesFortress = true;
+                    } else if (trapMessage.getCardName().equals("Mirror Force")){
+                        gameplayMenu.flagTrapMirrorForce = true;
+                    } else if (trapMessage.getCardName().equals("Wrath of The Star Dragons")){
+                        gameplayMenu.flagTrapWrathOfTheStarDragons = true;
                     }
                     gameplayMenu.addOneEnemyTrapCard();
                     gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
@@ -94,7 +102,34 @@ public class WaitingState implements Runnable{
                     gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                     gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof LifeRegenerationMessage) {
+                    LifeRegenerationMessage trapActivatedMessage = (LifeRegenerationMessage) objectMapper.readValue(messageReceived, Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
+                    gameplayMenu.myLifeBar.gainLife(trapActivatedMessage.getMyLifeGained(), true);
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof MagesFortressMessage) {
+                    MagesFortressMessage trapActivatedMessage = (MagesFortressMessage) objectMapper.readValue(messageReceived, Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof MirrorForceMessage) {
+                    MirrorForceMessage trapActivatedMessage = (MirrorForceMessage) objectMapper.readValue(messageReceived, Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
+                    gameplayMenu.enemyLifeBar.loseVida(trapActivatedMessage.getOpponentLifeLost(), false);
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof WrathOfTheStarDragonsMessage) {
+                    WrathOfTheStarDragonsMessage trapActivatedMessage = (WrathOfTheStarDragonsMessage) objectMapper.readValue(messageReceived, Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
                 }
+
 
                 gameplayMenu.flagUse = false;
                 gameplayMenu.enableMyCards();

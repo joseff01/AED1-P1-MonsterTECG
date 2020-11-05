@@ -10,7 +10,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = AttackMessage.class, name = "AttackMessage"),
         @JsonSubTypes.Type(value = SpellMessage.class, name = "SpellMessage"),
         @JsonSubTypes.Type(value = TrapMessage.class, name = "TrapMessage"),
-        @JsonSubTypes.Type(value = EyeOfTruthMessage.class, name = "EyeOfTruthMessage")
+        @JsonSubTypes.Type(value = EyeOfTruthMessage.class, name = "EyeOfTruthMessage"),
+        @JsonSubTypes.Type(value = MagesFortressMessage.class, name = "MagesFortressMessage"),
+        @JsonSubTypes.Type(value = MirrorForceMessage.class, name = "MirrorForceMessage"),
+        @JsonSubTypes.Type(value = WrathOfTheStarDragonsMessage.class, name = "WrathOfTheStarDragonsMessage"),
+        @JsonSubTypes.Type(value = LifeRegenerationMessage.class, name = "LifeRegenerationMessage")
 })
 public abstract class Message {
 }

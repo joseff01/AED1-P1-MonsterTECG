@@ -15,7 +15,9 @@ public class JsonMonsterCard {
 
     private String name;
 
-    public JsonMonsterCard(String smallImg, String largeImg, int AttackDamage, int manaReq, String name){
+    private boolean dragon;
+
+    public JsonMonsterCard(String smallImg, String largeImg, int AttackDamage, int manaReq, String name, boolean dragon){
 
         this.attackDamage = AttackDamage;
 
@@ -26,6 +28,8 @@ public class JsonMonsterCard {
         this.smallImage = smallImg;
 
         this.name = name;
+
+        this.dragon = dragon;
 
     }
 
@@ -72,4 +76,13 @@ public class JsonMonsterCard {
     public void setName(String name) {
         this.name = name;
     }
+
+    public boolean isDragon() {
+        return dragon;
+    }
+
+    public void setDragon(boolean dragon) {
+        this.dragon = dragon;
+    }
+
 }

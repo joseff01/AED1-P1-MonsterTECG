@@ -7,8 +7,14 @@ public class MonsterCard extends Card{
 
     private int attackDamage;
 
+    private boolean dragon;
+
     public int getAttackDamage() {
         return attackDamage;
+    }
+
+    public boolean isDragon() {
+        return dragon;
     }
 
     public MonsterCard(JsonMonsterCard jsonMonsterCard){
@@ -21,6 +27,7 @@ public class MonsterCard extends Card{
         this.setLargeImage(new ImageIcon(jsonMonsterCard.getLargeImage()));
         this.setLargeImageString(jsonMonsterCard.getLargeImage());
         this.setCardNameString(jsonMonsterCard.getName());
+        this.dragon = jsonMonsterCard.isDragon();
 
 
     }
