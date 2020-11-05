@@ -473,7 +473,6 @@ public class GameplayMenu {
                         manaRequirement = manaRequirement * 2;
                     } else if(flagMessengerOfPeace && card instanceof MonsterCard){
                         if(((MonsterCard) card).getAttackDamage()>=100){
-                            System.out.println("shrimp");
                             isBigger = true;
                         }
                     }
@@ -554,6 +553,7 @@ public class GameplayMenu {
                         } else if (card instanceof SpellCard) {
 
                             if (flagTrapEyeOfTruth) {
+                                flagTrapEyeOfTruth = false;
                                 sendMessage = new EyeOfTruthMessage(manaRequirement,150,"The Eye Of Truth");
                                 flagUse = true;
                                 removeCardMyHand(card);
@@ -564,7 +564,6 @@ public class GameplayMenu {
                                 gameBackgroundLabel.remove(useButton);
                                 cardBigLabel.setVisible(false);
                                 showBigCard("Images\\BigCards\\Trap\\EyeTruthBc.png");
-                                System.out.println("pepe");
                                 myLifeBar.loseVida(150,true);
                                 myManaBar.loseMana(manaRequirement,true);
                                 finishTurnButton.setEnabled(true);
@@ -636,10 +635,6 @@ public class GameplayMenu {
                             myManaBar.loseMana(manaRequirement, true);
                             TrapMessage trapMessage = new TrapMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
                             sendMessage = trapMessage;
-                            //if (card.getCardName().equals("")){
-
-                            //}
-
                             flagUse = true;
                             removeCardMyHand(card);
                             JButton chosencard = getChosenLarge();
