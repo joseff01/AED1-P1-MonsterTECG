@@ -10,7 +10,9 @@ public class JsonSpellCard {
 
     private String name;
 
-    public JsonSpellCard(String smallImg, String largeImg, int manaReq, String name){
+    private String id;
+
+    public JsonSpellCard(String smallImg, String largeImg, int manaReq, String name, String id){
 
         this.largeImage = largeImg;
 
@@ -19,6 +21,8 @@ public class JsonSpellCard {
         this.smallImage = smallImg;
 
         this.name = name;
+
+        this.id = id;
 
     }
 
@@ -56,5 +60,13 @@ public class JsonSpellCard {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

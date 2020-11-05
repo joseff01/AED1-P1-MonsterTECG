@@ -5,9 +5,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Random;
 
 public class WaitingState implements Runnable{
 
@@ -17,13 +19,19 @@ public class WaitingState implements Runnable{
 
     GameplayMenu gameplayMenu;
 
-    public WaitingState(ServerSocket mySocket, JButton finishTurnButton, GameplayMenu gameplayMenu){
+    int opponentSocketNum;
+
+    Card snatchedCard;
+
+    public WaitingState(ServerSocket mySocket, JButton finishTurnButton, GameplayMenu gameplayMenu, int opponentSocketNum){
 
         this.gameplayMenu = gameplayMenu;
 
         this.mySocket = mySocket;
 
         this.finishTurnButton = finishTurnButton;
+
+        this.opponentSocketNum= opponentSocketNum;
 
         Thread ParallelThread = new Thread(this);
 
@@ -55,27 +63,54 @@ public class WaitingState implements Runnable{
                     gameplayMenu.enemyManaBar.loseMana(attackMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                     gameplayMenu.opponentDiscardPile.setVisible(true);
-                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage){
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage) {
                     SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
                     gameplayMenu.showBigCard(spellMessage.getBigCardImageUsed());
-                    while (!gameplayMenu.closeCardFlag) {}
+                    while (!gameplayMenu.closeCardFlag) {
+                    }
                     gameplayMenu.closeCardFlag = false;
 
-                    if (spellMessage.getCardName().equals("Dark World Grimoire")){
+                    if (spellMessage.getCardName().equals("Dark World Grimoire")) {
                         gameplayMenu.flagDarkGrimoire = true;
-                    } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")){
+                    } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")) {
                         gameplayMenu.flagMagicTriangle = true;
-                    } else if (spellMessage.getCardName().equals("Pot Of Greed")){
+                    } else if (spellMessage.getCardName().equals("Pot Of Greed")) {
                         gameplayMenu.addCardEnemyHand();
                         gameplayMenu.addCardEnemyHand();
-                    } else if (spellMessage.getCardName().equals("Scapegoat")){
+                    } else if (spellMessage.getCardName().equals("Scapegoat")) {
                         gameplayMenu.flagScapegoat = true;
-                    } else if (spellMessage.getCardName().equals("Messanger Of Peace")){
+                    } else if (spellMessage.getCardName().equals("Messanger Of Peace")) {
                         gameplayMenu.flagMessengerOfPeace = true;
                     }
                     gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                     gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SnatchStealMessage){
+                    SnatchStealMessage snatchStealMessage = (SnatchStealMessage) objectMapper.readValue(messageReceived,Message.class);
+                    if (snatchStealMessage.isFirstTime()){
+                        System.out.println("received snatch request");
+                        EntrySocket.close();
+
+                        Random random = new Random();
+                        Card stolenCard = gameplayMenu.myHand.getValueAt(random.nextInt(gameplayMenu.myHand.getLength()));
+                        this.snatchedCard = stolenCard;
+                        SnatchStealMessage snatchStealMessageReturn = new SnatchStealMessage(0,null,null,stolenCard.getId(),true);
+
+                        Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
+                        DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
+                        String messageJson = objectMapper.writeValueAsString(snatchStealMessageReturn);
+                        streamOutput.writeUTF(messageJson);
+                        streamOutput.close();
+                        System.out.println("sent snatched card");
+                        run();
+                    } else if (!snatchStealMessage.isFirstTime()){
+                        gameplayMenu.showBigCard(snatchStealMessage.getCardNameUsedPath());
+                        while (!gameplayMenu.closeCardFlag) {}
+                        gameplayMenu.closeCardFlag = false;
+                        gameplayMenu.enemyManaBar.loseMana(snatchStealMessage.getOpponentManaUsed(), false);
+                        gameplayMenu.removeCardMyHand(snatchedCard);
+                        gameplayMenu.opponentDiscardPile.setVisible(true);
+                    }
                 } else if (objectMapper.readValue(messageReceived,Message.class) instanceof TrapMessage){
                     TrapMessage trapMessage = (TrapMessage) objectMapper.readValue(messageReceived,Message.class);
                     if (trapMessage.getCardName().equals("The Eye Of Truth")){

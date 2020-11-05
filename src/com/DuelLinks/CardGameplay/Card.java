@@ -12,7 +12,7 @@ public abstract class Card extends JButton {
 
     private String cardName;
 
-
+    private int id;
 
     public Card(ImageIcon icon) {
 
@@ -59,6 +59,18 @@ public abstract class Card extends JButton {
 
     public void setCardNameString(String cardName) {
         this.cardName = cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

@@ -46,9 +46,9 @@ public class GameplayMenu {
 
     public JLabel gameBackgroundLabel;
 
-    private DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
+    public DoubleCircularList<Card> allCards = new DoubleCircularList<Card>();
 
-    private DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
+    public DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
     private JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
@@ -77,7 +77,7 @@ public class GameplayMenu {
 
     private JButton cardBigLabel;
 
-    private Message sendMessage;
+    public Message sendMessage;
 
     public volatile boolean closeCardFlag = false;
 
@@ -214,7 +214,7 @@ public class GameplayMenu {
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
 
-        myHand.addLast(allCards.getValueAt(22));
+        myHand.addLast(allCards.getValueAt(30));
 
         addCardMyHand();
         addCardMyHand();
@@ -276,7 +276,7 @@ public class GameplayMenu {
                         enemyManaBar.gainMana(250, false);
                         addCardEnemyHand();
                     }
-                    WaitingState waitingState = new WaitingState(mySocket, finishTurnButton, gameplayMenu);
+                    WaitingState waitingState = new WaitingState(mySocket, finishTurnButton, gameplayMenu, opponentSocketNum);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -293,7 +293,7 @@ public class GameplayMenu {
         if (!myTurn) {
             disableMyCards();
             finishTurnButton.setEnabled(false);
-            WaitingState waitingState = new WaitingState(mySocket, finishTurnButton,this);
+            WaitingState waitingState = new WaitingState(mySocket, finishTurnButton,this, opponentSocketNum);
 
         }
         mainPanel.validate();
@@ -322,7 +322,7 @@ public class GameplayMenu {
     }
 
     public void addCardMyHand() {
-        if (myHand.getLength() <= 8) {
+        if (myHand.getLength() < 8) {
             if (myDeckLength > 0) {
                 myHand.addLast((Card) myDeck.pop());
                 myDeckLength--;
@@ -331,6 +331,27 @@ public class GameplayMenu {
                 if (myDeckLength == 0) {
                     gameBackgroundLabel.remove(myDeckLabel);
                 }
+            }
+        }
+    }
+
+    public void addSpecificCardMyHand(Card card) {
+        if (myHand.getLength() < 8) {
+            if (myDeckLength > 0) {
+                myHand.addLast(card);
+                this.displayMyHand();
+            }
+        }
+    }
+
+    public void addSpecificCardMyHand(Card card,boolean addActionListener) {
+        if (myHand.getLength() < 8) {
+            if (myDeckLength > 0) {
+                if (addActionListener){
+                    card.addActionListener(new CardClick());
+                }
+                myHand.addLast(card);
+                this.displayMyHand();
             }
         }
     }
@@ -458,6 +479,10 @@ public class GameplayMenu {
         gameBackgroundLabel.revalidate();
         gameBackgroundLabel.repaint();
 
+    }
+
+    public void startSnatchStealWaitingState(){
+        SnatchStealWaitingState snatchStealWaitingState = new SnatchStealWaitingState(mySocket, finishTurnButton, this);
     }
 
     public class CardClick implements ActionListener {
@@ -675,6 +700,38 @@ public class GameplayMenu {
 
                                     case ("A Wild Monster Appears!"):
                                         flagWildMonster = true;
+
+                                    case ("Snatch Steal"):
+
+                                        try {
+                                            Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
+                                            DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
+                                            ObjectMapper objectMapper = new ObjectMapper();
+                                            SnatchStealMessage snatchStealMessage = new SnatchStealMessage(0,"Snatch Steal",card.getLargeImageString(),0,true);
+                                            String messageJson = objectMapper.writeValueAsString(snatchStealMessage);
+                                            streamOutput.writeUTF(messageJson);
+                                            streamOutput.close();
+
+                                            flagUse = true;
+                                            removeCardMyHand(card);
+                                            JButton chosencard = getChosenLarge();
+                                            chosencard.setIcon(null);
+                                            setChosenCard(null);
+                                            gameBackgroundLabel.remove(backButton);
+                                            gameBackgroundLabel.remove(useButton);
+                                            gameBackgroundLabel.revalidate();
+                                            gameBackgroundLabel.repaint();
+                                            cardBigLabel.setVisible(false);
+
+                                            startSnatchStealWaitingState();
+
+                                            return;
+
+                                        } catch (IOException j) {
+                                            j.printStackTrace();
+                                        }
+
+
                                 }
                                 flagUse = true;
                                 removeCardMyHand(card);
