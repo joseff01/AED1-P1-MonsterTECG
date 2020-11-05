@@ -1,8 +1,6 @@
 package com.DuelLinks.CardGameplay;
 
-import com.DuelLinks.ComunicationMessages.AttackMessage;
-import com.DuelLinks.ComunicationMessages.Message;
-import com.DuelLinks.ComunicationMessages.SpellMessage;
+import com.DuelLinks.ComunicationMessages.*;
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
 import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -59,14 +57,23 @@ public class GameplayMenu {
     private JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
     private JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
 
+    public int amountMyTrapCards = 0;
+    private JLabel myTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel myTrapLengthLabel = new JLabel(String.valueOf(amountMyTrapCards), SwingConstants.CENTER);
+
+
     private DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
     private int enemyHandXPosition = 955;
 
-    private JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
     private int enemyDeckLength = 20;
     private JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
     private JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
+
+    public int amountEnemyTrapCards = 0;
+    private JLabel enemyTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
+    private JLabel enemyTrapLengthLabel = new JLabel(String.valueOf(amountEnemyTrapCards), SwingConstants.CENTER);
 
     private JButton cardBigLabel;
 
@@ -81,6 +88,8 @@ public class GameplayMenu {
     public volatile boolean flagDarkGrimoire = false;
 
     public volatile boolean flagMagicTriangle = false;
+
+    public volatile boolean flagTrapEyeOfTruth = false;
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -119,6 +128,14 @@ public class GameplayMenu {
                 spellCard.addActionListener(cardclick);
                 allCards.addLast(spellCard);
             }
+            for (int i = 0; i < 8; i++){
+                String cardJsonString = scanner.nextLine();
+                JsonTrapCard JsonCard = objectMapper.readValue(cardJsonString, JsonTrapCard.class);
+                TrapCard trapCard = new TrapCard(JsonCard);
+                CardClick cardclick = new CardClick();
+                trapCard.addActionListener(cardclick);
+                allCards.addLast(trapCard);
+            }
         } catch (FileNotFoundException | JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -128,7 +145,7 @@ public class GameplayMenu {
         DoubleCircularList<Integer> integerSingleList = new DoubleCircularList<Integer>();
 
         while (i < 20) {
-            int randomInt = random.nextInt(32);
+            int randomInt = random.nextInt(40);
             if (!integerSingleList.isValue(randomInt)) {
                 integerSingleList.addLast(randomInt);
                 myDeck.push(allCards.getValueAt(randomInt));
@@ -152,6 +169,24 @@ public class GameplayMenu {
         enemyDeckLabel.add(enemyDeckLengthLabel);
         gameBackgroundLabel.add(enemyDeckLabel);
 
+        myTrapCards.setLayout(null);
+        myTrapCards.setBounds(735, 390, 120, 175);
+        myTrapLengthLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
+        myTrapLengthLabel.setForeground(Color.WHITE);
+        myTrapLengthLabel.setBounds(40, 77, 40, 20);
+        myTrapCards.setVisible(false);
+        myTrapCards.add(myTrapLengthLabel);
+        gameBackgroundLabel.add(myTrapCards);
+
+        enemyTrapCards.setLayout(null);
+        enemyTrapCards.setBounds(465, 185, 120, 175);
+        enemyTrapLengthLabel.setFont(new Font("Copperplate Gothic Bold", Font.PLAIN, 20));
+        enemyTrapLengthLabel.setForeground(Color.WHITE);
+        enemyTrapLengthLabel.setBounds(40, 77, 40, 20);
+        enemyTrapCards.setVisible(false);
+        enemyTrapCards.add(enemyTrapLengthLabel);
+        gameBackgroundLabel.add(enemyTrapCards);
+
         myDiscardPile.setBounds(595, 390, 120, 175);
         myDiscardPile.setVisible(false);
         gameBackgroundLabel.add(myDiscardPile);
@@ -160,7 +195,7 @@ public class GameplayMenu {
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
 
-        myHand.addLast(allCards.getValueAt(27));
+        myHand.addLast(allCards.getValueAt(32));
 
         addCardMyHand();
         addCardMyHand();
@@ -285,7 +320,9 @@ public class GameplayMenu {
         this.removeMyHand();
         myHand.deleteValue(card);
         this.displayMyHand();
-        myDiscardPile.setVisible(true);
+        if (!(card instanceof TrapCard)){
+            myDiscardPile.setVisible(true);
+        }
     }
 
     public void removeCardEnemyHand() {
@@ -293,7 +330,6 @@ public class GameplayMenu {
             gameBackgroundLabel.remove(enemyHand.getLast());
             enemyHand.deleteLast();
             enemyHandXPosition = enemyHandXPosition + 135;
-            opponentDiscardPile.setVisible(true);
         }
     }
 
@@ -323,6 +359,38 @@ public class GameplayMenu {
     public void enableMyCards(){
         for (int i = 0; i < myHand.getLength(); i++) {
             myHand.getValueAt(i).setEnabled(true);
+        }
+    }
+
+    public void addOneMyTrapCard(){
+        amountMyTrapCards++;
+        myTrapLengthLabel.setText(String.valueOf(amountMyTrapCards));
+        myTrapCards.setVisible(true);
+    }
+
+    public void removeOneMyTrapCard(){
+        if (amountMyTrapCards == 1){
+            amountMyTrapCards--;
+            myTrapCards.setVisible(false);
+        } else if (amountMyTrapCards > 1){
+            amountMyTrapCards--;
+            myTrapLengthLabel.setText(String.valueOf(amountMyTrapCards));
+        }
+    }
+
+    public void addOneEnemyTrapCard(){
+        amountEnemyTrapCards++;
+        enemyTrapLengthLabel.setText(String.valueOf(amountEnemyTrapCards));
+        enemyTrapCards.setVisible(true);
+    }
+
+    public void removeOneEnemyTrapCard(){
+        if (amountEnemyTrapCards == 1){
+            amountEnemyTrapCards--;
+            enemyTrapCards.setVisible(false);
+        } else if (amountEnemyTrapCards > 1){
+            amountEnemyTrapCards--;
+            enemyTrapLengthLabel.setText(String.valueOf(amountMyTrapCards));
         }
     }
 
@@ -387,8 +455,6 @@ public class GameplayMenu {
             if (flagUse == true){
                 useButton.setEnabled(false);
             }
-            useButton.setBorderPainted(false);
-            useButton .setFocusPainted(false);
             useButton.setBounds(890, 300, 162, 51);
             useButton.addActionListener(new ActionListener() {
                 @Override
@@ -439,20 +505,60 @@ public class GameplayMenu {
                                 }
                             }
                         } else if (card instanceof SpellCard) {
+                            if (flagTrapEyeOfTruth) {
+                                sendMessage = new EyeOfTruthMessage(manaRequirement,150,"The Eye Of Truth");
+                                flagUse = true;
+                                removeCardMyHand(card);
+                                JButton chosencard = getChosenLarge();
+                                chosencard.setIcon(null);
+                                setChosenCard(null);
+                                gameBackgroundLabel.remove(backButton);
+                                gameBackgroundLabel.remove(useButton);
+                                cardBigLabel.setVisible(false);
+                                showBigCard("Images\\BigCards\\Trap\\EyeTruthBc.png");
+                                System.out.println("pepe");
+                                myLifeBar.loseVida(150,true);
+                                myManaBar.loseMana(manaRequirement,true);
+                                finishTurnButton.setEnabled(true);
+                                removeOneEnemyTrapCard();
+                                enableMyCards();
+                            } else {
+                                myManaBar.loseMana(manaRequirement, true);
+                                SpellMessage spellMessage = new SpellMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
+                                sendMessage = spellMessage;
+                                if (card.getCardName().equals("Pot Of Greed")) {
+                                    addCardMyHand();
+                                    addCardMyHand();
+                                }
+
+                                switch (card.getCardName()) {
+                                    case ("Fighting Spirit"):
+                                        flagFightingSpirit = true;
+
+                                }
+                                flagUse = true;
+                                removeCardMyHand(card);
+                                JButton chosencard = getChosenLarge();
+                                chosencard.setIcon(null);
+                                setChosenCard(null);
+                                gameBackgroundLabel.remove(backButton);
+                                gameBackgroundLabel.remove(useButton);
+                                gameBackgroundLabel.revalidate();
+                                gameBackgroundLabel.repaint();
+                                cardBigLabel.setVisible(false);
+                                finishTurnButton.setEnabled(true);
+                                enableMyCards();
+                            }
+
+                        }else if (card instanceof TrapCard){
+
                             myManaBar.loseMana(manaRequirement, true);
-                            SpellMessage spellMessage = new SpellMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
-                            sendMessage = spellMessage;
-                            if (card.getCardName().equals("Pot Of Greed")){
-                                addCardMyHand();
-                                addCardMyHand();
-                            }
+                            TrapMessage trapMessage = new TrapMessage(manaRequirement, card.getLargeImageString(), card.getCardName());
+                            sendMessage = trapMessage;
+                            //if (card.getCardName().equals("")){
 
-                            switch (card.getCardName())
-                            {
-                                case ("Fighting Spirit"):
-                                    flagFightingSpirit = true;
+                            //}
 
-                            }
                             flagUse = true;
                             removeCardMyHand(card);
                             JButton chosencard = getChosenLarge();
@@ -460,12 +566,12 @@ public class GameplayMenu {
                             setChosenCard(null);
                             gameBackgroundLabel.remove(backButton);
                             gameBackgroundLabel.remove(useButton);
-                            gameBackgroundLabel.revalidate();
-                            gameBackgroundLabel.repaint();
                             cardBigLabel.setVisible(false);
                             finishTurnButton.setEnabled(true);
                             enableMyCards();
-
+                            addOneMyTrapCard();
+                            gameBackgroundLabel.revalidate();
+                            gameBackgroundLabel.repaint();
                         }
                     }
                 }
@@ -473,8 +579,6 @@ public class GameplayMenu {
 
             gameBackgroundLabel.add(useButton);
             backButton = new JButton(new ImageIcon("Images\\Back.png"));
-            backButton.setBorderPainted(false);
-            backButton.setFocusPainted(false);
             backButton.setBounds(890, 360, 162, 51);
             backButton.addActionListener(new ActionListener() {
                 @Override

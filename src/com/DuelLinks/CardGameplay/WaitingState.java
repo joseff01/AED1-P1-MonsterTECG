@@ -1,9 +1,6 @@
 package com.DuelLinks.CardGameplay;
 
-import com.DuelLinks.ComunicationMessages.AttackMessage;
-import com.DuelLinks.ComunicationMessages.Message;
-import com.DuelLinks.ComunicationMessages.SpellMessage;
-import com.DuelLinks.MainMenu.StartGameFlag;
+import com.DuelLinks.ComunicationMessages.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
@@ -47,6 +44,8 @@ public class WaitingState implements Runnable{
 
                 String messageReceived = (String) StreamInput.readUTF();
 
+                System.out.println(messageReceived);
+
                 if (objectMapper.readValue(messageReceived,Message.class) instanceof AttackMessage) {
                     AttackMessage attackMessage = (AttackMessage) objectMapper.readValue(messageReceived, Message.class);
                     gameplayMenu.showBigCard(attackMessage.getBigCardImageUsed());
@@ -55,6 +54,7 @@ public class WaitingState implements Runnable{
                     gameplayMenu.myLifeBar.loseVida(attackMessage.getMyDamageTaken(), true);
                     gameplayMenu.enemyManaBar.loseMana(attackMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
                 } else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellMessage){
                     SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
                     gameplayMenu.showBigCard(spellMessage.getBigCardImageUsed());
@@ -69,6 +69,23 @@ public class WaitingState implements Runnable{
                         gameplayMenu.addCardEnemyHand();
                     }
                     gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof TrapMessage){
+                    TrapMessage trapMessage = (TrapMessage) objectMapper.readValue(messageReceived,Message.class);
+                    if (trapMessage.getCardName().equals("The Eye Of Truth")){
+                        gameplayMenu.flagTrapEyeOfTruth = true;
+                    }
+                    gameplayMenu.addOneEnemyTrapCard();
+                    gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                } else if (objectMapper.readValue(messageReceived,Message.class) instanceof EyeOfTruthMessage){
+                    EyeOfTruthMessage trapActivatedMessage = (EyeOfTruthMessage) objectMapper.readValue(messageReceived,Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
+                    gameplayMenu.enemyLifeBar.loseVida(trapActivatedMessage.getOpponentLifeLost(), false);
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
                 }
 
                 gameplayMenu.flagUse = false;

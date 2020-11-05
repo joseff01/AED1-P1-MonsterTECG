@@ -30,5 +30,12 @@
 {"smallImage":"Images\\SmallCards\\Spell\\cpSkapeG.png", "largeImage":"Images\\BigCards\\Spell\\ScapegoatBc.png", "manaRequirement": 150, "name": "Scapegoat" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpSnatch.png", "largeImage":"Images\\BigCards\\Spell\\Steal.png", "manaRequirement": 150, "name": "Snach Steal" }
 {"smallImage":"Images\\SmallCards\\Spell\\cpWildM.png", "largeImage":"Images\\BigCards\\Spell\\WildMonsterBc.png", "manaRequirement": 150, "name": "A Wild Monster Appears!" }
-
+{"smallImage":"Images\\SmallCards\\Trap\\cpEyeTruth.png", "largeImage":"Images\\BigCards\\Trap\\EyeTruthBc.png", "manaRequirement": 150, "name": "The Eye Of Truth" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpLifeRegen.png", "largeImage":"Images\\BigCards\\Trap\\LifeRegeBc.png", "manaRequirement": 150, "name": "Life Regeneration" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpMagesFort.png", "largeImage":"Images\\BigCards\\Trap\\MageFortBc.png", "manaRequirement": 150, "name": "Mage's Fortress" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpMirrorForce.png", "largeImage":"Images\\BigCards\\Trap\\MirrorBc.png", "manaRequirement": 150, "name": "Mirror Force" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpShadowEyes.png", "largeImage":"Images\\BigCards\\Trap\\ShadowEyeBc.png", "manaRequirement": 150, "name": "Shadow Of Eyes" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpSpellBind.png", "largeImage":"Images\\BigCards\\Trap\\CircleBc.png", "manaRequirement": 150, "name": "Spellbinding Circle" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpWrath.png", "largeImage":"Images\\BigCards\\Trap\\WrathStarBc.png", "manaRequirement": 150, "name": "Wrath of The Star Dragons" }
+{"smallImage":"Images\\SmallCards\\Trap\\cpWrathAnubis.png", "largeImage":"Images\\BigCards\\Trap\\CurseAnubisBc.png", "manaRequirement": 150, "name": "Curse Of Anubis" }
 	
