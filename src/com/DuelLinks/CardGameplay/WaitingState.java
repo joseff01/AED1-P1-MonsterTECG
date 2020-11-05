@@ -60,13 +60,19 @@ public class WaitingState implements Runnable{
                     gameplayMenu.showBigCard(spellMessage.getBigCardImageUsed());
                     while (!gameplayMenu.closeCardFlag) {}
                     gameplayMenu.closeCardFlag = false;
-                    if (spellMessage.getCardName().equals("Dark World Grimoire")){
-                        gameplayMenu.flagDarkGrimoire = true;
-                    } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")){
-                        gameplayMenu.flagMagicTriangle = true;
-                    }else if(spellMessage.getCardName().equals("Pot Of Greed")){
-                        gameplayMenu.addCardEnemyHand();
-                        gameplayMenu.addCardEnemyHand();
+
+                    switch(spellMessage.getCardName()){
+                        case("Dark World Grimoire"):
+                            gameplayMenu.flagDarkGrimoire = true;
+                        case("Magic Triangle Of The Ice Barrier"):
+                            gameplayMenu.flagMagicTriangle = true;
+                        case("Pot Of Greed"):
+                            gameplayMenu.addCardEnemyHand();
+                            gameplayMenu.addCardEnemyHand();
+                        case("Scapegoat"):
+                            gameplayMenu.flagScapegoat = true;
+                        case("Messanger Of Peace"):
+                            gameplayMenu.flagMessengerOfPeace = true;
                     }
                     gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                 }
