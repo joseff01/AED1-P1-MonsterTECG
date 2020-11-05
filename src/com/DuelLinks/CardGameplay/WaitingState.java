@@ -73,6 +73,8 @@ public class WaitingState implements Runnable{
                             gameplayMenu.flagScapegoat = true;
                         case("Messanger Of Peace"):
                             gameplayMenu.flagMessengerOfPeace = true;
+                        case("Remove Trap"):
+                            
                     }
                     gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                 }

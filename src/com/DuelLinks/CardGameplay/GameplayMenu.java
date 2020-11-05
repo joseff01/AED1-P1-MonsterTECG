@@ -84,6 +84,9 @@ public class GameplayMenu {
 
     public volatile boolean flagDarkGrimoire = false;
 
+    public volatile boolean flagWildMonster = false;
+    int wildNum = 0;
+
     public volatile boolean flagMagicTriangle = false;
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
@@ -415,23 +418,43 @@ public class GameplayMenu {
                         if (card instanceof MonsterCard) {
                             if (!flagMagicTriangle) {
                                 if(!isBigger){
-                                    if (flagFightingSpirit||flagScapegoat) {
+                                    if (flagFightingSpirit||flagScapegoat||flagWildMonster) {
                                         if(flagFightingSpirit){
+                                            flagUse = true;
                                             flagFightingSpirit = false;
                                             enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage() + 200, false);
+                                            AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage() + 200, manaRequirement, card.getLargeImageString(), card.getCardName());
+                                            sendMessage = attackMessage;
+                                            myManaBar.loseMana(manaRequirement, true);
+                                            removeCardMyHand(card);
                                         }
                                         else if(flagScapegoat){
+                                            flagUse = true;
                                             flagScapegoat = false;
                                             if(((MonsterCard) card).getAttackDamage()-100>0){
                                                 enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage() -100, false);
+                                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), manaRequirement, card.getLargeImageString(), card.getCardName());
+                                                sendMessage = attackMessage;
+                                                myManaBar.loseMana(manaRequirement, true);
+                                                removeCardMyHand(card);
                                             }
                                         }
+                                        else if(flagWildMonster){
+                                            if (wildNum != 2){
+                                                enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage(), false);
+                                                AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage(), manaRequirement, card.getLargeImageString(), card.getCardName());
+                                                sendMessage = attackMessage;
+                                                wildNum++;
+                                                removeCardMyHand(card);
+                                            }
+                                            else{
+                                                wildNum = 0;
+                                                flagWildMonster = false;
+                                                flagUse = true;
+                                            }
 
-                                        AttackMessage attackMessage = new AttackMessage(((MonsterCard) card).getAttackDamage() + 200, manaRequirement, card.getLargeImageString(), card.getCardName());
-                                        sendMessage = attackMessage;
-                                        myManaBar.loseMana(manaRequirement, true);
-                                        flagUse = true;
-                                        removeCardMyHand(card);
+                                        }
+
                                         JButton chosencard = getChosenLarge();
                                         chosencard.setIcon(null);
                                         setChosenCard(null);
@@ -480,11 +503,13 @@ public class GameplayMenu {
                                     int randomInt = random.nextInt(6);
                                     int num = 0;
                                     if(randomInt+1!=6){
-                                       num = randomInt+1*50;
-                                       myLifeBar.gainLife(num,true);
+                                        num = randomInt+1*50;
+                                        myLifeBar.gainLife(num,true);
                                     }else{
                                         myLifeBar.gainLife(50,true);
                                     }
+                                case("A Wild Monster Appears!"):
+                                    flagWildMonster = true;
                             }
                             flagUse = true;
                             removeCardMyHand(card);
