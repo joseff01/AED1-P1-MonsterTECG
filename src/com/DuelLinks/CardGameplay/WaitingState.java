@@ -83,6 +83,8 @@ public class WaitingState implements Runnable{
                     TrapMessage trapMessage = (TrapMessage) objectMapper.readValue(messageReceived,Message.class);
                     if (trapMessage.getCardName().equals("The Eye Of Truth")){
                         gameplayMenu.flagTrapEyeOfTruth = true;
+                    }else if(trapMessage.getCardName().equals("Spellbinding Circle")){
+                        gameplayMenu.flagSpellbinding = true;
                     }
                     gameplayMenu.addOneEnemyTrapCard();
                     gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
@@ -91,6 +93,12 @@ public class WaitingState implements Runnable{
                     EyeOfTruthMessage trapActivatedMessage = (EyeOfTruthMessage) objectMapper.readValue(messageReceived,Message.class);
                     gameplayMenu.removeOneMyTrapCard();
                     gameplayMenu.enemyLifeBar.loseVida(trapActivatedMessage.getOpponentLifeLost(), false);
+                    gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                }else if (objectMapper.readValue(messageReceived,Message.class) instanceof SpellBindingMessage){
+                    SpellBindingMessage trapActivatedMessage = (SpellBindingMessage) objectMapper.readValue(messageReceived,Message.class);
+                    gameplayMenu.removeOneMyTrapCard();
                     gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardEnemyHand();
                     gameplayMenu.opponentDiscardPile.setVisible(true);
