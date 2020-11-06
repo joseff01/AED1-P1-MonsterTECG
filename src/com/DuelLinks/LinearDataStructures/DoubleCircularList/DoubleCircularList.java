@@ -4,28 +4,57 @@ import com.DuelLinks.LinearDataStructures.DoubleList.DoubleNode;
 import com.DuelLinks.LinearDataStructures.SingleList.SingleNode;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
+/**
+ * Estructura de Datos Lineal Double Circular List
+ * Esta clase permite crear un DoubleList que almacene valores de la misma clase
+ * Los nodos tienen referencia al valor siguiente y al anterior
+ * El ultimo valor tiene como referencia al siguiete nodo al nodo inicial
+ * El nodo previo al nodo inicial es el final
+ * @param <T>
+ * @author Jose Retana & Mariana Navarro
+ */
 public class DoubleCircularList<T> {
 
     private DoubleNode<T> first;
 
+    /**
+     * Constructor de Double List
+     * Crea una lista Vacía
+     */
     public DoubleCircularList(){
         this.first =  null;
     }
 
+    /**
+     * Constructor de Double list
+     * Crea una lista con nodo indicado
+     * @param firstNode
+     */
     public DoubleCircularList(DoubleNode<T> firstNode) {
         this.first = firstNode;
     }
 
+    /**
+     * Crea una lista con el valor indicado
+     * @param value
+     */
     public DoubleCircularList(T value){
         this.first =  new DoubleNode<T>(value);
         this.first.setPrevious(this.first);
         this.first.setNext(this.first);
     }
-
+    /**
+     * Verifica si la lista está vacía
+     * @return boolean
+     */
     public boolean isEmpty(){
         return (this.first == null);
     }
 
+    /**
+     * Devuelve el valor del largo de la lista actual
+     * @return
+     */
     public int getLength() {
         if (this.isEmpty()){
             return 0;
@@ -41,6 +70,10 @@ public class DoubleCircularList<T> {
         return length;
     }
 
+    /**
+     * Se agrega un valor al inicio de la lista
+     * @param value
+     */
 
     public void addFirst(T value){
         if (this.isEmpty()) {
@@ -56,7 +89,9 @@ public class DoubleCircularList<T> {
         }
 
     }
-
+    /**
+     * Se elimina el primer valor de la lista
+     */
     public void deleteFirst() {
         if (!this.isEmpty()) {
             if (this.getLength() == 1) {
@@ -69,11 +104,17 @@ public class DoubleCircularList<T> {
             this.first = next;
         }
     }
-
+    /**
+     * Retorna el primer valor de la lista
+     * @return T
+     */
     public T getFirst() {
         return this.first.getValue();
     }
-
+    /**
+     * Argega un valor al final de la lista
+     * @param value
+     */
     public void addLast(T value){
         if (this.isEmpty()) {
             this.addFirst(value);
@@ -86,7 +127,9 @@ public class DoubleCircularList<T> {
 
         }
     }
-
+    /**
+     * Se elimina el valor al final de la lista
+     */
     public void deleteLast(){
         if (!this.isEmpty()) {
             DoubleNode<T> last = this.first.getPrevious();
@@ -95,11 +138,18 @@ public class DoubleCircularList<T> {
             this.first.setPrevious(lastPrevious);
         }
     }
-
+    /**
+     * Retorna el último valor de la lista
+     * @return T
+     */
     public T getLast() {
         return this.first.getPrevious().getValue();
     }
-
+    /**
+     * Se agrega un valor en la posición indicada de la lista
+     * @param position
+     * @param value
+     */
     public void addAt(int position, T value) {
         int length = this.getLength();
         if (length < position ) {
@@ -129,7 +179,10 @@ public class DoubleCircularList<T> {
         }
 
     }
-
+    /**
+     * Elimina un valor en un posición específica de la lista
+     * @param position
+     */
     public void deleteAt(int position){
         int length = this.getLength();
         if (length < position) {
@@ -161,7 +214,11 @@ public class DoubleCircularList<T> {
     }
 
 
-
+    /**
+     * Devuelve un valor en una posición específica de la lista
+     * @param position
+     * @return
+     */
     public T getValueAt(int position) {
         int length = this.getLength();
         if (length < position) {
@@ -190,6 +247,11 @@ public class DoubleCircularList<T> {
 
     }
 
+    /**
+     * Dado un valor, Se elimina la primera intancia de esta que se presente.
+     * @param value
+     * @return
+     */
     public boolean deleteValue(T value){
         if (!isEmpty()){
             if (this.first.getValue().equals(value)){
@@ -217,6 +279,11 @@ public class DoubleCircularList<T> {
 
     }
 
+    /**
+     * Dado un valor, returna true si la lista sí contiene por lo menos uno de los elementos dados.
+     * @param value
+     * @return
+     */
     public boolean isValue(T value){
         if (!isEmpty()){
             if (this.first.getValue().equals(value)){
@@ -237,7 +304,11 @@ public class DoubleCircularList<T> {
         return false;
 
     }
-
+    /**
+     * Muestra en la consola una representación grafica de la lista
+     * *WARNING* Los valores contenidos se deben poder desplegarse como strings
+     * si no es posible, da error.
+     */
     public void print(){
         if (this.isEmpty()){
             System.out.println("[]");

@@ -1,11 +1,21 @@
 package com.DuelLinks.ComunicationMessages;
 
+/**
+ * Mensaje de la carta trampa Eye of Truth,el cual se convierte en un json para se transmitido
+ * @author Jose Retana
+ */
 public class EyeOfTruthMessage extends Message{
 
     int opponentManaUsed;
     int opponentLifeLost;
     String cardName;
 
+    /**
+     *
+     * @param opponentManaUsed
+     * @param opponentLifeLost
+     * @param cardName
+     */
     public EyeOfTruthMessage(int opponentManaUsed, int opponentLifeLost, String cardName) {
         this.cardName = cardName;
         this.opponentManaUsed = opponentManaUsed;

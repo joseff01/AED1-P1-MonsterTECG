@@ -1,5 +1,8 @@
 package com.DuelLinks.ComunicationMessages;
-
+/**
+ * Mensaje de la carta de hechizo A Wild Monster Appears,el cual se convierte en un json para se transmitido
+ * @author Mariana Navarro
+ */
 public class WildMonsterMessage extends Message{
 
     String enemy1;
@@ -11,6 +14,16 @@ public class WildMonsterMessage extends Message{
 
     int myDamageTaken;
 
+    /**
+     *
+     * @param myDamageTaken
+     * @param enemy1
+     * @param enemy2
+     * @param enemy3
+     * @param image1
+     * @param image2
+     * @param image3
+     */
     public WildMonsterMessage(int myDamageTaken, String enemy1,String enemy2,String enemy3,String image1,String image2,String image3) {
         this.myDamageTaken = myDamageTaken;
         this.enemy1 = enemy1;

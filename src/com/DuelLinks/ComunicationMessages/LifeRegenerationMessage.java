@@ -1,10 +1,19 @@
 package com.DuelLinks.ComunicationMessages;
-
+/**
+ * Mensaje de la carta trampa Life Regeneration,el cual se convierte en un json para se transmitido
+ * @author Jose Retana
+ */
 public class LifeRegenerationMessage extends Message{
     int opponentManaUsed;
     int myLifeGained;
     String cardName;
 
+    /**
+     *
+     * @param opponentManaUsed
+     * @param myLifeGained
+     * @param cardName
+     */
     public LifeRegenerationMessage(int opponentManaUsed, int myLifeGained, String cardName) {
         this.cardName = cardName;
         this.opponentManaUsed = opponentManaUsed;

@@ -1,20 +1,45 @@
 package com.DuelLinks.LinearDataStructures.SingleList;
 
+/**
+ * Estructura de Datos Lineal SingleList
+ * Esta clase permite crear un SingleList que almacene valores de la misma clase
+ * Los nodos solo tienen referencia al valor siguiente.
+ * @param <T>
+ * @author Jose Retana & Mariana Navarro
+ */
 public class SingleList<T> {
     private SingleNode<T> first;
 
+    /**
+     * Constructor de SingleList
+     * Se crea una lista vacía
+     */
     public SingleList() {
         this.first = null;
     }
 
+    /**
+     * Constructor de SingleList
+     * Se crea una lista con un nodo que contiene a "value"
+     * @param value
+     */
     public SingleList(T value) {
         this.first = new SingleNode<T>(value, null);
     }
 
+    /**
+     * Verifica si la lista está vacía
+     *
+     * @return boolean
+     */
     public boolean isEmpty() {
         return (this.first == null);
     }
 
+    /**
+     * Retorna el largo actual de la lista
+     * @return int
+     */
     public int getLength() {
         SingleNode<T> ref = this.first;
 
@@ -27,19 +52,33 @@ public class SingleList<T> {
         return length;
     }
 
-
+    /**
+     * Se agrega un valor al inicio de la lista
+     * @param value
+     */
     public void addFirst(T value) {
         this.first = new SingleNode<T>(value, this.first);
     }
 
+    /**
+     * Se elimina el primer valor de la lista
+     */
     public void deleteFirst() {
         this.first = this.first.getNext();
     }
 
+    /**
+     * Retorna el primer valor de la lista
+     * @return T
+     */
     public T getFirst() {
         return this.first.getValue();
     }
 
+    /**
+     * Argega un valor al final de la lista
+     * @param value
+     */
     public void addLast(T value) {
         if (this.isEmpty()) {
             this.first = new SingleNode<T>(value);
@@ -52,6 +91,9 @@ public class SingleList<T> {
         }
     }
 
+    /**
+     * Se elimina el valor al final de la lista
+     */
     public void deleteLast() {
         if (!this.isEmpty()) {
             SingleNode<T> ref = this.first;
@@ -64,6 +106,10 @@ public class SingleList<T> {
         }
     }
 
+    /**
+     * Retorna el último valor de la lista
+     * @return T
+     */
     public T getLast() {
         if (!this.isEmpty()) {
             SingleNode<T> ref = this.first;
@@ -75,6 +121,11 @@ public class SingleList<T> {
         return null;
     }
 
+    /**
+     * Se agrega un valor en la posición indicada de la lista
+     * @param position
+     * @param value
+     */
     public void addAt(int position, T value) {
         int length = this.getLength();
         if (length < position) {
@@ -105,6 +156,10 @@ public class SingleList<T> {
 
     }
 
+    /**
+     * Elimina un valor en un posición específica de la lista
+     * @param position
+     */
     public void deleteAt(int position) {
         int length = this.getLength();
         if (length < position) {
@@ -136,7 +191,11 @@ public class SingleList<T> {
 
     }
 
-
+    /**
+     * Devuelve un valor en una posición específica de la lista
+     * @param position
+     * @return
+     */
     public T getValueAt(int position) {
         int length = this.getLength();
         if (length < position) {
@@ -165,6 +224,11 @@ public class SingleList<T> {
 
     }
 
+    /**
+     * Muestra en la consola una representación grafica de la lista
+     * *WARNING* Los valores contenidos se deben poder desplegarse como strings
+     * si no es posible, da error.
+     */
     public void print(){
         if (this.isEmpty()){
             System.out.println("[]");

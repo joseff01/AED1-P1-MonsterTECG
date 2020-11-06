@@ -1,11 +1,21 @@
 package com.DuelLinks.ComunicationMessages;
 
+/**
+ * Mensaje de la mayoría de cartas trampa,el cual se convierte en un json para se transmitido
+ * @author Jose Retana
+ */
 public class TrapMessage extends Message{
 
     int opponentManaUsed;
     String bigCardImageUsed;
     String cardName;
 
+    /**
+     *
+     * @param opponentManaUsed
+     * @param bigCardImageUsed
+     * @param cardName
+     */
     public TrapMessage(int opponentManaUsed, String bigCardImageUsed, String cardName) {
         this.cardName = cardName;
         this.opponentManaUsed = opponentManaUsed;

@@ -2,21 +2,46 @@ package com.DuelLinks.LinearDataStructures.DoubleList;
 
 import com.DuelLinks.LinearDataStructures.SingleList.SingleNode;
 
+/**
+ * Estructura de Datos Lineal DoubleList
+ * Esta clase permite crear un DoubleList que almacene valores de la misma clase
+ * Los nodos tienen referencia al valor siguiente y al anterior
+ * @param <T>
+ * @author Jose Retana & Mariana Navarro
+ */
+
 public class DoubleList<T> {
     private DoubleNode<T> first;
 
+    /**
+     * Constructor de Double List
+     * Crea una lista Vacía
+     */
     public DoubleList(){
         this.first =  null;
     }
 
+    /**
+     * Constructor de Double list
+     * Crea una lista con el valor indicado
+     * @param value
+     */
     public DoubleList(T value){
         this.first =  new DoubleNode<T>(value);
     }
 
+    /**
+     * Verifica si la lista está vacía
+     * @return boolean
+     */
     public boolean isEmpty(){
         return (this.first == null);
     }
 
+    /**
+     * Devuelve el valor del largo de la lista actual
+     * @return
+     */
     public int getLength() {
         DoubleNode<T> ref = this.first;
 
@@ -29,7 +54,10 @@ public class DoubleList<T> {
         return length;
     }
 
-
+    /**
+     * Se agrega un valor al inicio de la lista
+     * @param value
+     */
     public void addFirst(T value){
         if (this.isEmpty()) {
             this.first = new DoubleNode<T>(value);
@@ -40,16 +68,24 @@ public class DoubleList<T> {
         }
 
     }
-
+    /**
+     * Se elimina el primer valor de la lista
+     */
     public void deleteFirst() {
         this.first = this.first.getNext();
         this.first.setPrevious(null);
     }
-
+    /**
+     * Retorna el primer valor de la lista
+     * @return T
+     */
     public T getFirst() {
         return this.first.getValue();
     }
-
+    /**
+     * Argega un valor al final de la lista
+     * @param value
+     */
     public void addLast(T value){
         if (this.isEmpty()) {
             this.addFirst(value);
@@ -62,7 +98,9 @@ public class DoubleList<T> {
             ref.setNext(newNode);
         }
     }
-
+    /**
+     * Se elimina el valor al final de la lista
+     */
     public void deleteLast(){
         if (!this.isEmpty()) {
             DoubleNode<T> ref = this.first;
@@ -72,7 +110,10 @@ public class DoubleList<T> {
             ref.getPrevious().setNext(null);
         }
     }
-
+    /**
+     * Retorna el último valor de la lista
+     * @return T
+     */
     public T getLast() {
         if (!this.isEmpty()) {
             DoubleNode<T> ref = this.first;
@@ -83,7 +124,11 @@ public class DoubleList<T> {
         }
         return null;
     }
-
+    /**
+     * Se agrega un valor en la posición indicada de la lista
+     * @param position
+     * @param value
+     */
     public void addAt(int position, T value) {
         int length = this.getLength();
         if (length < position ) {
@@ -113,7 +158,10 @@ public class DoubleList<T> {
         }
 
     }
-
+    /**
+     * Elimina un valor en un posición específica de la lista
+     * @param position
+     */
     public void deleteAt(int position){
         int length = this.getLength();
         if (length < position) {
@@ -145,7 +193,11 @@ public class DoubleList<T> {
     }
 
 
-
+    /**
+     * Devuelve un valor en una posición específica de la lista
+     * @param position
+     * @return
+     */
     public T getValueAt(int position) {
         int length = this.getLength();
         if (length < position) {
@@ -173,7 +225,11 @@ public class DoubleList<T> {
 
 
     }
-
+    /**
+     * Muestra en la consola una representación grafica de la lista
+     * *WARNING* Los valores contenidos se deben poder desplegarse como strings
+     * si no es posible, da error.
+     */
     public void print(){
         if (this.isEmpty()){
             System.out.println("[]");

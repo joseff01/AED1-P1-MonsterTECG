@@ -10,6 +10,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Clase creada para que reciba el mensaje de iniciación del juego de parte
+ * del jugador que se quiere unir
+ *
+ * @Author Jose Retana
+ */
+
 public class HostMenu implements Runnable{
 
     JLabel socketLabel;
@@ -22,7 +29,13 @@ public class HostMenu implements Runnable{
 
     DataOutputStream outputStream;
 
-
+    /**
+     *
+     * @param socketLabel
+     * @param mainPanel
+     * @authors Jose Retana
+     *
+     */
     public HostMenu(JLabel socketLabel,JPanel mainPanel){
 
         this.mainPanel = mainPanel;
@@ -38,6 +51,9 @@ public class HostMenu implements Runnable{
 
     }
 
+    /**
+     * @authors Jose Retana
+     */
     private void setListenSocket(){
         try{
             listenSocket = new ServerSocket(ListenSocketNum);
@@ -47,6 +63,9 @@ public class HostMenu implements Runnable{
         }
     }
 
+    /**
+     * @Authors: Jose Retana
+     */
     @Override
     public void run() {
 

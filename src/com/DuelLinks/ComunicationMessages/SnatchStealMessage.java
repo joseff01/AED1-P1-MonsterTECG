@@ -1,5 +1,8 @@
 package com.DuelLinks.ComunicationMessages;
-
+/**
+ * Mensaje de la carta de hechizo Snatch Steal,el cual se convierte en un json para se transmitido
+ * @author Jose Retana
+ */
 public class SnatchStealMessage extends Message{
 
     private int opponentManaUsed;
@@ -8,6 +11,14 @@ public class SnatchStealMessage extends Message{
     private boolean firstTime;
     private String cardNameUsedPath;
 
+    /**
+     *
+     * @param opponentManaUsed
+     * @param cardNameUsed
+     * @param cardNameUsedPath
+     * @param cardNameStolen
+     * @param firstTime
+     */
     public SnatchStealMessage(int opponentManaUsed, String cardNameUsed,String cardNameUsedPath, int cardNameStolen, boolean firstTime) {
         this.cardNameUsed = cardNameUsed;
         this.opponentManaUsed = opponentManaUsed;

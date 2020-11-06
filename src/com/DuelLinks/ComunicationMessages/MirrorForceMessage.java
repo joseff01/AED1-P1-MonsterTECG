@@ -1,10 +1,19 @@
 package com.DuelLinks.ComunicationMessages;
-
+/**
+ * Mensaje de la carta trampa Mirror Force,el cual se convierte en un json para se transmitido
+ * @author Jose Retana
+ */
 public class MirrorForceMessage extends Message{
     int opponentManaUsed;
     int opponentLifeLost;
     String cardName;
 
+    /**
+     *
+     * @param opponentManaUsed
+     * @param opponentLifeLost
+     * @param cardName
+     */
     public MirrorForceMessage(int opponentManaUsed, int opponentLifeLost, String cardName) {
         this.cardName = cardName;
         this.opponentManaUsed = opponentManaUsed;

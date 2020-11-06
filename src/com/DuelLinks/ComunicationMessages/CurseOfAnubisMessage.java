@@ -1,5 +1,9 @@
 package com.DuelLinks.ComunicationMessages;
 
+/**
+ * Mensaje de la carta trampa Curse of Anubis,el cual se convierte en un json para se transmitido
+ * @author Mariana Navarro
+ */
 public class CurseOfAnubisMessage extends Message{
 
 
@@ -7,7 +11,11 @@ public class CurseOfAnubisMessage extends Message{
     String imageAnubis;
     String anubisCard;
 
-
+    /**
+     *
+     * @param anubisName
+     * @param imageAnubis
+     */
     public CurseOfAnubisMessage(String anubisName,String imageAnubis) {
 
         this.imageAnubis = imageAnubis;
@@ -16,8 +24,6 @@ public class CurseOfAnubisMessage extends Message{
     }
 
     public CurseOfAnubisMessage(){}
-
-
 
     public String getImageAnubis() {
         return imageAnubis;

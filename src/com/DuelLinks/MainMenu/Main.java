@@ -15,6 +15,15 @@ import java.net.Socket;
 
 public class Main {
 
+    /**
+     * Muestra el menú principal del juego, donde se puede
+     * escoger si se quiere alojar un juego, o si se quiere unir
+     *
+     * @param args
+     * @author: Mariana Navarro y Jose Retana
+     *
+     */
+
     public static void main(String[] args) {
 
         ServerSocket mySocket;
@@ -44,7 +53,14 @@ public class Main {
         JButton hostGameButton = new JButton(new ImageIcon("Images\\hostButton.png"));
         hostGameButton.setBounds(510,400,242,93);
 
+
         class HostGameEvent implements ActionListener{
+
+            /**
+             *
+             * @param e
+             * @author: Jose Retana
+             */
 
             @Override
             public void actionPerformed(ActionEvent e){
@@ -88,6 +104,13 @@ public class Main {
 
         class EnterGameMenuEvent implements ActionListener{
 
+            /**
+             *
+             * @param e
+             * @author Jose Retana
+             *
+             */
+
             @Override
             public void actionPerformed(ActionEvent e){
 
@@ -124,6 +147,13 @@ public class Main {
                 JoinMenu joinMenu = new JoinMenu();
 
                 class JoinGameEvent implements ActionListener{
+
+                    /**
+                     *
+                     * @param i
+                     * @authors Jose Retana
+                     *
+                     */
 
                     @Override
                     public void actionPerformed(ActionEvent i){

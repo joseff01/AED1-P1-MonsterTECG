@@ -1,5 +1,8 @@
 package com.DuelLinks.ComunicationMessages;
-
+/**
+ * Mensaje de la carta de hechizo SpellBinding Circle,el cual se convierte en un json para se transmitido
+ * @author Mariana Navarro
+ */
 public class SpellBindingMessage extends Message{
     int opponentManaUsed;
     String cardName;

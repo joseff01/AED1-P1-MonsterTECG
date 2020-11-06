@@ -23,4 +23,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = SpellBindingMessage.class, name = "SpellBindingMessage")
 })
 
+/**
+ * Clase común de todos los mensages utilizados, para qeu todos pertenezcan a la misma familia y que
+ * se puedan almacenar en conjunto.
+ * @authors Jose Retana
+ */
 public abstract class Message {}
