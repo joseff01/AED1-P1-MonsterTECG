@@ -115,8 +115,6 @@ public class GameplayMenu {
 
     public volatile boolean flagSpellbinding = false;
 
-
-
     public volatile boolean flagTrapEyeOfTruth = false;
 
     public volatile boolean flagTrapLifeRegeneration = false;
@@ -240,7 +238,7 @@ public class GameplayMenu {
         opponentDiscardPile.setBounds(605, 185, 120, 175);
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
-
+        
         addCardMyHand();
         addCardMyHand();
         addCardMyHand();
@@ -637,8 +635,8 @@ public class GameplayMenu {
 
                         } else if (card instanceof MonsterCard) {
                             if (flagTrapWrathOfTheStarDragons) {
-                                if(flagCurseOfAnubis){
-                                    sendMessage = new CurseOfAnubisMessage("Curse Of Anubis","Images\\BigCards\\Trap\\CurseAnubisBc.png");
+                                if (flagCurseOfAnubis) {
+                                    sendMessage = new CurseOfAnubisMessage("Curse Of Anubis", "Images\\BigCards\\Trap\\CurseAnubisBc.png");
                                     removeOneMyTrapCard();
                                     removeOneEnemyTrapCard();
                                     flagTrapWrathOfTheStarDragons = false;
@@ -654,11 +652,12 @@ public class GameplayMenu {
                                     finishTurnButton.setEnabled(true);
                                     flagUse = true;
                                     enableMyCards();
-                                }else if (((MonsterCard) card).isDragon()) {
+                                    return;
+                                } else if (((MonsterCard) card).isDragon()) {
                                     flagTrapWrathOfTheStarDragons = false;
-                                    if(!flagWildMonster) {
+                                    if (!flagWildMonster) {
                                         sendMessage = new WrathOfTheStarDragonsMessage(manaRequirement, "Wrath of The Star Dragons");
-                                         logList.addLast("The enemy trap card Wrath of The Star Dragons has been activated!\n");
+                                        logList.addLast("The enemy trap card Wrath of The Star Dragons has been activated!\n");
                                     }
                                     flagUse = true;
                                     removeCardMyHand(card);
@@ -675,7 +674,7 @@ public class GameplayMenu {
                                     enableMyCards();
                                     return;
                                 }
-                            } else if (flagTrapLifeRegeneration) {
+                            }if (flagTrapLifeRegeneration) {
                                 if(flagCurseOfAnubis) {
                                     sendMessage = new CurseOfAnubisMessage("Curse Of Anubis","Images\\BigCards\\Trap\\CurseAnubisBc.png");
                                     removeOneMyTrapCard();
@@ -693,6 +692,7 @@ public class GameplayMenu {
                                     cardBigLabel.setVisible(false);
                                     finishTurnButton.setEnabled(true);
                                     enableMyCards();
+                                    return;
                                 }else {
                                     flagTrapLifeRegeneration = false;
                                     if(!flagWildMonster) {
@@ -715,7 +715,7 @@ public class GameplayMenu {
                                     enableMyCards();
                                     return;
                                 }
-                            } else if (flagTrapMirrorForce) {
+                            }if (flagTrapMirrorForce) {
                                 if(flagCurseOfAnubis) {
                                     sendMessage = new CurseOfAnubisMessage("Curse Of Anubis","Images\\BigCards\\Trap\\CurseAnubisBc.png");
                                     removeOneMyTrapCard();
@@ -733,6 +733,7 @@ public class GameplayMenu {
                                     cardBigLabel.setVisible(false);
                                     finishTurnButton.setEnabled(true);
                                     enableMyCards();
+                                    return;
                                 }else {
                                     flagTrapMirrorForce = false;
                                     if(!flagWildMonster) {
@@ -747,7 +748,7 @@ public class GameplayMenu {
                                     enableMyCards();
                                     return;
                                 }
-                            } else if (!flagMagicTriangle) {
+                            } if (!flagMagicTriangle) {
                                 if (!isBigger) {
                                     if (flagFightingSpirit || flagScapegoat || flagWildMonster) {
                                         if (flagFightingSpirit) {
