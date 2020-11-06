@@ -12,6 +12,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * At. Mariana Navarro Jiménez
+ * Devuelve un objeto barra que contiene vida y mana
+ * Tiene los metodos que reduce o aumenta la vida y el mana de la barra,
+ * ademas detecta cuando el jugador gana o pierde la partida
+ */
 public class Bar extends JLabel {
     boolean lose;
 
@@ -20,6 +26,12 @@ public class Bar extends JLabel {
 
     GameplayMenu gameplayMenu;
 
+    /**
+     *  * At. Mariana Navarro Jimenez
+     * @param type
+     * @param my
+     * @param gameplayMenu
+     */
     public Bar(boolean type,boolean my, GameplayMenu gameplayMenu) {
         this.gameplayMenu = gameplayMenu;
 
@@ -45,6 +57,12 @@ public class Bar extends JLabel {
 
 
     }
+
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param valor
+     * @return true o false
+     */
     public boolean isEnough(int valor){
         if(this.getMana()-valor<0){
             return false;
@@ -53,6 +71,13 @@ public class Bar extends JLabel {
             return true;
         }
     }
+
+    /**
+     * At. Mariana Navarro Jimenez
+     * proboca que el jugador gane o pierda la partida al llegar a 0
+     * @param valor
+     * @param bottom
+     */
     public void loseVida(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
 
@@ -116,6 +141,11 @@ public class Bar extends JLabel {
         }
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param valor
+     * @param bottom
+     */
     public void loseMana(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
         if(this.getMana()-valor<=0 && bottom){
@@ -141,6 +171,11 @@ public class Bar extends JLabel {
 
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param valor
+     * @param bottom
+     */
     public void gainLife(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
         if(this.getVida()+valor>=1000 && bottom){
@@ -164,6 +199,12 @@ public class Bar extends JLabel {
             this.setText(Integer.toString(getVida()));
         }
     }
+
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param valor
+     * @param bottom
+     */
 
     public void gainMana(int valor,boolean bottom){
         int temp = ((valor * 400)/1000);
@@ -190,18 +231,34 @@ public class Bar extends JLabel {
         }
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @return
+     */
     public int getVida() {
         return vida;
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param vida
+     */
     public void setVida(int vida) {
         this.vida = vida;
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @return
+     */
     public int getMana() {
         return mana;
     }
 
+    /**
+     * At. Mariana Navarro Jimenez
+     * @param mana
+     */
     public void setMana(int mana) {
         this.mana = mana;
     }
