@@ -26,7 +26,7 @@ public class Bar extends JLabel {
         if(type){
             super.setText("1000");
             super.setBackground(Color.GREEN);
-            this.vida = 5;
+            this.vida = 1000;
         }
         else{
             super.setText("250");
