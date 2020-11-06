@@ -26,7 +26,7 @@ public class Bar extends JLabel {
         if(type){
             super.setText("1000");
             super.setBackground(Color.GREEN);
-            this.vida = 1000;
+            this.vida = 5;
         }
         else{
             super.setText("250");
@@ -57,8 +57,52 @@ public class Bar extends JLabel {
         int temp = ((valor * 400)/1000);
 
         if(this.getVida()-valor<=0){
+            if(this==gameplayMenu.enemyLifeBar) {
+                gameplayMenu.finishTurnButton.setVisible(false);
+                gameplayMenu.logButton.setVisible(false);
+                gameplayMenu.hideMyCards();
+                gameplayMenu.nextGame.setVisible(true);
+                gameplayMenu.endResult.setText("You Won!");
+                gameplayMenu.endGameMessageLabel.setVisible(true);
+                gameplayMenu.endGameMessageLabel.revalidate();
+                gameplayMenu.endGameMessageLabel.repaint();
+                gameplayMenu.sendMessage = new EndGameMessage(false);
+                gameplayMenu.nextGame.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Window win = SwingUtilities.getWindowAncestor(gameplayMenu.mainPanel);
+                        win.dispose();
+                    }
+                });
 
-            //PONER AQUI LA VARA DE FIN DEL JUEGO
+            }else{
+                gameplayMenu.finishTurnButton.setVisible(false);
+                gameplayMenu.logButton.setVisible(false);
+                gameplayMenu.hideMyCards();
+                gameplayMenu.nextGame.setVisible(true);
+                gameplayMenu.endResult.setText("You Lost.");
+                gameplayMenu.endGameMessageLabel.setVisible(true);
+                gameplayMenu.endGameMessageLabel.revalidate();
+                gameplayMenu.endGameMessageLabel.repaint();
+                gameplayMenu.sendMessage = new EndGameMessage(true);
+
+            }
+
+            try {
+                Socket ClientSocket = new Socket("127.0.0.1", gameplayMenu.opponentSocketNum);
+                DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
+                ObjectMapper objectMapper = new ObjectMapper();
+                String messageJson = objectMapper.writeValueAsString(gameplayMenu.sendMessage);
+                streamOutput.writeUTF(messageJson);
+                streamOutput.close();
+                gameplayMenu.sendMessage = null;
+                gameplayMenu.disableMyCards();
+
+                WaitingState waitingState = new WaitingState(gameplayMenu.getMySocket(), gameplayMenu.finishTurnButton, gameplayMenu, gameplayMenu.opponentSocketNum);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
         }else if(bottom){
             this.setVida(this.getVida()-valor);

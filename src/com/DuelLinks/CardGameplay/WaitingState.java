@@ -216,7 +216,33 @@ public class WaitingState implements Runnable {
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             }else if (objectMapper.readValue(messageReceived, Message.class) instanceof EndGameMessage) {
-                //PONER AQUI LA VARA DE FINAL DEL JUEGO
+                EndGameMessage endGameMessage = (EndGameMessage) objectMapper.readValue(messageReceived,Message.class);
+                if(endGameMessage.isWinner()){
+                    gameplayMenu.finishTurnButton.setVisible(false);
+                    gameplayMenu.logButton.setVisible(false);
+                    gameplayMenu.hideMyCards();
+                    gameplayMenu.nextGame.setVisible(true);
+                    gameplayMenu.endResult.setText("You Won!");
+                    gameplayMenu.endGameMessageLabel.setVisible(true);
+                    gameplayMenu.endGameMessageLabel.revalidate();
+                    gameplayMenu.endGameMessageLabel.repaint();
+                }else{
+                    gameplayMenu.finishTurnButton.setVisible(false);
+                    gameplayMenu.logButton.setVisible(false);
+                    gameplayMenu.hideMyCards();
+                    gameplayMenu.nextGame.setVisible(true);
+                    gameplayMenu.endResult.setText("You Lost.");
+                    gameplayMenu.endGameMessageLabel.setVisible(true);
+                    gameplayMenu.endGameMessageLabel.revalidate();
+                    gameplayMenu.endGameMessageLabel.repaint();
+                }
+                gameplayMenu.nextGame.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Window win = SwingUtilities.getWindowAncestor(gameplayMenu.mainPanel);
+                        win.dispose();
+                    }
+                });
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof WildMonsterMessage) {
                 WildMonsterMessage wildMonsterMessage = (WildMonsterMessage ) objectMapper.readValue(messageReceived, Message.class);
                 gameplayMenu.showBigCard(wildMonsterMessage.getImage1());
