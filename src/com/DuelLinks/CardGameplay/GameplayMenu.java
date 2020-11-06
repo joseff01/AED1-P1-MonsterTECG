@@ -29,13 +29,8 @@ public class GameplayMenu {
      * At. Mariana Navarro Jimenez
      * @return mySocket
      */
-    public ServerSocket getMySocket() {
-        return mySocket;
-    }
 
-    private ServerSocket mySocket;
-
-    private boolean pressed = false;
+    public ServerSocket mySocket;
 
     public JButton finishTurnButton;
 
@@ -55,9 +50,9 @@ public class GameplayMenu {
 
     public boolean myTurn;
 
-    private Card chosenCard;
+    public Card chosenCard;
 
-    private JButton chosenLarge;
+    public JButton chosenLarge;
 
     public JButton nextGame;
 
@@ -67,34 +62,34 @@ public class GameplayMenu {
 
     public DoubleCircularList<Card> myHand = new DoubleCircularList<Card>();
 
-    private JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel myDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
-    private Stack myDeck = new Stack(20);
-    private int myDeckLength = 20;
-    private JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
-    private JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
+    public Stack myDeck = new Stack(20);
+    public int myDeckLength = 20;
+    public JLabel myDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
 
     public int amountMyTrapCards = 0;
     public JLabel myTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
     public JLabel myTrapLengthLabel = new JLabel(String.valueOf(amountMyTrapCards), SwingConstants.CENTER);
 
 
-    private DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
-    private int enemyHandXPosition = 955;
+    public DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
+    public int enemyHandXPosition = 955;
 
     public JLabel opponentDiscardPile = new JLabel(new ImageIcon("Images\\cpAtras.png"));
 
-    private int enemyDeckLength = 20;
-    private JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
-    private JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
+    public int enemyDeckLength = 20;
+    public JLabel enemyDeckLabel = new JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel enemyDeckLengthLabel = new JLabel(String.valueOf(enemyDeckLength), SwingConstants.CENTER);
 
     public int amountEnemyTrapCards = 0;
-    private JLabel enemyTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
-    private JLabel enemyTrapLengthLabel = new JLabel(String.valueOf(amountEnemyTrapCards), SwingConstants.CENTER);
+    public JLabel enemyTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel enemyTrapLengthLabel = new JLabel(String.valueOf(amountEnemyTrapCards), SwingConstants.CENTER);
 
     public DoubleList<String> logList = new DoubleList<String>("The game has started!\n");
 
-    private JButton cardBigLabel;
+    public JButton cardBigLabel;
 
     public Message sendMessage;
 
@@ -447,7 +442,7 @@ public class GameplayMenu {
 
     /**
      * At. Jose Antonio Retana
-     * Agrega cartas a la mano
+     * Agrega una carta a la mano
      */
     public void addCardMyHand() {
         if (myHand.getLength() < 8) {
@@ -607,22 +602,6 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
-     * @return cardBigLabel
-     */
-    public JButton getCardBigLabel() {
-        return cardBigLabel;
-    }
-
-    /**
-     * At.Mariana Navarro JImenez
-     * @param cardBigLabel
-     */
-    public void setCardBigLabel(JButton cardBigLabel) {
-        this.cardBigLabel = cardBigLabel;
-    }
-
-    /**
      * At. Mariana Navarro jimenez
      * @return chosenLarge
      */
@@ -634,14 +613,7 @@ public class GameplayMenu {
      * At. Mariana Navarro Jimenez
      * @return chosenCard
      */
-    public Card getChosenCard() {
-        return chosenCard;
-    }
 
-    /**
-     * At. Mariana Navarro Jimenez
-     * @param chosenCard
-     */
     public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
     }
@@ -652,6 +624,14 @@ public class GameplayMenu {
      */
     public void setChosenLarge(JButton chosenLarge) {
         this.chosenLarge = chosenLarge;
+    }
+
+    /**
+     * At. Mariana Navarro Jimenez
+     * @return mySocket
+     */
+    public ServerSocket getMySocket() {
+        return mySocket;
     }
 
     /**
