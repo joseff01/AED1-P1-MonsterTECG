@@ -15,6 +15,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Random;
 
+/**
+ * At. Jose Antonio Retana y Mariana Navarro Jimenez
+ * Se crea cuando el programa espera a que el oponente termine su turno o envie un mensaje
+ */
 public class WaitingState implements Runnable {
 
     ServerSocket mySocket;
@@ -26,6 +30,15 @@ public class WaitingState implements Runnable {
     int opponentSocketNum;
 
     Card snatchedCard;
+
+    /**
+     * At. Jose Antonio Retana
+     * Se crea un thread que espera a la accion del oponente
+     * @param mySocket
+     * @param finishTurnButton
+     * @param gameplayMenu
+     * @param opponentSocketNum
+     */
 
     public WaitingState(ServerSocket mySocket, JButton finishTurnButton, GameplayMenu gameplayMenu, int opponentSocketNum) {
 
@@ -43,6 +56,11 @@ public class WaitingState implements Runnable {
 
     }
 
+    /**
+     * At. Jose Antonio Retana y Mariana Navarro Jimenez
+     * run implementado del metodo Runnable, utilizado para esperar a aceptar la informacion obtenida del scoekt del oponente.
+     * Al aceptar la informacion retorna al gameplay menu el efecto de la informacion obtenida.
+     */
     @Override
     public void run() {
 
@@ -55,7 +73,6 @@ public class WaitingState implements Runnable {
 
             String messageReceived = (String) StreamInput.readUTF();
 
-            System.out.println(messageReceived);
 
             if (objectMapper.readValue(messageReceived, Message.class) instanceof AttackMessage) {
                 AttackMessage attackMessage = (AttackMessage) objectMapper.readValue(messageReceived, Message.class);

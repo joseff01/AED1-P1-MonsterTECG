@@ -10,6 +10,10 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * At. Jose Antonio Retana
+ *
+ */
 public class SnatchStealWaitingState implements Runnable {
 
     ServerSocket mySocket;
@@ -18,6 +22,13 @@ public class SnatchStealWaitingState implements Runnable {
 
     GameplayMenu gameplayMenu;
 
+    /**
+     * At. Jose Antonio Retana
+     * Espera a recivir un mensaje enviado por el oponente la carta del mismo, y le devuelve un mensaje de confirmación.
+     * @param mySocket
+     * @param finishTurnButton
+     * @param gameplayMenu
+     */
     public SnatchStealWaitingState(ServerSocket mySocket, JButton finishTurnButton, GameplayMenu gameplayMenu) {
 
         this.gameplayMenu = gameplayMenu;

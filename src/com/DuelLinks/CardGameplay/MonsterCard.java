@@ -4,20 +4,36 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
+/**
+ * At. Jose Antonio Retana
+ * Obtiene informacion del archivo Cards.Jason y almacena la informacion;
+ */
 public class MonsterCard extends Card{
 
     private int attackDamage;
 
     private boolean dragon;
 
+    /**
+     * At. Jose Antonio Retana
+     * @return
+     */
     public int getAttackDamage() {
         return attackDamage;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @return
+     */
     public boolean isDragon() {
         return dragon;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @param jsonMonsterCard
+     */
     public MonsterCard(JsonMonsterCard jsonMonsterCard) {
 
         super(new ImageIcon(jsonMonsterCard.getSmallImage()));
@@ -33,6 +49,17 @@ public class MonsterCard extends Card{
 
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @param smallImage
+     * @param largeImage
+     * @param largeImageString
+     * @param cardName
+     * @param attackDamage
+     * @param dragon
+     * @param manaRequirement
+     * @param id
+     */
     public MonsterCard(ImageIcon smallImage,ImageIcon largeImage, String largeImageString, String cardName, int attackDamage, boolean dragon, int manaRequirement, int id) {
         super(smallImage);
         this.setDisabledIcon(smallImage);
@@ -46,7 +73,10 @@ public class MonsterCard extends Card{
         this.setId(id);
     }
 
-
+    /**
+     * At. Jose Antonio Retana
+     * @return
+     */
     public MonsterCard createCopyCard(){
         return new MonsterCard(this.getSmallImage(),this.getLargeImage(),this.getLargeImageString(),this.getCardName(),this.getAttackDamage(),this.isDragon(),this.getManaRequirement(),this.getId());
     }

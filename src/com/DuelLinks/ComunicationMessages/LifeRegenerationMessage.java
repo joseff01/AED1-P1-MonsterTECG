@@ -22,26 +22,50 @@ public class LifeRegenerationMessage extends Message{
 
     public LifeRegenerationMessage(){}
 
+    /**
+     * At. Jose Antonio Retana
+     * @return opponentManaUsed
+     */
     public int getOpponentManaUsed() {
         return opponentManaUsed;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @param opponentManaUsed
+     */
     public void setOpponentManaUsed(int opponentManaUsed) {
         this.opponentManaUsed = opponentManaUsed;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @return
+     */
     public String getCardName() {
         return cardName;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @param cardName
+     */
     public void setCardName(String cardName) {
         this.cardName = cardName;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @return
+     */
     public int getMyLifeGained() {
         return myLifeGained;
     }
 
+    /**
+     * At. Jose Antonio Retana
+     * @param myLifeGained
+     */
     public void setMyLifeGained(int myLifeGained) {
         this.myLifeGained = myLifeGained;
     }
