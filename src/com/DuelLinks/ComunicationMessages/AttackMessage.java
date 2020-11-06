@@ -39,4 +39,12 @@ public class AttackMessage extends Message{
         this.bigCardImageUsed = bigCardImageUsed;
     }
 
+    public String getCardName() {
+        return cardName;
+    }
+
+    public void setCardName(String cardName) {
+        this.cardName = cardName;
+    }
+
 }

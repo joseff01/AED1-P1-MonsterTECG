@@ -2,6 +2,7 @@ package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.ComunicationMessages.*;
 import com.DuelLinks.LinearDataStructures.DoubleCircularList.DoubleCircularList;
+import com.DuelLinks.LinearDataStructures.DoubleList.DoubleList;
 import com.DuelLinks.LinearDataStructures.Stack.Stack;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,21 +23,24 @@ import java.util.Scanner;
 
 public class GameplayMenu {
 
-    private JPanel mainPanel;
+    public JPanel mainPanel;
 
     private ServerSocket mySocket;
 
     private boolean pressed = false;
 
     public JButton finishTurnButton;
-    JButton log;
+
+    public JButton logButton;
 
     public Bar myLifeBar;
     public Bar enemyLifeBar;
     public Bar myManaBar;
     public Bar enemyManaBar;
 
-    private int opponentSocketNum;
+    public JLabel endGameMessageLabel;
+
+    public int opponentSocketNum;
 
     public boolean flagUse = false;
 
@@ -58,8 +64,8 @@ public class GameplayMenu {
     private JLabel myDeckLengthLabel = new JLabel(String.valueOf(myDeckLength), SwingConstants.CENTER);
 
     public int amountMyTrapCards = 0;
-    private JLabel myTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
-    private JLabel myTrapLengthLabel = new JLabel(String.valueOf(amountMyTrapCards), SwingConstants.CENTER);
+    public JLabel myTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
+    public JLabel myTrapLengthLabel = new JLabel(String.valueOf(amountMyTrapCards), SwingConstants.CENTER);
 
 
     private DoubleCircularList<JLabel> enemyHand = new DoubleCircularList<JLabel>();
@@ -74,6 +80,8 @@ public class GameplayMenu {
     public int amountEnemyTrapCards = 0;
     private JLabel enemyTrapCards = new  JLabel(new ImageIcon("Images\\cpAtras.png"));
     private JLabel enemyTrapLengthLabel = new JLabel(String.valueOf(amountEnemyTrapCards), SwingConstants.CENTER);
+
+    public DoubleList<String> logList = new DoubleList<String>("The game has started!\n");
 
     private JButton cardBigLabel;
 
@@ -94,11 +102,11 @@ public class GameplayMenu {
     public volatile boolean flagWildMonster = false;
     int wildNum = 0;
 
-    public volatile boolean flagCurseOfAnubis = false;
-
-    public volatile boolean flagSpellbinding = false;
-
     public volatile boolean flagMagicTriangle = false;
+
+    public volatile boolean flagTrapCurseOfAnubis = false;
+
+    public volatile boolean flagTrapSpellbinding = false;
 
     public volatile boolean flagTrapEyeOfTruth = false;
 
@@ -129,6 +137,11 @@ public class GameplayMenu {
         cardBigLabel.setBorderPainted(false);
         cardBigLabel.setFocusPainted(false);
         gameBackgroundLabel.add(cardBigLabel);
+
+        this.endGameMessageLabel = new JLabel();
+        endGameMessageLabel.setBounds(500,300,400,400);
+        endGameMessageLabel.setVisible(false);
+        gameBackgroundLabel.add(endGameMessageLabel);
 
         try {
             Scanner scanner = new Scanner(new File("json\\Cards.json"));
@@ -216,7 +229,7 @@ public class GameplayMenu {
         opponentDiscardPile.setVisible(false);
         gameBackgroundLabel.add(opponentDiscardPile);
 
-        myHand.addLast(allCards.getValueAt(30));
+        myHand.addLast(allCards.getValueAt(24));
 
         addCardMyHand();
         addCardMyHand();
@@ -228,28 +241,68 @@ public class GameplayMenu {
         addCardEnemyHand();
         addCardEnemyHand();
 
-        myLifeBar = new Bar(true, true);
+        myLifeBar = new Bar(true, true, this);
         myLifeBar.setBounds(10, 360, 55, 400);
         gameBackgroundLabel.add(myLifeBar);
 
-        myManaBar = new Bar(false, true);
+        myManaBar = new Bar(false, true, this);
         myManaBar.setBounds(85, 660, 55, 400);
         gameBackgroundLabel.add(myManaBar);
 
-        enemyManaBar = new Bar(false, false);
+        enemyManaBar = new Bar(false, false, this);
         enemyManaBar.setBounds(1085, 0, 55, 100);
         gameBackgroundLabel.add(enemyManaBar);
 
-        enemyLifeBar = new Bar(true, false);
+        enemyLifeBar = new Bar(true, false, this);
         enemyLifeBar.setBounds(1160, 0, 55, 400);
         gameBackgroundLabel.add(enemyLifeBar);
 
+        logButton = new JButton(new ImageIcon("Images\\record.png"));
+        logButton.setBounds(200, 420, 162, 51);
+        gameBackgroundLabel.add(logButton);
+
+        logButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                disableMyCards();
+                finishTurnButton.setEnabled(false);
+                logButton.setEnabled(false);
+                JFrame logFrame = new JFrame();
+                logFrame.addWindowListener(new WindowAdapter() {
+                    @Override
+                    public void windowClosing(WindowEvent e) {
+                        super.windowClosing(e);
+                        enableMyCards();
+                        finishTurnButton.setEnabled(true);
+                        logButton.setEnabled(true);
+                    }
+                });
+                logFrame.setSize(500,500);
+                logFrame.setLocation(50,50);
+                logFrame.setTitle("Event Log");
+                logFrame.setResizable(true);
+                logFrame.setVisible(true);
+                logFrame.setLayout(new BorderLayout());
+
+                JPanel logPanel = new JPanel();
+                logPanel.setLayout(new BorderLayout());
+                JTextArea logTextArea = new JTextArea();
+                logTextArea.setEditable(false);
+                logTextArea.setLineWrap(true);
+                JScrollPane jScrollPane = new JScrollPane(logTextArea);
+
+                for (int i = 0; i < logList.getLength(); i++){
+                    logTextArea.append(logList.getValueAt(i));
+                }
+
+                logFrame.add(logPanel, BorderLayout.CENTER);
+                logPanel.add(jScrollPane,BorderLayout.CENTER);
+
+            }
+        });
+
         finishTurnButton = new JButton(new ImageIcon("Images\\endTurn.png"));
         finishTurnButton.setBounds(200, 300, 208, 83);
-
-        log = new JButton(new ImageIcon("Images\\record.png"));
-        log.setBounds(200, 420, 162, 51);
-        gameBackgroundLabel.add(log);
 
         class EndTurnEvent implements ActionListener {
 
@@ -278,6 +331,7 @@ public class GameplayMenu {
                         enemyManaBar.gainMana(250, false);
                         addCardEnemyHand();
                     }
+                    flagMagicTriangle = false;
                     WaitingState waitingState = new WaitingState(mySocket, finishTurnButton, gameplayMenu, opponentSocketNum);
 
                 } catch (IOException e) {
@@ -519,10 +573,11 @@ public class GameplayMenu {
                     System.out.println(manaRequirement);
                     if (myManaBar.isEnough(manaRequirement)) {
                         flagDarkGrimoire = false;
-                        if (flagSpellbinding) {
+                        if (flagTrapSpellbinding) {
+                            logList.addLast("The enemy trap card Spellbinding Circle has been activated!\n");
                             sendMessage = new SpellBindingMessage(manaRequirement, "Spellbinding Circle");
                             myManaBar.loseMana(manaRequirement, true);
-                            flagSpellbinding = false;
+                            flagTrapSpellbinding = false;
                             flagUse = true;
                             removeCardMyHand(card);
                             JButton chosencard = getChosenLarge();
@@ -539,6 +594,7 @@ public class GameplayMenu {
                         } else if (card instanceof MonsterCard) {
                             if (flagTrapWrathOfTheStarDragons) {
                                 if (((MonsterCard) card).isDragon()) {
+                                    logList.addLast("The enemy trap card Wrath of The Star Dragons has been activated!\n");
                                     flagTrapWrathOfTheStarDragons = false;
                                     sendMessage = new WrathOfTheStarDragonsMessage(manaRequirement, "Wrath of The Star Dragons");
                                     flagUse = true;
@@ -557,6 +613,7 @@ public class GameplayMenu {
                                     return;
                                 }
                             } else if (flagTrapLifeRegeneration) {
+                                logList.addLast("The enemy trap card Life Regeneration has been activated!\n");
                                 flagTrapLifeRegeneration = false;
                                 sendMessage = new LifeRegenerationMessage(manaRequirement, ((MonsterCard) card).getAttackDamage(), "Life Regeneration");
                                 flagUse = true;
@@ -575,6 +632,7 @@ public class GameplayMenu {
                                 enableMyCards();
                                 return;
                             } else if (flagTrapMirrorForce) {
+                                logList.addLast("The enemy trap card Mirror Force has been activated!\n");
                                 flagTrapMirrorForce = false;
                                 sendMessage = new MirrorForceMessage(manaRequirement, ((MonsterCard) card).getAttackDamage(), "Mirror Force");
                                 showBigCard("Images\\BigCards\\Trap\\MirrorBc.png");
@@ -595,6 +653,7 @@ public class GameplayMenu {
                                             sendMessage = attackMessage;
                                             myManaBar.loseMana(manaRequirement, true);
                                             removeCardMyHand(card);
+                                            logList.addLast("You have attacked the enemy with " + card.getCardName() + " for " + (((MonsterCard) card).getAttackDamage() + 200) + " and lost " + manaRequirement + " mana\n");
                                         } else if (flagScapegoat) {
                                             flagUse = true;
                                             flagScapegoat = false;
@@ -604,6 +663,7 @@ public class GameplayMenu {
                                                 sendMessage = attackMessage;
                                                 myManaBar.loseMana(manaRequirement, true);
                                                 removeCardMyHand(card);
+                                                logList.addLast("You have attacked the enemy with " + card.getCardName() + " for " + ((MonsterCard) card).getAttackDamage() + " and lost " + manaRequirement + " mana \n");
                                             }
                                         } else if (flagWildMonster) {
                                             if (wildNum != 2) {
@@ -646,11 +706,13 @@ public class GameplayMenu {
                                         cardBigLabel.setVisible(false);
                                         finishTurnButton.setEnabled(true);
                                         enableMyCards();
+                                        logList.addLast("You have attacked the enemy with " + card.getCardName() + " for " + ((MonsterCard) card).getAttackDamage() + " and lost " + manaRequirement + " mana \n");
                                     }
                                 }
                             }
                         } else if (card instanceof SpellCard) {
                             if (flagTrapEyeOfTruth) {
+                                logList.addLast("The enemy trap card The Eye Of Truth has been activated!\n");
                                 flagTrapEyeOfTruth = false;
                                 sendMessage = new EyeOfTruthMessage(manaRequirement, 150, "The Eye Of Truth");
                                 flagUse = true;
@@ -667,8 +729,10 @@ public class GameplayMenu {
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
+                                logList.addLast("You have lost 150 life points and wasted "+ card.getManaRequirement()+" mana\n");
 
                             } else if (flagTrapMagesFortress) {
+                                logList.addLast("The enemy trap card Mage's Fortress has been activated!\n");
                                 flagTrapMagesFortress = false;
                                 sendMessage = new MagesFortressMessage(manaRequirement, "Mage's Fortress");
                                 flagUse = true;
@@ -684,6 +748,7 @@ public class GameplayMenu {
                                 finishTurnButton.setEnabled(true);
                                 removeOneEnemyTrapCard();
                                 enableMyCards();
+                                logList.addLast("You have wasted "+ card.getManaRequirement()+" mana\n");
 
                             } else {
                                 myManaBar.loseMana(manaRequirement, true);
@@ -691,18 +756,38 @@ public class GameplayMenu {
                                 sendMessage = spellMessage;
 
                                 if (card.getCardName().equals("Fighting Spirit")) {
+                                    logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
                                     flagFightingSpirit = true;
                                 } else if (card.getCardName().equals("Pot Of Greed")) {
+                                    logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
+                                    logList.addLast("You now have two extra cards!\n");
                                     addCardMyHand();
                                     addCardMyHand();
                                 } else if (card.getCardName().equals("Poison Of The Old Man")) {
                                     Random random = new Random();
                                     int randomInt = random.nextInt(6);
                                     myLifeBar.gainLife((randomInt + 1) * 50, true);
+                                    logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
+                                    logList.addLast("You have gained " + ((randomInt + 1) * 50) + " life points!\n");
                                 } else if (card.getCardName().equals("A Wild Monster Appears!")) {
                                     flagWildMonster = true;
+                                } else if (card.getCardName().equals("Remove Trap")){
+                                    flagTrapWrathOfTheStarDragons = false;
+                                    flagTrapMagesFortress = false;
+                                    flagTrapLifeRegeneration = false;
+                                    flagTrapEyeOfTruth = false;
+                                    flagTrapCurseOfAnubis = false;
+                                    flagTrapMirrorForce = false;
+                                    flagTrapSpellbinding = false;
+                                    flagTrapShadowEye = false;
+                                    amountEnemyTrapCards = 0;
+                                    enemyTrapLengthLabel.setText(String.valueOf(amountEnemyTrapCards));
+                                    enemyTrapCards.setVisible(false);
+                                    logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
+                                    logList.addLast("All the set enemy trap cards disappeared!\n");
                                 } else if (card.getCardName().equals("Snatch Steal")) {
                                     try {
+                                        logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
                                         Socket ClientSocket = new Socket("127.0.0.1", opponentSocketNum);
                                         DataOutputStream streamOutput = new DataOutputStream(ClientSocket.getOutputStream());
                                         ObjectMapper objectMapper = new ObjectMapper();
@@ -729,21 +814,23 @@ public class GameplayMenu {
                                     } catch (IOException j) {
                                         j.printStackTrace();
                                     }
+                                } else {
+                                    logList.addLast("You have activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                                 }
-                            }
-                            flagUse = true;
-                            removeCardMyHand(card);
-                            JButton chosencard = getChosenLarge();
-                            chosencard.setIcon(null);
-                            setChosenCard(null);
-                            gameBackgroundLabel.remove(backButton);
-                            gameBackgroundLabel.remove(useButton);
-                            gameBackgroundLabel.revalidate();
-                            gameBackgroundLabel.repaint();
-                            cardBigLabel.setVisible(false);
-                            finishTurnButton.setEnabled(true);
-                            enableMyCards();
 
+                                flagUse = true;
+                                removeCardMyHand(card);
+                                JButton chosencard = getChosenLarge();
+                                chosencard.setIcon(null);
+                                setChosenCard(null);
+                                gameBackgroundLabel.remove(backButton);
+                                gameBackgroundLabel.remove(useButton);
+                                gameBackgroundLabel.revalidate();
+                                gameBackgroundLabel.repaint();
+                                cardBigLabel.setVisible(false);
+                                finishTurnButton.setEnabled(true);
+                                enableMyCards();
+                            }
 
                         }else if (card instanceof TrapCard) {
 
@@ -763,6 +850,7 @@ public class GameplayMenu {
                             addOneMyTrapCard();
                             gameBackgroundLabel.revalidate();
                             gameBackgroundLabel.repaint();
+                            logList.addLast("You have set the trap card " + card.getCardName()+ " on the battlefield and lost " + card.getManaRequirement() + " mana\n");
                         }
 
                     }

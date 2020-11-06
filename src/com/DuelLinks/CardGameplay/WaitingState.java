@@ -1,9 +1,13 @@
 package com.DuelLinks.CardGameplay;
 
 import com.DuelLinks.ComunicationMessages.*;
+import com.DuelLinks.MainMenu.Main;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -63,6 +67,7 @@ public class WaitingState implements Runnable {
                 gameplayMenu.enemyManaBar.loseMana(attackMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
+                gameplayMenu.logList.addLast("You have been attacked by the enemy with " + attackMessage.getCardName() + " using " + attackMessage.getOpponentManaUsed() + " mana and dealing " + attackMessage.getMyDamageTaken() + " damage!\n");
 
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof SpellMessage) {
                 SpellMessage spellMessage = (SpellMessage) objectMapper.readValue(messageReceived, Message.class);
@@ -72,16 +77,32 @@ public class WaitingState implements Runnable {
                 gameplayMenu.closeCardFlag = false;
 
                 if (spellMessage.getCardName().equals("Dark World Grimoire")) {
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                     gameplayMenu.flagDarkGrimoire = true;
                 } else if (spellMessage.getCardName().equals("Magic Triangle Of The Ice Barrier")) {
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                     gameplayMenu.flagMagicTriangle = true;
                 } else if (spellMessage.getCardName().equals("Pot Of Greed")) {
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
+                    gameplayMenu.logList.addLast("He has added two extra cards to his hand\n");
                     gameplayMenu.addCardEnemyHand();
                     gameplayMenu.addCardEnemyHand();
                 } else if (spellMessage.getCardName().equals("Scapegoat")) {
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                     gameplayMenu.flagScapegoat = true;
                 } else if (spellMessage.getCardName().equals("Messanger Of Peace")) {
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                     gameplayMenu.flagMessengerOfPeace = true;
+                } else if (spellMessage.getCardName().equals("Remove Trap")){
+                    gameplayMenu.amountMyTrapCards = 0;
+                    gameplayMenu.myTrapLengthLabel.setText(String.valueOf(gameplayMenu.amountMyTrapCards));
+                    gameplayMenu.myTrapCards.setVisible(false);
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
+                    gameplayMenu.logList.addLast("All your set trap cards have vanished!?!\n");
+
+
+                } else{
+                    gameplayMenu.logList.addLast("The enemy has activated the spell card " + spellMessage.getCardName() + " using " + spellMessage.getOpponentManaUsed() + " mana\n");
                 }
                 gameplayMenu.enemyManaBar.loseMana(spellMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
@@ -112,6 +133,7 @@ public class WaitingState implements Runnable {
                     gameplayMenu.enemyManaBar.loseMana(snatchStealMessage.getOpponentManaUsed(), false);
                     gameplayMenu.removeCardMyHand(snatchedCard);
                     gameplayMenu.opponentDiscardPile.setVisible(true);
+                    gameplayMenu.logList.addLast("The enemy has stolen the card " + snatchedCard.getCardName() + " and has lost " + snatchStealMessage.getOpponentManaUsed() + "\n");
                 }
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof TrapMessage) {
                 TrapMessage trapMessage = (TrapMessage) objectMapper.readValue(messageReceived, Message.class);
@@ -126,15 +148,18 @@ public class WaitingState implements Runnable {
                 } else if (trapMessage.getCardName().equals("Wrath of The Star Dragons")) {
                     gameplayMenu.flagTrapWrathOfTheStarDragons = true;
                 } else if (trapMessage.getCardName().equals("Spellbinding Circle")) {
-                    gameplayMenu.flagSpellbinding = true;
+                    gameplayMenu.flagTrapSpellbinding = true;
                 } else if (trapMessage.getCardName().equals("Shadow Of Eyes")) {
                     gameplayMenu.flagTrapShadowEye = true;
                 }
                 gameplayMenu.addOneEnemyTrapCard();
                 gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
+                gameplayMenu.logList.addLast("The enemy has set a trap card and lost " + trapMessage.getOpponentManaUsed() + " mana\n");
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof EyeOfTruthMessage) {
                 EyeOfTruthMessage trapActivatedMessage = (EyeOfTruthMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost " + trapActivatedMessage.getOpponentLifeLost() + " life points and lost "+ trapActivatedMessage.getOpponentManaUsed() +"mana\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.enemyLifeBar.loseVida(trapActivatedMessage.getOpponentLifeLost(), false);
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
@@ -142,6 +167,8 @@ public class WaitingState implements Runnable {
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof LifeRegenerationMessage) {
                 LifeRegenerationMessage trapActivatedMessage = (LifeRegenerationMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost "+ trapActivatedMessage.getOpponentManaUsed() +" mana, and you have gained "+ trapActivatedMessage.getMyLifeGained() +" life points\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.myLifeBar.gainLife(trapActivatedMessage.getMyLifeGained(), true);
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
@@ -149,18 +176,24 @@ public class WaitingState implements Runnable {
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof SpellBindingMessage) {
                 SpellBindingMessage trapActivatedMessage = (SpellBindingMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost "+ trapActivatedMessage.getOpponentManaUsed() +" mana\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof MagesFortressMessage) {
                 MagesFortressMessage trapActivatedMessage = (MagesFortressMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost "+ trapActivatedMessage.getOpponentManaUsed() +" mana\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof MirrorForceMessage) {
                 MirrorForceMessage trapActivatedMessage = (MirrorForceMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost " + trapActivatedMessage.getOpponentLifeLost() + " life points and lost "+ trapActivatedMessage.getOpponentManaUsed() +"mana\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.enemyLifeBar.loseVida(trapActivatedMessage.getOpponentLifeLost(), false);
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
@@ -168,17 +201,24 @@ public class WaitingState implements Runnable {
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof WrathOfTheStarDragonsMessage) {
                 WrathOfTheStarDragonsMessage trapActivatedMessage = (WrathOfTheStarDragonsMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost "+ trapActivatedMessage.getOpponentManaUsed() +" mana\n");
                 gameplayMenu.removeOneMyTrapCard();
                 gameplayMenu.enemyManaBar.loseMana(trapActivatedMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof ShadowOfEyesMessage) {
+                ShadowOfEyesMessage trapActivatedMessage = (ShadowOfEyesMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
+                        + " and lost "+ trapActivatedMessage.getOpponentManaUsed() +" mana\n");
                 gameplayMenu.enemyManaBar.loseMana(1000, false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
 
-
+            }else if (objectMapper.readValue(messageReceived, Message.class) instanceof EndGameMessage) {
+                //PONER AQUI LA VARA DE FINAL DEL JUEGO
             }
+
             gameplayMenu.flagUse = false;
             gameplayMenu.enableMyCards();
 

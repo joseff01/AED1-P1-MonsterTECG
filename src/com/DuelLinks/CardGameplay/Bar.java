@@ -1,15 +1,28 @@
 package com.DuelLinks.CardGameplay;
 
+import com.DuelLinks.ComunicationMessages.EndGameMessage;
+import com.DuelLinks.MainMenu.Main;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
 
 public class Bar extends JLabel {
-    boolean loose;
+    boolean lose;
 
     int vida;
     int mana;
 
-    public Bar(boolean type,boolean my) {
+    GameplayMenu gameplayMenu;
+
+    public Bar(boolean type,boolean my, GameplayMenu gameplayMenu) {
+        this.gameplayMenu = gameplayMenu;
+
         if(type){
             super.setText("1000");
             super.setBackground(Color.GREEN);
@@ -44,9 +57,10 @@ public class Bar extends JLabel {
         int temp = ((valor * 400)/1000);
 
         if(this.getVida()-valor<=0){
-            loose = true;
-        }
-        else if(bottom){
+
+            //PONER AQUI LA VARA DE FIN DEL JUEGO
+
+        }else if(bottom){
             this.setVida(this.getVida()-valor);
             this.setBounds(this.getX(), this.getY()+temp,this.getWidth(),this.getHeight());
             this.setText(Integer.toString(getVida()));

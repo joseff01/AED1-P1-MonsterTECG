@@ -70,6 +70,8 @@ public class SnatchStealWaitingState implements Runnable {
 
             EntrySocket.close();
 
+            gameplayMenu.logList.addLast("You have stolen the card "+ card.getCardName() + "from the enemy!");
+
         } catch (IOException e) {
             e.printStackTrace();
         }
