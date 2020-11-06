@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = AttackMessage.class, name = "AttackMessage"),
+        @JsonSubTypes.Type(value = WildMonsterMessage.class, name = "A Wild Monster Appears!"),
         @JsonSubTypes.Type(value = SpellMessage.class, name = "SpellMessage"),
         @JsonSubTypes.Type(value = TrapMessage.class, name = "TrapMessage"),
         @JsonSubTypes.Type(value = EyeOfTruthMessage.class, name = "EyeOfTruthMessage"),
@@ -16,9 +17,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = WrathOfTheStarDragonsMessage.class, name = "WrathOfTheStarDragonsMessage"),
         @JsonSubTypes.Type(value = LifeRegenerationMessage.class, name = "LifeRegenerationMessage"),
         @JsonSubTypes.Type(value = SnatchStealMessage.class, name = "SnatchStealMessage"),
-        @JsonSubTypes.Type(value = SpellBindingMessage.class, name = "SpellBindingMessage"),
-        @JsonSubTypes.Type(value = ShadowOfEyesMessage.class, name = "ShadowOfEyesMessage"),
+        @JsonSubTypes.Type(value = CurseOfAnubisMessage.class, name = "Curse Of Anubis")
         @JsonSubTypes.Type(value = EndGameMessage.class, name = "EndGameMessage")
+        @JsonSubTypes.Type(value = ShadowOfEyesMessage.class, name = "ShadowOfEyesMessage"),
+        @JsonSubTypes.Type(value = SpellBindingMessage.class, name = "SpellBindingMessage"),
 })
 
 public abstract class Message {}

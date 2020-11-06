@@ -29,7 +29,7 @@
 {"smallImage":"Images\\SmallCards\\Spell\\cpRemoveT.png", "largeImage":"Images\\BigCards\\Spell\\RemoveBc.png", "manaRequirement": 250, "name": "Remove Trap", "id": 28 }
 {"smallImage":"Images\\SmallCards\\Spell\\cpSkapeG.png", "largeImage":"Images\\BigCards\\Spell\\ScapegoatBc.png", "manaRequirement": 25, "name": "Scapegoat", "id": 29 }
 {"smallImage":"Images\\SmallCards\\Spell\\cpSnatch.png", "largeImage":"Images\\BigCards\\Spell\\Steal.png", "manaRequirement": 50, "name": "Snatch Steal", "id": 30 }
-{"smallImage":"Images\\SmallCards\\Spell\\cpWildM.png", "largeImage":"Images\\BigCards\\Spell\\WildMonsterBc.png", "manaRequirement": 800, "name": "A Wild Monster Appears!", "id": 31 }
+{"smallImage":"Images\\SmallCards\\Spell\\cpWildM.png", "largeImage":"Images\\BigCards\\Spell\\WildMonsterBc.png", "manaRequirement": 20, "name": "A Wild Monster Appears!", "id": 31 }
 {"smallImage":"Images\\SmallCards\\Trap\\cpEyeTruth.png", "largeImage":"Images\\BigCards\\Trap\\EyeTruthBc.png", "manaRequirement": 250, "name": "The Eye Of Truth", "id": 32 }
 {"smallImage":"Images\\SmallCards\\Trap\\cpLifeRegen.png", "largeImage":"Images\\BigCards\\Trap\\LifeRegeBc.png", "manaRequirement": 300, "name": "Life Regeneration", "id": 33 }
 {"smallImage":"Images\\SmallCards\\Trap\\cpMagesFort.png", "largeImage":"Images\\BigCards\\Trap\\MageFortBc.png", "manaRequirement": 250, "name": "Mage's Fortress", "id": 34 }

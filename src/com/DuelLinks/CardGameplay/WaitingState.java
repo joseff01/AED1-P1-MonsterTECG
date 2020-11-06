@@ -214,9 +214,69 @@ public class WaitingState implements Runnable {
                 gameplayMenu.enemyManaBar.loseMana(1000, false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.opponentDiscardPile.setVisible(true);
-
             }else if (objectMapper.readValue(messageReceived, Message.class) instanceof EndGameMessage) {
                 //PONER AQUI LA VARA DE FINAL DEL JUEGO
+            }
+            } else if (objectMapper.readValue(messageReceived, Message.class) instanceof WildMonsterMessage) {
+                WildMonsterMessage wildMonsterMessage = (WildMonsterMessage ) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.showBigCard(wildMonsterMessage.getImage1());
+                if(wildMonsterMessage.getImage2()==null){
+                    while(!gameplayMenu.closeCardFlag){}
+                    gameplayMenu.closeCardFlag = false;
+            
+
+                    gameplayMenu.myLifeBar.loseVida(wildMonsterMessage.getMyDamageTaken(),true);
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+
+                }else if(wildMonsterMessage.getImage3()==null) {
+                    while (!gameplayMenu.closeCardFlag) {
+                    }
+                    gameplayMenu.closeCardFlag = false;
+
+                    gameplayMenu.showBigCard(wildMonsterMessage.getImage2());
+                    while (!gameplayMenu.closeCardFlag) {}
+                    gameplayMenu.closeCardFlag = false;
+
+                    gameplayMenu.myLifeBar.loseVida(wildMonsterMessage.getMyDamageTaken(), true);
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+                    gameplayMenu.removeCardEnemyHand();
+
+                    if (wildMonsterMessage.getImage2() == null) {
+                        while (!gameplayMenu.closeCardFlag) {
+                        }
+                        gameplayMenu.closeCardFlag = false;
+
+                        gameplayMenu.myLifeBar.loseVida(wildMonsterMessage.getMyDamageTaken(), true);
+                        gameplayMenu.opponentDiscardPile.setVisible(true);
+                    }
+                }
+                else {
+                    while (!gameplayMenu.closeCardFlag) {
+                    }
+                    gameplayMenu.closeCardFlag = false;
+
+                    gameplayMenu.showBigCard(wildMonsterMessage.getImage2());
+                    while (!gameplayMenu.closeCardFlag) {
+                    }
+                    gameplayMenu.closeCardFlag = false;
+
+                    gameplayMenu.showBigCard(wildMonsterMessage.getImage3());
+                    while (!gameplayMenu.closeCardFlag) {
+                    }
+                    gameplayMenu.closeCardFlag = false;
+
+                    gameplayMenu.myLifeBar.loseVida(wildMonsterMessage.getMyDamageTaken(), true);
+                    gameplayMenu.opponentDiscardPile.setVisible(true);
+
+                    gameplayMenu.removeCardEnemyHand();
+                    gameplayMenu.removeCardEnemyHand();
+                }
+            }else if (objectMapper.readValue(messageReceived, Message.class) instanceof CurseOfAnubisMessage) {
+                CurseOfAnubisMessage curseOfAnubis = (CurseOfAnubisMessage) objectMapper.readValue(messageReceived, Message.class);
+                gameplayMenu.showBigCard(curseOfAnubis.getImageAnubis());
+                while (!gameplayMenu.closeCardFlag) {
+                }
+                gameplayMenu.closeCardFlag = false;
             }
 
             gameplayMenu.flagUse = false;
