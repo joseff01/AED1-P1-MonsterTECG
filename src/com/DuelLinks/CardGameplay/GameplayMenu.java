@@ -25,6 +25,11 @@ public class GameplayMenu {
 
     public JPanel mainPanel;
 
+    public ServerSocket getMySocket() {
+        return mySocket;
+    }
+
+
     private ServerSocket mySocket;
 
     private boolean pressed = false;
@@ -39,6 +44,7 @@ public class GameplayMenu {
     public Bar enemyManaBar;
 
     public JLabel endGameMessageLabel;
+    public JLabel endResult;
 
     public int opponentSocketNum;
 
@@ -49,6 +55,8 @@ public class GameplayMenu {
     private Card chosenCard;
 
     private JButton chosenLarge;
+
+    public JButton nextGame;
 
     public JLabel gameBackgroundLabel;
 
@@ -100,6 +108,7 @@ public class GameplayMenu {
     public volatile boolean flagDarkGrimoire = false;
 
     public volatile boolean flagWildMonster = false;
+
     boolean onlyMonsters = false;
     int wildNum = 0;
     int suma = 0;
@@ -148,10 +157,25 @@ public class GameplayMenu {
         cardBigLabel.setFocusPainted(false);
         gameBackgroundLabel.add(cardBigLabel);
 
-        this.endGameMessageLabel = new JLabel();
-        endGameMessageLabel.setBounds(500,300,400,400);
+        this.nextGame = new JButton("End Game");
+        nextGame.setBounds(545,400,180,100);
+        nextGame.setFont(new Font("Arial Black", Font.PLAIN, 25));
+        nextGame.setVisible(false);
+        gameBackgroundLabel.add(nextGame);
+        this.endGameMessageLabel = new JLabel(new ImageIcon("Images\\endResult.png"));
+        endGameMessageLabel.setBounds(0,0,1250,800);
         endGameMessageLabel.setVisible(false);
         gameBackgroundLabel.add(endGameMessageLabel);
+
+        this.endResult =  new JLabel();
+        endResult.setBounds(485,100,400,150);
+        endResult.setFont(new Font("Arial Black", Font.PLAIN, 60));
+        endResult.setForeground(Color.WHITE);
+        endGameMessageLabel.add(endResult);
+
+
+
+
 
         try {
             Scanner scanner = new Scanner(new File("json\\Cards.json"));
@@ -466,6 +490,11 @@ public class GameplayMenu {
     public void disableMyCards(){
         for (int i = 0; i < myHand.getLength(); i++) {
             myHand.getValueAt(i).setEnabled(false);
+        }
+    }
+    public void hideMyCards(){
+        for (int i = 0; i < myHand.getLength(); i++) {
+            myHand.getValueAt(i).setVisible(false);
         }
     }
 
