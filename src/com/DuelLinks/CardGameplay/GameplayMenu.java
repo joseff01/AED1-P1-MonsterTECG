@@ -129,6 +129,8 @@ public class GameplayMenu {
 
     public volatile boolean flagTrapShadowEye = false;
 
+    public volatile boolean flagMagicTriangle = false;
+
 
     public GameplayMenu(JPanel mainPanel, ServerSocket mySocket, int opponentSocketNum, boolean myTurn) {
 
@@ -934,6 +936,7 @@ public class GameplayMenu {
                                         finishTurnButton.setEnabled(true);
                                         removeOneEnemyTrapCard();
                                         enableMyCards();
+                                        logList.addLast("You have lost 150 life points and wasted "+ card.getManaRequirement()+" mana\n");
                                     }
 
                                 } else if (flagTrapMagesFortress) {
@@ -955,9 +958,9 @@ public class GameplayMenu {
                                         removeOneMyTrapCard();
                                         removeOneEnemyTrapCard();
                                     } else {
+                                        logList.addLast("The enemy trap card Mage's Fortress has been activated!\n");
                                         flagTrapMagesFortress = false;
                                         sendMessage = new MagesFortressMessage(manaRequirement, "Mage's Fortress");
-
                                         removeCardMyHand(card);
                                         JButton chosencard = getChosenLarge();
                                         chosencard.setIcon(null);
@@ -970,6 +973,7 @@ public class GameplayMenu {
                                         finishTurnButton.setEnabled(true);
                                         removeOneEnemyTrapCard();
                                         enableMyCards();
+                                        logList.addLast("You have wasted "+ card.getManaRequirement()+" mana\n");
                                     }
 
                                 } else {
@@ -990,9 +994,9 @@ public class GameplayMenu {
                                     flagTrapMagesFortress = false;
                                     flagTrapLifeRegeneration = false;
                                     flagTrapEyeOfTruth = false;
-                                    flagTrapCurseOfAnubis = false;
+                                    flagCurseOfAnubis= false;
                                     flagTrapMirrorForce = false;
-                                    flagTrapSpellbinding = false;
+                                    flagSpellbinding = false;
                                     amountEnemyTrapCards = 0;
                                     flagTrapShadowEye = false;
                                     enemyTrapLengthLabel.setText(String.valueOf(amountEnemyTrapCards));
@@ -1001,10 +1005,10 @@ public class GameplayMenu {
                                     logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
                                     } else if (card.getCardName().equals("Poison Of The Old Man")) {
                                         logList.addLast("You have activated the spell card " + card.getCardName() + " and lost " + card.getManaRequirement() + " mana\n");
-                                        logList.addLast("You have gained " + ((randomInt + 1) * 50) + " life points!\n");
                                         Random random = new Random();
                                         int randomInt = random.nextInt(6);
                                         myLifeBar.gainLife((randomInt + 1) * 50, true);
+                                        logList.addLast("You have gained " + ((randomInt + 1) * 50) + " life points!\n");
                                     } else if (card.getCardName().equals("A Wild Monster Appears!")) {
                                         flagWildMonster = true;
                                     } else if (card.getCardName().equals("Snatch Steal")) {
@@ -1099,14 +1103,14 @@ public class GameplayMenu {
                                 cardBigLabel.setVisible(false);
                                 finishTurnButton.setEnabled(true);
                                 enableMyCards();
-                                logList.addLast("You have set the trap card " + card.getCardName()+ " on the battlefield and lost " + card.getManaRequirement() + " mana\n");
-                                    
+                                logList.addLast("You have set the trap card " + card.getCardName() + " on the battlefield and lost " + card.getManaRequirement() + " mana\n");
+
                                 addOneMyTrapCard();
                                 gameBackgroundLabel.revalidate();
                                 gameBackgroundLabel.repaint();
                             }
 
-
+                        }
                     }
                 }
 

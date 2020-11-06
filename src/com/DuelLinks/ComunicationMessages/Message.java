@@ -17,10 +17,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = WrathOfTheStarDragonsMessage.class, name = "WrathOfTheStarDragonsMessage"),
         @JsonSubTypes.Type(value = LifeRegenerationMessage.class, name = "LifeRegenerationMessage"),
         @JsonSubTypes.Type(value = SnatchStealMessage.class, name = "SnatchStealMessage"),
-        @JsonSubTypes.Type(value = CurseOfAnubisMessage.class, name = "Curse Of Anubis")
-        @JsonSubTypes.Type(value = EndGameMessage.class, name = "EndGameMessage")
+        @JsonSubTypes.Type(value = CurseOfAnubisMessage.class, name = "Curse Of Anubis"),
+        @JsonSubTypes.Type(value = EndGameMessage.class, name = "EndGameMessage"),
         @JsonSubTypes.Type(value = ShadowOfEyesMessage.class, name = "ShadowOfEyesMessage"),
-        @JsonSubTypes.Type(value = SpellBindingMessage.class, name = "SpellBindingMessage"),
+        @JsonSubTypes.Type(value = SpellBindingMessage.class, name = "SpellBindingMessage")
 })
 
 public abstract class Message {}

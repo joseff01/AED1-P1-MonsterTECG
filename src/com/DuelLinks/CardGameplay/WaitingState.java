@@ -148,7 +148,7 @@ public class WaitingState implements Runnable {
                 } else if (trapMessage.getCardName().equals("Wrath of The Star Dragons")) {
                     gameplayMenu.flagTrapWrathOfTheStarDragons = true;
                 } else if (trapMessage.getCardName().equals("Spellbinding Circle")) {
-                    gameplayMenu.flagTrapSpellbinding = true;
+                    gameplayMenu.flagSpellbinding = true;
                 } else if (trapMessage.getCardName().equals("Shadow Of Eyes")) {
                     gameplayMenu.flagTrapShadowEye = true;
                 }
@@ -156,6 +156,7 @@ public class WaitingState implements Runnable {
                 gameplayMenu.enemyManaBar.loseMana(trapMessage.getOpponentManaUsed(), false);
                 gameplayMenu.removeCardEnemyHand();
                 gameplayMenu.logList.addLast("The enemy has set a trap card and lost " + trapMessage.getOpponentManaUsed() + " mana\n");
+
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof EyeOfTruthMessage) {
                 EyeOfTruthMessage trapActivatedMessage = (EyeOfTruthMessage) objectMapper.readValue(messageReceived, Message.class);
                 gameplayMenu.logList.addLast("The enemy has activated your trap card " + trapActivatedMessage.getCardName()
@@ -216,7 +217,6 @@ public class WaitingState implements Runnable {
                 gameplayMenu.opponentDiscardPile.setVisible(true);
             }else if (objectMapper.readValue(messageReceived, Message.class) instanceof EndGameMessage) {
                 //PONER AQUI LA VARA DE FINAL DEL JUEGO
-            }
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof WildMonsterMessage) {
                 WildMonsterMessage wildMonsterMessage = (WildMonsterMessage ) objectMapper.readValue(messageReceived, Message.class);
                 gameplayMenu.showBigCard(wildMonsterMessage.getImage1());
