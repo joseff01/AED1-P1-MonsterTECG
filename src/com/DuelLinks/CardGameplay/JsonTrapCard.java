@@ -1,6 +1,6 @@
 package com.DuelLinks.CardGameplay;
 /**
- * At. Jose Antonio Retana
+ * @author Jose Antonio Retana
  * Obtiene informacion del archivo Cards.Jason y almacena la informacion;
  */
 public class JsonTrapCard {
@@ -16,7 +16,7 @@ public class JsonTrapCard {
     private String id;
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImg
      * @param largeImg
      * @param manaReq
@@ -42,7 +42,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @authort. Jose Antonio Retana
      * @return
      */
     public String getSmallImage() {
@@ -50,7 +50,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      */
     public void setSmallImage(String smallImage) {
@@ -58,7 +58,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getLargeImage() {
@@ -66,7 +66,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param largeImage
      */
     public void setLargeImage(String largeImage) {
@@ -74,7 +74,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getManaRequirement() {
@@ -82,7 +82,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param manaRequirement
      */
     public void setManaRequirement(int manaRequirement) {
@@ -90,7 +90,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getName() {
@@ -98,7 +98,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param name
      */
     public void setName(String name) {
@@ -106,7 +106,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getId() {
@@ -114,7 +114,7 @@ public class JsonTrapCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param id
      */
     public void setId(String id) {

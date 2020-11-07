@@ -3,12 +3,12 @@ package com.DuelLinks.CardGameplay;
 import javax.swing.*;
 
 /**
- * At. Jose Antonio Retana
+ * @author Jose Antonio Retana
  * Obtiene informacion del archivo Cards.Jason y almacena la informacion;
  */
 public class SpellCard extends Card{
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param jsonSpellCard
      */
     public SpellCard(JsonSpellCard jsonSpellCard){
@@ -26,7 +26,7 @@ public class SpellCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      * @param largeImage
      * @param largeImageString
@@ -46,7 +46,7 @@ public class SpellCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public SpellCard createCopyCard(){

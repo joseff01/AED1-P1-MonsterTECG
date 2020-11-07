@@ -347,7 +347,7 @@ public class GameplayMenu {
             GameplayMenu gameplayMenu;
 
             /**
-             * At. Jose Antonio Retana
+             * @author Jose Antonio Retana
              * @param gameplayMenu
              */
             public EndTurnEvent(GameplayMenu gameplayMenu) {
@@ -411,7 +411,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Elimina cartas la mano
      */
     private void removeMyHand() {
@@ -424,7 +424,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Muestra cartas que se tienen en la mano
      */
     private void displayMyHand() {
@@ -441,8 +441,8 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
-     * Agrega una carta a la mano
+     * @author Jose Antonio Retana
+     * Agrega cartas a la mano
      */
     public void addCardMyHand() {
         if (myHand.getLength() < 8) {
@@ -459,7 +459,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Agregaa una carta especifica a la mano
      * @param card
      * @param addActionListener
@@ -477,7 +477,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Eliminca una carta de la mano
      * @param card
      */
@@ -491,7 +491,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * elimina una carto de la mano enemiga
      */
     public void removeCardEnemyHand() {
@@ -503,7 +503,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Agrega una carta a la mano enemiga
      */
     public void addCardEnemyHand() {
@@ -524,7 +524,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Desactiva las cartas de la mano del jugador
      */
     public void disableMyCards(){
@@ -534,7 +534,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * Esconde las cartas del jugador
      */
     public void hideMyCards(){
@@ -544,7 +544,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * habilita las cartas de jugador
      */
     public void enableMyCards(){
@@ -554,7 +554,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * agrega una trap card al mazo del jugador
      */
     public void addOneMyTrapCard(){
@@ -564,7 +564,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * elimina una trap card del mazo del jugador
      */
     public void removeOneMyTrapCard(){
@@ -578,7 +578,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Agrega una trap card al mazo del contrincante
      */
     public void addOneEnemyTrapCard(){
@@ -588,7 +588,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Elimina una trap card del mazo del contrincante
      */
     public void removeOneEnemyTrapCard(){
@@ -602,7 +602,23 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Mariana Navarro jimenez
+     * @author Mariana Navarro Jimenez
+     * @return cardBigLabel
+     */
+    public JButton getCardBigLabel() {
+        return cardBigLabel;
+    }
+
+    /**
+     * @authorMariana Navarro JImenez
+     * @param cardBigLabel
+     */
+    public void setCardBigLabel(JButton cardBigLabel) {
+        this.cardBigLabel = cardBigLabel;
+    }
+
+    /**
+     * @author Mariana Navarro jimenez
      * @return chosenLarge
      */
     public JButton getChosenLarge() {
@@ -610,32 +626,28 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @return chosenCard
      */
 
+  
     public void setChosenCard(Card chosenCard) {
         this.chosenCard = chosenCard;
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param chosenLarge
      */
     public void setChosenLarge(JButton chosenLarge) {
         this.chosenLarge = chosenLarge;
     }
-
-    /**
-     * At. Mariana Navarro Jimenez
-     * @return mySocket
-     */
-    public ServerSocket getMySocket() {
+    
+public ServerSocket getMySocket() {
         return mySocket;
     }
-
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Muestra en pantalla la carta Grande seleccionada
      * @param cardStringPath
      */
@@ -662,7 +674,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Crea una instancia de la calse SnatchSteal WaitingState
      */
     public void startSnatchStealWaitingState(){
@@ -670,7 +682,7 @@ public class GameplayMenu {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * Implementa el action listener utilizado para los botones generados por la clase Card
      */
     public class CardClick implements ActionListener {
@@ -679,7 +691,7 @@ public class GameplayMenu {
         JButton useButton;
 
         /**
-         * At. Mariana Navarro Jimenez
+         * @author Mariana Navarro Jimenez
          * Permite que la carta grande sea visible y crea dos botones, back y useButton
          * @param e
          */
@@ -698,7 +710,7 @@ public class GameplayMenu {
             useButton.setBounds(890, 300, 162, 51);
             useButton.addActionListener(new ActionListener() {
                 /**
-                 * At. Mariana Navarro Jimenez y Jose Antonio Retana
+                 * @author Mariana Navarro Jimenez y Jose Antonio Retana
                  * Retorna los efectos de las cartas seleccionadas y crea un Mensaje Jason
                  * @param e
                  */
@@ -1244,7 +1256,7 @@ public class GameplayMenu {
             backButton.setBounds(890, 360, 162, 51);
             backButton.addActionListener(new ActionListener() {
                 /**
-                 * At. Mariana Navarro Jimenez
+                 * @author Mariana Navarro Jimenez
                  * Esconde la carta activada por el boton original
                  * @param e
                  */

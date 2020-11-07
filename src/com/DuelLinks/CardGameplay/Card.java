@@ -19,7 +19,7 @@ public abstract class Card extends JButton {
     private int id;
 
     /**
-     * At. Jose Antonio Retana
+     *  @author Jose Antonio Retana
      * @param icon
      */
     public Card(ImageIcon icon) {
@@ -29,7 +29,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getManaRequirement() {
@@ -37,7 +37,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param manaRequirement
      */
     public void setManaRequirement(int manaRequirement) {
@@ -45,7 +45,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public ImageIcon getSmallImage() {
@@ -53,7 +53,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      */
     public void setSmallImage(ImageIcon smallImage) {
@@ -61,7 +61,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public ImageIcon getLargeImage() {
@@ -69,7 +69,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param largeImage
      */
     public void setLargeImage(ImageIcon largeImage) {
@@ -77,7 +77,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getLargeImageString() {
@@ -85,7 +85,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param largeImageString
      */
     public void setLargeImageString(String largeImageString) {
@@ -93,7 +93,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getCardName() {
@@ -101,7 +101,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param cardName
      */
     public void setCardNameString(String cardName) {
@@ -109,7 +109,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param cardName
      */
     public void setCardName(String cardName) {
@@ -117,7 +117,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getId() {
@@ -125,7 +125,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param id
      */
     public void setId(int id) {
@@ -133,7 +133,7 @@ public abstract class Card extends JButton {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param o
      * @return
      */

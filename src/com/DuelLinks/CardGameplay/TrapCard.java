@@ -2,12 +2,12 @@ package com.DuelLinks.CardGameplay;
 
 import javax.swing.*;
 /**
- * At. Jose Antonio Retana
+ * @author Jose Antonio Retana
  * Obtiene informacion del archivo Cards.Jason y almacena la informacion;
  */
 public class TrapCard extends Card{
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param jsonTrapCard
      */
     public TrapCard(JsonTrapCard jsonTrapCard){
@@ -24,7 +24,7 @@ public class TrapCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      * @param largeImage
      * @param largeImageString
@@ -44,7 +44,7 @@ public class TrapCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public TrapCard createCopyCard(){

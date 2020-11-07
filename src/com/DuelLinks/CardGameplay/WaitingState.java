@@ -16,7 +16,7 @@ import java.net.Socket;
 import java.util.Random;
 
 /**
- * At. Jose Antonio Retana y Mariana Navarro Jimenez
+ * @author Jose Antonio Retana y Mariana Navarro Jimenez
  * Se crea cuando el programa espera a que el oponente termine su turno o envie un mensaje
  */
 public class WaitingState implements Runnable {
@@ -32,7 +32,7 @@ public class WaitingState implements Runnable {
     Card snatchedCard;
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Se crea un thread que espera a la accion del oponente
      * @param mySocket
      * @param finishTurnButton
@@ -57,7 +57,7 @@ public class WaitingState implements Runnable {
     }
 
     /**
-     * At. Jose Antonio Retana y Mariana Navarro Jimenez
+     * @author Jose Antonio Retana y Mariana Navarro Jimenez
      * run implementado del metodo Runnable, utilizado para esperar a aceptar la informacion obtenida del scoekt del oponente.
      * Al aceptar la informacion retorna al gameplay menu el efecto de la informacion obtenida.
      */
