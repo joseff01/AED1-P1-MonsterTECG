@@ -19,7 +19,6 @@ import java.net.Socket;
  * ademas detecta cuando el jugador gana o pierde la partida
  */
 public class Bar extends JLabel {
-    boolean lose;
 
     int vida;
     int mana;
@@ -27,7 +26,7 @@ public class Bar extends JLabel {
     GameplayMenu gameplayMenu;
 
     /**
-     *  * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param type
      * @param my
      * @param gameplayMenu
@@ -59,7 +58,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param valor
      * @return true o false
      */
@@ -73,7 +72,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * proboca que el jugador gane o pierda la partida al llegar a 0
      * @param valor
      * @param bottom
@@ -142,7 +141,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param valor
      * @param bottom
      */
@@ -172,7 +171,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param valor
      * @param bottom
      */
@@ -201,7 +200,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param valor
      * @param bottom
      */
@@ -232,7 +231,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @return
      */
     public int getVida() {
@@ -240,7 +239,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param vida
      */
     public void setVida(int vida) {
@@ -248,7 +247,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @return
      */
     public int getMana() {
@@ -256,7 +255,7 @@ public class Bar extends JLabel {
     }
 
     /**
-     * At. Mariana Navarro Jimenez
+     * @author Mariana Navarro Jimenez
      * @param mana
      */
     public void setMana(int mana) {

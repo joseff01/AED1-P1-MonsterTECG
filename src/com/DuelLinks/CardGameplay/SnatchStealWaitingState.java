@@ -11,7 +11,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * At. Jose Antonio Retana
+ * @author. Jose Antonio Retana
  *
  */
 public class SnatchStealWaitingState implements Runnable {
@@ -23,7 +23,7 @@ public class SnatchStealWaitingState implements Runnable {
     GameplayMenu gameplayMenu;
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * Espera a recivir un mensaje enviado por el oponente la carta del mismo, y le devuelve un mensaje de confirmación.
      * @param mySocket
      * @param finishTurnButton

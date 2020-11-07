@@ -24,7 +24,7 @@ public class JsonMonsterCard {
     private String id;
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImg
      * @param largeImg
      * @param AttackDamage
@@ -56,7 +56,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getSmallImage() {
@@ -64,7 +64,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      */
     public void setSmallImage(String smallImage) {
@@ -72,7 +72,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getLargeImage() {
@@ -80,7 +80,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param largeImage
      */
     public void setLargeImage(String largeImage) {
@@ -88,7 +88,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getManaRequirement() {
@@ -96,7 +96,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param manaRequirement
      */
     public void setManaRequirement(int manaRequirement) {
@@ -104,7 +104,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getAttackDamage() {
@@ -112,7 +112,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param attackDamage
      */
     public void setAttackDamage(int attackDamage) {
@@ -120,7 +120,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public String getName() {
@@ -128,7 +128,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param name
      */
     public void setName(String name) {
@@ -136,7 +136,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public boolean isDragon() {
@@ -144,7 +144,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param dragon
      */
     public void setDragon(boolean dragon) {
@@ -152,7 +152,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return id
      */
     public String getId() {
@@ -160,7 +160,7 @@ public class JsonMonsterCard {
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param id
      */
     public void setId(String id) {

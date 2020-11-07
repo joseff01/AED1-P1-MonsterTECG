@@ -15,7 +15,7 @@ public class MonsterCard extends Card{
     private boolean dragon;
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public int getAttackDamage() {
@@ -23,7 +23,7 @@ public class MonsterCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public boolean isDragon() {
@@ -31,7 +31,7 @@ public class MonsterCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param jsonMonsterCard
      */
     public MonsterCard(JsonMonsterCard jsonMonsterCard) {
@@ -50,7 +50,7 @@ public class MonsterCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @param smallImage
      * @param largeImage
      * @param largeImageString
@@ -74,7 +74,7 @@ public class MonsterCard extends Card{
     }
 
     /**
-     * At. Jose Antonio Retana
+     * @author Jose Antonio Retana
      * @return
      */
     public MonsterCard createCopyCard(){
