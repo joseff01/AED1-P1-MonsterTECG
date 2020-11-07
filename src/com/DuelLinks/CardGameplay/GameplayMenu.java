@@ -918,7 +918,6 @@ public class GameplayMenu {
                                             }else{
                                                 enemyLifeBar.loseVida(((MonsterCard) card).getAttackDamage(), false);
                                                 suma = suma + ((MonsterCard) card).getAttackDamage();
-                                                System.out.println(suma);
                                                 WildMonsterMessage wildMonsterMessage = new WildMonsterMessage(suma,card1,card2,card.getCardName(),imageUsed1,imageUsed2,card.getLargeImageString());
                                                 sendMessage = wildMonsterMessage;
                                                 wildNum = 0;
@@ -1206,9 +1205,7 @@ public class GameplayMenu {
                             }
                         }else if (card instanceof TrapCard) {
                             if (!onlyMonsters) {
-                                System.out.println(card.getCardName());
                                 if (card.getCardName().equals("Curse Of Anubis")) {
-                                    System.out.println("flag funciona");
                                     flagCurseOfAnubis = true;
                                     flagLetMeIn = true;
                                     removeOneMyTrapCard();

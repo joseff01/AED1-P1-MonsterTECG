@@ -53,9 +53,7 @@ public class SnatchStealWaitingState implements Runnable {
             ObjectMapper objectMapper = new ObjectMapper();
 
             String messageReceived = (String) StreamInput.readUTF();
-
-            System.out.println(messageReceived);
-
+            
             SnatchStealMessage snatchStealMessage = (SnatchStealMessage) objectMapper.readValue(messageReceived, Message.class);
             Card card = gameplayMenu.allCards.getValueAt(snatchStealMessage.getCardNameStolen());
 

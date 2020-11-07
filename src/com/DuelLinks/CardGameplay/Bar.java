@@ -19,7 +19,6 @@ import java.net.Socket;
  * ademas detecta cuando el jugador gana o pierde la partida
  */
 public class Bar extends JLabel {
-    boolean lose;
 
     int vida;
     int mana;

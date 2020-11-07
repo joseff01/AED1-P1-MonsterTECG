@@ -127,7 +127,6 @@ public class WaitingState implements Runnable {
             } else if (objectMapper.readValue(messageReceived, Message.class) instanceof SnatchStealMessage) {
                 SnatchStealMessage snatchStealMessage = (SnatchStealMessage) objectMapper.readValue(messageReceived, Message.class);
                 if (snatchStealMessage.isFirstTime()) {
-                    System.out.println("received snatch request");
                     EntrySocket.close();
 
                     Random random = new Random();
@@ -140,7 +139,6 @@ public class WaitingState implements Runnable {
                     String messageJson = objectMapper.writeValueAsString(snatchStealMessageReturn);
                     streamOutput.writeUTF(messageJson);
                     streamOutput.close();
-                    System.out.println("sent snatched card");
                     run();
                 } else if (!snatchStealMessage.isFirstTime()) {
                     gameplayMenu.showBigCard(snatchStealMessage.getCardNameUsedPath());

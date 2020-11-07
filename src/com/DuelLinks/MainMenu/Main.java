@@ -65,6 +65,8 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e){
 
+                //Host Information Labels
+
                 backgroundLabel.removeAll();
 
                 String ip = "127.0.0.1";
